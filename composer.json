@@ -1,0 +1,25 @@
+{
+    "name"       : "telecomcorp/tcorplib",
+    "description": "Composer Package for Use with Telecom Corporate Projects",
+    "type"       : "library",
+    "keywords"   : ["telecomcorp", "tcorp"],
+
+    "authors": [
+        {
+            "name": "Telecom Corporate",
+            "email": "webmaster@telecomcorp.com.au"
+        }
+    ],
+
+
+    "require":
+    {
+    },
+
+    "autoload": {
+        "psr-4": {
+            "TCorp\\": "src/"
+        }
+    }
+
+}
