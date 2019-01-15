@@ -1,6 +1,6 @@
 {
     "name"       : "telecomcorp/tcorplib",
-    "description": "Composer Package for Use with Telecom Corporate Projects",
+    "description": "Telecom Corporate PHP Library",
     "type"       : "library",
     "keywords"   : ["telecomcorp", "tcorp"],
 

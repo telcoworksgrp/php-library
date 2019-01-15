@@ -1,2 +1,2 @@
-# Telecom Corporate Composer Package
-Composer Package for use with Telecom Corporate Projects
+# Telecom Corporate PHP Library
+Composer package/library for use with various Telecom Corporate projects
