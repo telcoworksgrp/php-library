@@ -7,6 +7,8 @@
 
 namespace TCorp\T3;
 
+use \TCorp\Legacy\T2\Helper AS T2Helper;
+
 
 /**
  * Helper class for working with Telecom Corporate's T3 system
@@ -26,7 +28,7 @@ class Helper
 
         if (!empty($affilateId) AND self::validateAffilateId($affilateId)) {
             setrawcookie('affiliate', $affilateId);
-        }      
+        }
 
     }
 
@@ -41,7 +43,8 @@ class Helper
      */
     public static function validateAffilateId(string $id)
     {
-        return (bool) preg_match('|^(?:[A-Z]{12}|[A-Za-z0-9]{8})$|', $id);
+        return preg_match('|^[A-Z]{12}$|', $id) OR
+            T2Helper::validateAffilateId($id);
     }
 
 
