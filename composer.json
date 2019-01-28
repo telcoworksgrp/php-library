@@ -3,6 +3,7 @@
     "description": "Telecom Corporate PHP Library",
     "type"       : "library",
     "keywords"   : ["telecomcorp", "tcorp"],
+    "license"    : "GPL-3.0-or-later",
 
     "authors": [
         {
