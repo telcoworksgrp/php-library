@@ -9,7 +9,7 @@
 # Telecom Corporate PHP Library
 
 ## Description
-Composer package/library for use with various Telecom Corporate projects
+Composer package/library for use with various Telecom Corporate projects. This includes a number of helper and base classes for both  'vanilla' PHP and a variety of PHP based platforms/frameworks.
 
 ## Installation
 The best way to install this library is using composer. Just run this composer command line
