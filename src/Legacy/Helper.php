@@ -14,6 +14,7 @@ namespace TCorp\Legacy;
 class Helper
 {
 
+
     /**
      * Send a very basic HTTP request and return the response body
      * -------------------------------------------------------------------------
@@ -24,7 +25,7 @@ class Helper
      * @return string               The reponse body
      */
     public static function sendRequest(string $url, string $method = 'GET', $data =
-    array(), $headers = array('Content-type: application/x-www-form-urlencoded'))
+        array(), $headers = array('Content-type: application/x-www-form-urlencoded'))
     {
         $context = stream_context_create(array
         (
@@ -38,7 +39,6 @@ class Helper
         return file_get_contents($url, false, $context);
 
     }
-
 
 
     /**
@@ -70,5 +70,22 @@ class Helper
     {
         return (bool) preg_match('|^[A-Za-z0-9]{8}$|', $id);
     }
+
+
+    /**
+     * Send an email
+     * -------------------------------------------------------------------------
+     * @param  string $to           Receiver, or receivers of the mail.
+     * @param  string $subject      Subject of the email to be sent.
+     * @param  string $message      Message to be sent.
+     * @param  string $headers      Additional headers to be inserted
+     * @return bool                 TRUE if successfully sent, FALSE otherwise
+     */
+    public static function sendEmail(string $to, string $subject,
+        string $message, mixed $headers = '')
+    {
+        return mail($to, $subject, $message, $headers);
+    }
+
 
 }
