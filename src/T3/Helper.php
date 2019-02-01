@@ -7,7 +7,7 @@
 
 namespace TCorp\T3;
 
-use \TCorp\Legacy\T2\Helper AS T2Helper;
+use \TCorp\Legacy\Helper AS LegacyHelper;
 
 
 /**
@@ -70,7 +70,7 @@ class Helper
     protected static function validateAffilateId(string $id) : bool
     {
         return (bool) preg_match('|^[A-Z]{12}$|', $id) OR
-            T2Helper::validateAffilateId($id);
+            LegacyHelper::validateT2AffilateId($id);
     }
 
 
