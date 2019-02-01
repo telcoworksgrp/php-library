@@ -82,10 +82,22 @@ class Helper
      * @return bool                 TRUE if successfully sent, FALSE otherwise
      */
     public static function sendEmail(string $to, string $subject,
-        string $message, mixed $headers = '')
+        string $message, mixed $headers = null)
     {
         return mail($to, $subject, $message, $headers);
     }
 
+
+    /**
+     * Redirect the user's browser to another URL
+     * -------------------------------------------------------------------------
+     * @param  string   $url          URL to redirect the user to
+     * @param  int      $statusCode   HTTP status code (usually 301 or 303)
+     */
+    public static function redirect(string $url, int $statusCode = 301)
+    {
+        header('Location: ' . $url, true, $statusCode);
+        exit();
+    }
 
 }
