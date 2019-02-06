@@ -16,6 +16,11 @@ The best way to install this library is using composer. Just run this composer c
 ```sh
 composer require telecomcorp/tcorplib
 ```
+then include composer's autoload.php file.
+```sh
+require_once('vendor/autoload.php');
+```
+
 ## Usage
 
 ## Documentation
