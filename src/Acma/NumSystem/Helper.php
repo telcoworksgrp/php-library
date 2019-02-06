@@ -40,7 +40,7 @@ class Helper
         // Parse CSV data
         $csvReader = CsvReader::createFromString($result);
         $csvReader->setHeaderOffset(0);
-        $result = $csvReader->getRecords();
+        $result = iterator_to_array($csvReader->getRecords());
 
         // Return the result
         return $result;
