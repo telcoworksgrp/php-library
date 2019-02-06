@@ -20,10 +20,12 @@ class Helper
 
 
     /**
-     * Download, extract, parse and then return ACMA's register of
-     * numbers from thier website
+     * Download, extract, parse and then return ACMA's register of numbers from
+     * thier website. This method may take allot of time to complete. Caching
+     * the result is recommended. ACMA updated the register of numbers once
+     * every day at midnight.
      * -------------------------------------------------------------------------
-     * @return string   A array of records parsed from the data.
+     * @return string   A very large array of records parsed from the data.
      */
     public static function downloadRegisterOfNumbers()
     {
@@ -37,7 +39,7 @@ class Helper
         $zipReader = new Filesystem(new ZipArchiveAdapter($tempFilename));
         $result = $zipReader->read('EnhancedFullDownload.csv');
 
-        // Parse CSV data
+        // Parse the CSV data
         $csvReader = CsvReader::createFromString($result);
         $csvReader->setHeaderOffset(0);
         $result = iterator_to_array($csvReader->getRecords());
