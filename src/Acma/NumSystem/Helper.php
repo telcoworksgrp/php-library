@@ -9,6 +9,7 @@ namespace TCorp\Acma\NumSystem;
 
 use \League\Flysystem\Filesystem;
 use \League\Flysystem\ZipArchive\ZipArchiveAdapter;
+use \League\Csv\Reader AS CsvReader;
 
 
 /**
@@ -19,10 +20,10 @@ class Helper
 
 
     /**
-     * Download and ACMA's register of numbers from thier website, extract
-     * the data and return a RAW CSV file
+     * Download, extract, parse and then return ACMA's register of
+     * numbers from thier website
      * -------------------------------------------------------------------------
-     * @return string   A raw CSV file containing the register of numbers
+     * @return string   A array of records parsed from the data.
      */
     public static function downloadRegisterOfNumbers()
     {
@@ -35,6 +36,11 @@ class Helper
         // Extract the CSV file which contains the registar of numbers
         $zipReader = new Filesystem(new ZipArchiveAdapter($tempFilename));
         $result = $zipReader->read('EnhancedFullDownload.csv');
+
+        // Parse CSV data
+        $csvReader = CsvReader::createFromString($result);
+        $csvReader->setHeaderOffset(0);
+        $result = $csvReader->getRecords();
 
         // Return the result
         return $result;
