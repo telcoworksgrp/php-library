@@ -27,13 +27,13 @@ class Helper
     public static function downloadRegisterOfNumbers()
     {
         // Download the ZIP file and save it to a tempory location
-        $tempFilename = tempnam(sys_get_temp_dir());
+        $tempFilename = tempnam(sys_get_temp_dir(), '');
         $url = 'https://www.thenumberingsystem.com.au/download/' .
             'EnhancedFullDownload.zip';
         file_put_contents($tempFilename, file_get_contents($url));
 
         // Extract the CSV file which contains the registar of numbers
-        $zipReader = new Filesystem(new ZipArchiveAdapter($zipFilename));
+        $zipReader = new Filesystem(new ZipArchiveAdapter($tempFilename));
         $result = $zipReader->read('EnhancedFullDownload.csv');
 
         // Return the result
