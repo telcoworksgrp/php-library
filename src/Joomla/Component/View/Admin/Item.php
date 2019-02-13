@@ -11,6 +11,7 @@ defined('_JEXEC') or die();
 
 use \Joomla\CMS\MVC\View\HtmlView;
 use \Joomla\CMS\HTML\HTMLHelper;
+use \Joomla\CMS\Factory;
 
 class Item extends HtmlView
 {
@@ -27,6 +28,7 @@ class Item extends HtmlView
         $this->item     = $this->get('Item');
         $this->form     = $this->get('Form');
         $this->state    = $this->get('State');
+        $this->menuitem = Factory::getApplication()->getMenu()->getActive();
 
         // Add component toolbar items
         $this->addAdministratonToolbar();

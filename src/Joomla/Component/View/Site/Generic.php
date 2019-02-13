@@ -10,6 +10,7 @@ namespace TCorp\Joomla\Component\View\Site;
 defined('_JEXEC') or die();
 
 use \Joomla\CMS\MVC\View\HtmlView;
+use \Joomla\CMS\Factory;
 
 class Generic extends HtmlView
 {
@@ -23,7 +24,8 @@ class Generic extends HtmlView
     public function display($tpl = null)
     {
         // Add data to the view
-        $this->state = $this->get('State');
+        $this->state    = $this->get('State');
+        $this->menuitem = Factory::getApplication()->getMenu()->getActive();
 
         // Call and return the parent method
         return parent::display($tpl);

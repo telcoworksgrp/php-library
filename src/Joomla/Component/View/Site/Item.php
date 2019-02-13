@@ -26,6 +26,7 @@ class Item extends HtmlView
         // Add data to the view
         $this->item     = $this->get('Item');
         $this->state    = $this->get('State');
+        $this->menuitem = Factory::getApplication()->getMenu()->getActive();
 
         // If the item has a title then use it for the document title
         if (!empty($this->item)) {

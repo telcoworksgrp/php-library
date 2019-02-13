@@ -10,6 +10,7 @@ namespace TCorp\Joomla\Component\View\Admin;
 defined('_JEXEC') or die();
 
 use \TCorp\Joomla\Component\View\Admin\Generic;
+use \Joomla\CMS\Factory;
 
 class Dashboard extends Generic
 {
@@ -25,6 +26,7 @@ class Dashboard extends Generic
         // Add data to the view
         $this->server   = $this->get('ServerInfo');
         $this->database = $this->get('DatabaseInfo');
+        $this->menuitem = Factory::getApplication()->getMenu()->getActive();
 
         // Call and return the parent method
 		return parent::display($tpl);

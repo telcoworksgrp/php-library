@@ -10,6 +10,7 @@ namespace TCorp\Joomla\Component\View\Admin;
 defined('_JEXEC') or die();
 
 use \Joomla\CMS\MVC\View\HtmlView;
+use \Joomla\CMS\Factory;
 
 class ItemList extends HtmlView
 {
@@ -32,6 +33,7 @@ class ItemList extends HtmlView
         $this->state         = $this->get('State');
         $this->ordering      = $this->escape($this->state->get('list.ordering'));
         $this->direction     = $this->escape($this->state->get('list.direction'));
+        $this->menuitem      = Factory::getApplication()->getMenu()->getActive();
 
         // Add component toolbar items
         $this->addAdministratonToolbar();
