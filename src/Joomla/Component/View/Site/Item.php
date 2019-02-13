@@ -31,7 +31,7 @@ class Item extends HtmlView
         // If the item has a title then use it for the document title
         if (!empty($this->item)) {
             if (property_exists($this->item, 'title')) {
-                Factory::getDocument()->setTitle($this->item->title);
+                $this->setDocumentTitle($this->item->title);
             }
         }
 
