@@ -9,29 +9,27 @@ namespace TCorp\Joomla\Component\Router\Site;
 
 defined('_JEXEC') or die();
 
-use \Joomla\CMS\Component\Router\RouterBase;
-use \Joomla\CMS\Factory;
+use \Joomla\CMS\Component\Router\RouterView;
+use \Joomla\CMS\Component\Router\Rules\MenuRules;
+use \Joomla\CMS\Component\Router\Rules\NomenuRules;
+use \Joomla\CMS\Component\Router\Rules\StandardRules;
 
-abstract class Generic extends RouterBase
+
+abstract class Generic extends RouterView
 {
 
-
     /**
-     * Holds a database connector
-     *
-     * @var /JDatabaseDriver
+     * Constructor for initialising new instances of this class
+     * -------------------------------------------------------------------------
      */
-    protected $db = null;
-
-
-
     public function __construct($app = null, $menu = null)
-    {
-        // Initialise some class properties
-        $this->db = Factory::getDbo();
-
-        // Call the parent constructor
+	{
         parent::__construct($app, $menu);
-    }
+
+        $this->attachRule(new MenuRules($this));
+		$this->attachRule(new StandardRules($this));
+		$this->attachRule(new NomenuRules($this));
+	}
+
 
 }
