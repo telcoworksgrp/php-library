@@ -21,7 +21,7 @@ class Dashboard extends Generic
      * Execute and display a view layout.
      * -------------------------------------------------------------------------
      * @param  string   $tpl    The name of the view layout to parse
-     * @return mixed    A string if successful, otherwise an Error object
+     * @return mixed            A string if successful, Error object if not
      */
     public function display($tpl = null)
     {
