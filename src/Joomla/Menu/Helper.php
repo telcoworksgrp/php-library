@@ -52,4 +52,16 @@ class Helper
 		// Return the result
 		return $result;
 	}
+
+
+    /**
+     *  Get the currently active menu item
+     * -------------------------------------------------------------------------
+     * @return  object  The currently active menu item
+     */
+    public static function getActive()
+    {
+        return Factory::getApplication()->getMenu()->getActive();
+    }
+
 }
