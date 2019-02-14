@@ -37,9 +37,6 @@ class Item extends HtmlView
         // Add component toolbar items
         $this->addAdministratonToolbar();
 
-        // Get a rendered administraton sidebar
-        $this->sidebar = $this->getAdministratonSidebar();
-
         // Prevent the user's session from timing out
         HTMLHelper::_('behavior.keepalive');
 
@@ -53,16 +50,6 @@ class Item extends HtmlView
      */
     protected function addAdministratonToolbar()
     {
-    }
-
-
-    /**
-     * Build and render an administraton sidebar
-     * -------------------------------------------------------------------------
-     */
-    public function getAdministratonSidebar()
-    {
-        return '';
     }
 
 }
