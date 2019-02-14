@@ -10,6 +10,7 @@ namespace TCorp\Joomla\Component\Table\Admin;
 defined('_JEXEC') or die();
 
 use \Joomla\CMS\Table\Nested AS NestedTable;
+use \Joomla\CMS\Factory;
 
 class Nested extends NestedTable
 {
