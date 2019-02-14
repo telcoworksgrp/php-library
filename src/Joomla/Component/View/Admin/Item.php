@@ -15,6 +15,7 @@ use \Joomla\CMS\MVC\View\HtmlView;
 use \Joomla\CMS\HTML\HTMLHelper;
 use \Joomla\CMS\Factory;
 
+
 class Item extends HtmlView
 {
 
@@ -36,6 +37,9 @@ class Item extends HtmlView
         // Add component toolbar items
         $this->addAdministratonToolbar();
 
+        // Get a rendered administraton sidebar
+        $this->sidebar = $this->getAdministratonSidebar();
+
         // Prevent the user's session from timing out
         HTMLHelper::_('behavior.keepalive');
 
@@ -43,13 +47,22 @@ class Item extends HtmlView
 		return parent::display($tpl);
     }
 
-
-
     /**
-     * Add items to the administration toolbar
+     * Add items to the administration toolbar for this view
      * -------------------------------------------------------------------------
      */
     protected function addAdministratonToolbar()
     {
     }
+
+
+    /**
+     * Build and render an administraton sidebar
+     * -------------------------------------------------------------------------
+     */
+    public function getAdministratonSidebar()
+    {
+        return '';
+    }
+
 }

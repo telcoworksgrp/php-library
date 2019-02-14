@@ -14,6 +14,7 @@ use \TCorp\Joomla\Menu\Helper AS MenuHelper;
 use \Joomla\CMS\MVC\View\HtmlView;
 use \Joomla\CMS\Factory;
 
+
 class Generic extends HtmlView
 {
 
@@ -33,18 +34,30 @@ class Generic extends HtmlView
         // Add component toolbar items
         $this->addAdministratonToolbar();
 
+        // Get a rendered administraton sidebar
+        $this->sidebar = $this->getAdministratonSidebar();
+
         // Call and return the parent method
         return parent::display($tpl);
     }
 
 
-
     /**
-     * Add items to the administration toolbar
+     * Add items to the administration toolbar for this view
      * -------------------------------------------------------------------------
      */
     protected function addAdministratonToolbar()
     {
+    }
+
+
+    /**
+     * Build and render an administraton sidebar
+     * -------------------------------------------------------------------------
+     */
+    public function getAdministratonSidebar()
+    {
+        return '';
     }
 
 }
