@@ -9,6 +9,7 @@ namespace TCorp\Joomla\Component\View\Site;
 
 defined('_JEXEC') or die();
 
+use \TCorp\Joomla\Component\Helper AS ComponentHelper;
 use \TCorp\Joomla\Menu\Helper AS MenuHelper;
 use \Joomla\CMS\MVC\View\HtmlView;
 use \Joomla\CMS\Factory;
