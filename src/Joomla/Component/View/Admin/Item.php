@@ -9,6 +9,7 @@ namespace TCorp\Joomla\Component\View\Admin;
 
 defined('_JEXEC') or die();
 
+use \TCorp\Joomla\Menu\Helper AS MenuHelper;
 use \Joomla\CMS\MVC\View\HtmlView;
 use \Joomla\CMS\HTML\HTMLHelper;
 use \Joomla\CMS\Factory;
@@ -29,7 +30,7 @@ class Item extends HtmlView
         $this->form     = $this->get('Form');
         $this->state    = $this->get('State');
         $this->config   = ComponentHelper::getComponentConfig();
-        $this->menuitem = Factory::getApplication()->getMenu()->getActive();
+        $this->menuitem = MenuHelper->getActive();
 
         // Add component toolbar items
         $this->addAdministratonToolbar();

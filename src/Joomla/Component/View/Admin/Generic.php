@@ -10,6 +10,7 @@ namespace TCorp\Joomla\Component\View\Admin;
 defined('_JEXEC') or die();
 
 use \TCorp\Joomla\Component\Helper AS ComponentHelper;
+use \TCorp\Joomla\Menu\Helper AS MenuHelper;
 use \Joomla\CMS\MVC\View\HtmlView;
 use \Joomla\CMS\Factory;
 
@@ -27,7 +28,7 @@ class Generic extends HtmlView
     {
         // Add data to the view
         $this->config   = ComponentHelper::getComponentConfig();
-        $this->menuitem = Factory::getApplication()->getMenu()->getActive();
+        $this->menuitem = MenuHelper->getActive();
 
         // Add component toolbar items
         $this->addAdministratonToolbar();

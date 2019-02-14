@@ -11,6 +11,7 @@ defined('_JEXEC') or die();
 
 use \TCorp\Joomla\Component\View\Admin\Generic;
 use \TCorp\Joomla\Component\Helper AS ComponentHelper;
+use \TCorp\Joomla\Menu\Helper AS MenuHelper;
 use \Joomla\CMS\Factory;
 
 class Dashboard extends Generic
@@ -28,7 +29,7 @@ class Dashboard extends Generic
         $this->server   = $this->get('ServerInfo');
         $this->database = $this->get('DatabaseInfo');
         $this->config   = ComponentHelper::getComponentConfig();
-        $this->menuitem = Factory::getApplication()->getMenu()->getActive();
+        $this->menuitem = MenuHelper->getActive();
 
         // Call and return the parent method
 		return parent::display($tpl);

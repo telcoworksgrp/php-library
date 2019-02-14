@@ -9,6 +9,7 @@ namespace TCorp\Joomla\Component\View\Site;
 
 defined('_JEXEC') or die();
 
+use \TCorp\Joomla\Menu\Helper AS MenuHelper;
 use \Joomla\CMS\MVC\View\HtmlView;
 use \Joomla\CMS\Factory;
 
@@ -27,7 +28,7 @@ class Item extends HtmlView
         $this->item     = $this->get('Item');
         $this->state    = $this->get('State');
         $this->config   = ComponentHelper::getComponentConfig();
-        $this->menuitem = Factory::getApplication()->getMenu()->getActive();
+        $this->menuitem = MenuHelper->getActive();
 
         // If the item has a title then use it for the document title
         if (!empty($this->item)) {
