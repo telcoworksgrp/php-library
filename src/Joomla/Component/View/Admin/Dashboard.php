@@ -9,10 +9,7 @@ namespace TCorp\Joomla\Component\View\Admin;
 
 defined('_JEXEC') or die();
 
-use \TCorp\Joomla\Component\Helper AS ComponentHelper;
-use \TCorp\Joomla\Menu\Helper AS MenuHelper;
 use \TCorp\Joomla\Component\View\Admin\Generic;
-use \Joomla\CMS\Factory;
 
 class Dashboard extends Generic
 {
