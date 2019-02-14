@@ -33,6 +33,7 @@ class ItemList extends HtmlView
         $this->state         = $this->get('State');
         $this->ordering      = $this->escape($this->state->get('list.ordering'));
         $this->direction     = $this->escape($this->state->get('list.direction'));
+        $this->config        = ComponentHelper::getComponentConfig();
         $this->menuitem      = Factory::getApplication()->getMenu()->getActive();
 
         // Call and return the parent method
