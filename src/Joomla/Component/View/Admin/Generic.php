@@ -28,7 +28,7 @@ class Generic extends HtmlView
     {
         // Add data to the view
         $this->config   = ComponentHelper::getComponentConfig();
-        $this->menuitem = MenuHelper->getActive();
+        $this->menuitem = MenuHelper::getActive();
 
         // Add component toolbar items
         $this->addAdministratonToolbar();

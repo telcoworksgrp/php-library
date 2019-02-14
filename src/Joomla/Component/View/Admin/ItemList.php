@@ -36,7 +36,7 @@ class ItemList extends HtmlView
         $this->ordering      = $this->escape($this->state->get('list.ordering'));
         $this->direction     = $this->escape($this->state->get('list.direction'));
         $this->config        = ComponentHelper::getComponentConfig();
-        $this->menuitem      = MenuHelper->getActive();
+        $this->menuitem      = MenuHelper::getActive();
 
         // Add component toolbar items
         $this->addAdministratonToolbar();

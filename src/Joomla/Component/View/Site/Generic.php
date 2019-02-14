@@ -28,7 +28,7 @@ class Generic extends HtmlView
         // Add data to the view
         $this->state    = $this->get('State');
         $this->config   = ComponentHelper::getComponentConfig();
-        $this->menuitem = MenuHelper->getActive();
+        $this->menuitem = MenuHelper::getActive();
 
         // Call and return the parent method
         return parent::display($tpl);

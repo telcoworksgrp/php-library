@@ -29,7 +29,7 @@ class Dashboard extends Generic
         $this->server   = $this->get('ServerInfo');
         $this->database = $this->get('DatabaseInfo');
         $this->config   = ComponentHelper::getComponentConfig();
-        $this->menuitem = MenuHelper->getActive();
+        $this->menuitem = MenuHelper::getActive();
 
         // Call and return the parent method
 		return parent::display($tpl);

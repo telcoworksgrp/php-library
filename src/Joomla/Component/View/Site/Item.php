@@ -29,7 +29,7 @@ class Item extends HtmlView
         $this->item     = $this->get('Item');
         $this->state    = $this->get('State');
         $this->config   = ComponentHelper::getComponentConfig();
-        $this->menuitem = MenuHelper->getActive();
+        $this->menuitem = MenuHelper::getActive();
 
         // If the item has a title then use it for the document title
         if (!empty($this->item)) {

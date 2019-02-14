@@ -31,7 +31,7 @@ class Item extends HtmlView
         $this->form     = $this->get('Form');
         $this->state    = $this->get('State');
         $this->config   = ComponentHelper::getComponentConfig();
-        $this->menuitem = MenuHelper->getActive();
+        $this->menuitem = MenuHelper::getActive();
 
         // Add component toolbar items
         $this->addAdministratonToolbar();
