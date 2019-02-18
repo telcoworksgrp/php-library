@@ -89,6 +89,32 @@ class Helper
 
 
     /**
+     * Composes an email message from all POST params - plus the IP address
+     * of the remote user. This is a quick and dirty way some of the older
+     * sites display form data in email notifications
+     * -------------------------------------------------------------------------
+     * @return  stying  An email message
+     */
+    public static function composeMessageFromPostParams()
+    {
+        // Initialise some local variables
+        $params       = $_POST;
+        $params['ip'] = $_SERVER['REMOTE_IP'];
+        $result       = '';
+
+        // Add a list of key-value pairs
+        foreach ($_POST as $key => $value){
+            $k = htmlentities($key);
+        	$v = htmlentities($value);
+            $result .= "$k - $v\n";
+        }
+
+        // Return the result
+        return $result;
+    }
+
+
+    /**
      * Redirect the user's browser to another URL
      * -------------------------------------------------------------------------
      * @param  string   $url          URL to redirect the user to
