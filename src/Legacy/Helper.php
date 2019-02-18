@@ -103,7 +103,7 @@ class Helper
         $result       = '';
 
         // Add a list of key-value pairs
-        foreach ($_POST as $key => $value){
+        foreach ($params as $key => $value){
             $k = htmlentities($key);
         	$v = htmlentities($value);
             $result .= "$k - $v\n";
