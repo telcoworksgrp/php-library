@@ -99,7 +99,7 @@ class Helper
     {
         // Initialise some local variables
         $params       = $_POST;
-        $params['ip'] = $_SERVER['REMOTE_IP'];
+        $params['ip'] = $_SERVER['REMOTE_ADDR'];
         $result       = '';
 
         // Add a list of key-value pairs
