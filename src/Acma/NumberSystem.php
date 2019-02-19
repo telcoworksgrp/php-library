@@ -5,7 +5,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace TCorp\Acma\NumSystem;
+namespace TCorp\Acma;
 
 use \League\Flysystem\Filesystem;
 use \League\Flysystem\ZipArchive\ZipArchiveAdapter;
@@ -15,7 +15,7 @@ use \League\Csv\Reader AS CsvReader;
 /**
  * Helper class for working with ACMA's "Numbering System"
  */
-class Helper
+class NumberSystem
 {
 
 
