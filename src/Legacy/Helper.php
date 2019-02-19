@@ -115,13 +115,25 @@ class Helper
 
 
     /**
-     * Redirect the user's browser to another URL
+     * Redirect the user's browser to another URL, preserving the current
+     * URL parameters.
      * -------------------------------------------------------------------------
-     * @param  string   $url          URL to redirect the user to
-     * @param  int      $statusCode   HTTP status code (usually 301 or 303)
+     * @param  string   $url             URL to redirect the user to
+     * @param  bool     $preserveParams  Pass existing URL params to the redirect
+     * @param  int      $statusCode      HTTP status code (usually 301 or 303)
      */
-    public static function redirect(string $url, int $statusCode = 301)
+    public static function redirect(string $url, bool $preserveParams = TRUE,
+        int $statusCode = 301)
     {
+        // Append the exitsing params if needed
+        if ($preserveParams) {
+
+            $url = $url . ((strpos($url, '?')) ? '&' : '?') .
+                $_SERVER['QUERY_STRING'];
+
+        }
+
+        // Redirect the user
         header('Location: ' . $url, true, $statusCode);
         exit();
     }
