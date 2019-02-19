@@ -11,7 +11,7 @@ namespace TCorp\T3\Affilate;
 /**
  * Helper class for working with T3 affilate referrals from other sites
  */
-class Refferal
+class Referral
 {
 
     /**
