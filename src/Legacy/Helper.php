@@ -42,37 +42,6 @@ class Helper
 
 
     /**
-     * Detects a T2 affilate refferal and sets the appropriate cookies so that
-     * the affilate id is remebered across subsequent requests
-     * -------------------------------------------------------------------------
-     */
-    public static function detectT2AffilateRefferal()
-    {
-        // If an "affid" URL param exists, and it's value is a valid affilate
-        // id then set an "affid" cookie to remember that value across
-        // subsequent requests
-        if (isset($_GET['affid']) AND self::validateT2AffilateId(
-            $_GET['affid'])) {
-
-            setrawcookie('affid', $_GET['affid']);
-        }
-    }
-
-
-    /**
-     * Check if a given T2 affilate id is valid. Valid T2 affilate ids consist
-     * 8 characters including lower case letters and digits
-     * -------------------------------------------------------------------------
-     * @param  string   $id     An affilate id to check
-     * @return bool             TRUE is valid, FALSE is invalid
-     */
-    public static function validateT2AffilateId(string $id) : bool
-    {
-        return (bool) preg_match('|^[A-Za-z0-9]{8}$|', $id);
-    }
-
-
-    /**
      * Send an email
      * -------------------------------------------------------------------------
      * @param  string $to           Receiver, or receivers of the mail.
