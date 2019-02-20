@@ -51,7 +51,7 @@ class Helper
      * @return bool                 TRUE if successfully sent, FALSE otherwise
      */
     public static function sendEmail(string $to, string $subject,
-        string $message, mixed $headers = null)
+        string $message, mixed $headers = array())
     {
         return mail($to, $subject, $message, $headers);
     }
