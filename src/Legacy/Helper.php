@@ -47,11 +47,11 @@ class Helper
      * @param  string $to           Receiver, or receivers of the mail.
      * @param  string $subject      Subject of the email to be sent.
      * @param  string $message      Message to be sent.
-     * @param  string $headers      Additional headers to be inserted
+     * @param  mixed  $headers      String/array of additional headers to add
      * @return bool                 TRUE if successfully sent, FALSE otherwise
      */
     public static function sendEmail(string $to, string $subject,
-        string $message, mixed $headers = array())
+        string $message, $headers = '')
     {
         return mail($to, $subject, $message, $headers);
     }
