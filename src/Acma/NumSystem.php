@@ -15,7 +15,7 @@ use \League\Csv\Reader AS CsvReader;
 /**
  * Helper class for working with ACMA's "Numbering System"
  */
-class NumberSystem
+class NumSystem
 {
 
 
