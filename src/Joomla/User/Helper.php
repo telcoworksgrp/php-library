@@ -15,7 +15,7 @@ use \Joomla\CMS\Factory;
 /**
  * Helper class for working with Joomla user info
  */
-class UserHelper
+class Helper
 {
 
 
