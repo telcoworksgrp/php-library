@@ -42,38 +42,4 @@ class Dashboard extends Generic
       }
 
 
-
-      /**
-       * Get information about the database
-       * -------------------------------------------------------------------------
-       * @return  object  The statistics
-       */
-      public function getDatabaseInfo()
-      {
-          //  Initalize some local variables
-          $result       = new \stdClass;
-          $database   = $this->getDbo();
-
-          // Add a list database session variables
-          $result->sessionvars =
-              $database->setQuery('SHOW SESSION VARIABLES')->loadRowList();
-
-          // Add the a list of charictar sets
-          $result->charsets =
-              $database->setQuery('SHOW CHARACTER SET')->loadRowList();
-
-          // Add the a list of collations
-          $result->collations =
-              $database->setQuery('SHOW COLLATION')->loadRowList();
-
-          // Add the a list of supported engines
-          $result->engines =
-              $database->setQuery('SHOW ENGINES')->loadRowList();
-
-          // Return the statistical data
-          return $result;
-      }
-
-
-
 }

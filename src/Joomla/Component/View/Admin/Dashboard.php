@@ -24,7 +24,6 @@ class Dashboard extends Generic
     {
         // Add data to the view
         $this->server   = $this->get('ServerInfo');
-        $this->database = $this->get('DatabaseInfo');
 
         // Call and return the parent method
 		return parent::display($tpl);
