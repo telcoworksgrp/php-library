@@ -42,9 +42,6 @@ class ItemList extends HtmlView
         // Add component toolbar items
         $this->addAdministratonToolbar();
 
-        // Get a rendered administraton sidebar
-        $this->sidebar = $this->getAdministratonSidebar();
-
         // Call and return the parent method
         return parent::display($tpl);
     }
@@ -56,16 +53,6 @@ class ItemList extends HtmlView
      */
     protected function addAdministratonToolbar()
     {
-    }
-
-
-    /**
-     * Build and render an administraton sidebar
-     * -------------------------------------------------------------------------
-     */
-    public function getAdministratonSidebar()
-    {
-        return '';
     }
 
 }
