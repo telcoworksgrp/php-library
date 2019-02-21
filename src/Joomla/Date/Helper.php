@@ -25,7 +25,7 @@ class Helper
      *
      * @return string   A more user friendly datetime string
      */
-    public static function formatMysqlDateTime(string $dateTime, string
+    public static function formatMysqlDateTime($dateTime, string
         $format = 'd/m/Y h:i:s A', string $default = '-')
     {
         // If the value is '0' or invalid the return the default
