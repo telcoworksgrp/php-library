@@ -23,7 +23,7 @@ class TemplateHelper
 	 *
 	 * @var HtmlDocument
 	 */
-	protected $document = null;
+	protected $this->document = null;
 
 
 
@@ -56,7 +56,7 @@ class TemplateHelper
 	{
 		// Initialise some class properties
 		$this->document = Factory::getDocument();
-		$this->baseUrl  = Uri::base() . '/' . $document->template . '/';
+		$this->baseUrl  = Uri::base() . '/' . $this->document->template . '/';
 
 		// Initialise the template (add assets, etcs)
 		$this->initialise();
@@ -72,7 +72,7 @@ class TemplateHelper
 	public function initialise()
 	{
 		// Set the document to HTML5
-        $document->setHTML5(true);
+        $this->document->setHTML5(true);
 
 		// Add all CSS stylesheets to document
 		$this->addStylesheets();
@@ -124,7 +124,7 @@ class TemplateHelper
     public function addTemplateStylesheets()
     {
         // Add the template's main CSS stylesheet
-        $document->addStylesheet($this->baseUrl . 'css/template.css');
+        $this->document->addStylesheet($this->baseUrl . 'css/template.css');
     }
 
 
@@ -164,7 +164,7 @@ class TemplateHelper
     public function addTemplateScripts()
     {
         // Add the template's main javascript script
-        $document->addScript($this->baseUrl . 'js/template.js',
+        $this->document->addScript($this->baseUrl . 'js/template.js',
 			array(), array('defer'=>'true'));
     }
 
@@ -181,31 +181,31 @@ class TemplateHelper
 		$baseUrl  = $this->baseUrl . 'images/favicons/';
 
         // Add favicons to the HTML document
-		$document->addHeadLink($baseUrl . 'favicon.ico',
+		$this->document->addHeadLink($baseUrl . 'favicon.ico',
 			'shortcut icon', 'rel', array('type' => 'image/x-icon'));
 
-		$document->addHeadLink($baseUrl . 'apple-touch-icon.png',
+		$this->document->addHeadLink($baseUrl . 'apple-touch-icon.png',
 			'apple-touch-icon');
 
-		$document->addHeadLink($baseUrl . 'apple-touch-icon-57x57.png',
+		$this->document->addHeadLink($baseUrl . 'apple-touch-icon-57x57.png',
 			'apple-touch-icon', 'rel', array('sizes' => '57x57'));
 
-		$document->addHeadLink($baseUrl . 'apple-touch-icon-72x72.png',
+		$this->document->addHeadLink($baseUrl . 'apple-touch-icon-72x72.png',
 			'apple-touch-icon', 'rel', array('sizes' => '72x72'));
 
-		$document->addHeadLink($baseUrl . 'apple-touch-icon-76x76.png',
+		$this->document->addHeadLink($baseUrl . 'apple-touch-icon-76x76.png',
 			'apple-touch-icon', 'rel', array('sizes' => '76x76'));
 
-		$document->addHeadLink($baseUrl . 'apple-touch-icon-114x114.png',
+		$this->document->addHeadLink($baseUrl . 'apple-touch-icon-114x114.png',
 			'apple-touch-icon', 'rel', array('sizes' => '114x114'));
 
-		$document->addHeadLink($baseUrl . 'apple-touch-icon-120x120.png',
+		$this->document->addHeadLink($baseUrl . 'apple-touch-icon-120x120.png',
 			'apple-touch-icon', 'rel', array('sizes' => '120x120'));
 
-		$document->addHeadLink($baseUrl . 'apple-touch-icon-144x144.png',
+		$this->document->addHeadLink($baseUrl . 'apple-touch-icon-144x144.png',
 			'apple-touch-icon', 'rel', array('sizes' => '144x144'));
 
-		$document->addHeadLink($baseUrl . 'apple-touch-icon-152x152.png',
+		$this->document->addHeadLink($baseUrl . 'apple-touch-icon-152x152.png',
 			'apple-touch-icon', 'rel', array('sizes' => '152x152'));
 	}
 
@@ -219,13 +219,13 @@ class TemplateHelper
 	public function updateMetaTags()
 	{
         // Set the meta title to the same value as the document title
-        $document->setMetaData('title', $document->getTitle());
+        $this->document->setMetaData('title', $this->document->getTitle());
 
         // Remove the generator tag added by Joomla.
-		$document->setGenerator('');
+		$this->document->setGenerator('');
 
         // Set the document's viewport meta tag
-        $document->setMetaData('viewport', $this->viewport);
+        $this->document->setMetaData('viewport', $this->viewport);
 	}
 
 
