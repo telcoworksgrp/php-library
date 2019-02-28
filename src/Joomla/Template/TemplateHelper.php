@@ -8,6 +8,10 @@
 namespace TCorp\Joomla\Template;
 
 
+use \Joomla\CMS\Factory;
+use \Joomla\CMS\Uri\Uri;
+
+
 /**
  * Base class for Joomla template helpers
  */
