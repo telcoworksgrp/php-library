@@ -96,37 +96,7 @@ class TemplateHelper
 	 */
 	public function addStylesheets()
 	{
-        // Add all vendor CSS stylesheets to document
-		$this->addVendorStylesheets();
-
-        // Add all template CSS stylesheets to document
-		$this->addTemplateStylesheets();
 	}
-
-
-
-    /**
-     * Add all vendor CSS stylesheets to document
-     * -------------------------------------------------------------------------
-     * @return void
-     */
-    public function addVendorStylesheets()
-    {
-    }
-
-
-
-    /**
-     * Add all vendor CSS stylesheets to document
-     * -------------------------------------------------------------------------
-     * @return void
-     */
-    public function addTemplateStylesheets()
-    {
-        // Add the template's main CSS stylesheet
-        $this->document->addStylesheet($this->baseUrl . 'css/template.css');
-    }
-
 
 
 	/**
@@ -136,38 +106,10 @@ class TemplateHelper
 	 */
 	public function addScripts()
 	{
-        // Add all vendor scripts to the document
-		$this->addVendorScripts();
-
-        // Add all template scripts to the document
-		$this->addTemplateScripts();
-	}
-
-
-
-    /**
-     * Add all vendor scripts to the document
-     * -------------------------------------------------------------------------
-     * @return void
-     */
-    public function addVendorScripts()
-    {
-    }
-
-
-
-    /**
-     * Add all template scripts to the document
-     * -------------------------------------------------------------------------
-     * @return void
-     */
-    public function addTemplateScripts()
-    {
-        // Add the template's main javascript script
+		// Add the template's main javascript script
         $this->document->addScript($this->baseUrl . 'js/template.js',
 			array(), array('defer'=>'true'));
-    }
-
+	}
 
 
 	/**
@@ -227,7 +169,6 @@ class TemplateHelper
         // Set the document's viewport meta tag
         $this->document->setMetaData('viewport', $this->viewport);
 	}
-
 
 
 
