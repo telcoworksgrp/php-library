@@ -23,7 +23,7 @@ class TemplateHelper
 	 *
 	 * @var HtmlDocument
 	 */
-	protected $this->document = null;
+	protected $document = null;
 
 
 
