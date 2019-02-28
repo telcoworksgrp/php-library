@@ -9,7 +9,7 @@ namespace TCorp\Joomla\Template;
 
 
 /**
- * Base class for Joomla template helper's
+ * Base class for Joomla template helpers
  */
 class TemplateHelper
 {
