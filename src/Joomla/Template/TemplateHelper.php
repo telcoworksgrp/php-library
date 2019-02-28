@@ -36,15 +36,6 @@ class TemplateHelper
 
 
 
-	/**
-	 * A copy of the template parameters as an object
-	 *
-	 * @var \stdClass
-	 */
-	public $params = null;
-
-
-
     /**
      * Default value for the viewport meta tag
      *
@@ -66,7 +57,6 @@ class TemplateHelper
 		// Initialise some class properties
 		$this->document = Factory::getDocument();
 		$this->baseUrl  = Uri::base() . '/' . $document->template . '/';
-		$this->params	= $document->params->asObject();
 
 		// Initialise the template (add assets, etcs)
 		$this->initialise();
