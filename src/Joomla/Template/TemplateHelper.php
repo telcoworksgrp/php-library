@@ -56,7 +56,8 @@ class TemplateHelper
 	{
 		// Initialise some class properties
 		$this->document = Factory::getDocument();
-		$this->baseUrl  = Uri::base() . '/' . $this->document->template . '/';
+		$this->baseUrl  = Uri::base() . 'templates/' .
+			$this->document->template . '/';
 
 		// Initialise the template (add assets, etcs)
 		$this->initialise();
