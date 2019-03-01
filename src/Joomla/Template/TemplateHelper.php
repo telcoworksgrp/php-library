@@ -7,7 +7,7 @@
 
 namespace TCorp\Joomla\Template;
 
-
+use \TCorp\Joomla\Document\DocumentHelper;
 use \Joomla\CMS\Factory;
 use \Joomla\CMS\Uri\Uri;
 
