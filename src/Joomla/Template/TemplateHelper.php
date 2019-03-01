@@ -97,6 +97,8 @@ class TemplateHelper
 	 */
 	public function addStylesheets()
 	{
+		// Add stylesheets specific to this template
+        DocumentHelper::addStylesheet($this->baseUrl . 'css/template.css');
 	}
 
 
@@ -107,9 +109,8 @@ class TemplateHelper
 	 */
 	public function addScripts()
 	{
-		// Add the template's main javascript script
-        $this->document->addScript($this->baseUrl . 'js/template.js',
-			array(), array('defer'=>'true'));
+		// Add scripts specific to this template
+        DocumentHelper::addScript($this->baseUrl . 'js/template.js', '', true);
 	}
 
 
@@ -124,32 +125,28 @@ class TemplateHelper
 		$baseUrl  = $this->baseUrl . 'images/favicons/';
 
         // Add favicons to the HTML document
-		$this->document->addHeadLink($baseUrl . 'favicon.ico',
-			'shortcut icon', 'rel', array('type' => 'image/x-icon'));
-
 		$this->document->addHeadLink($baseUrl . 'apple-touch-icon.png',
-			'apple-touch-icon');
+			'apple-touch-icon', 'rel', array('sizes' => '180x180'));
 
-		$this->document->addHeadLink($baseUrl . 'apple-touch-icon-57x57.png',
-			'apple-touch-icon', 'rel', array('sizes' => '57x57'));
+		$this->document->addHeadLink($baseUrl . 'favicon-32x32.png',
+			'icon', 'rel', array('sizes' => '32x32'));
 
-		$this->document->addHeadLink($baseUrl . 'apple-touch-icon-72x72.png',
-			'apple-touch-icon', 'rel', array('sizes' => '72x72'));
+		$this->document->addHeadLink($baseUrl . 'favicon-16x16.png',
+			'icon', 'rel', array('sizes' => '16x16'));
 
-		$this->document->addHeadLink($baseUrl . 'apple-touch-icon-76x76.png',
-			'apple-touch-icon', 'rel', array('sizes' => '76x76'));
+		$this->document->addHeadLink($baseUrl . 'site.webmanifest', 'manifest');
 
-		$this->document->addHeadLink($baseUrl . 'apple-touch-icon-114x114.png',
-			'apple-touch-icon', 'rel', array('sizes' => '114x114'));
+		$this->document->addHeadLink($baseUrl . 'safari-pinned-tab.svg',
+			'mask-icon', 'rel', array('color' => '#5bbad5'))
 
-		$this->document->addHeadLink($baseUrl . 'apple-touch-icon-120x120.png',
-			'apple-touch-icon', 'rel', array('sizes' => '120x120'));
+		$this->document->addHeadLink($baseUrl . 'favicon.ico', 'shortcut icon');
 
-		$this->document->addHeadLink($baseUrl . 'apple-touch-icon-144x144.png',
-			'apple-touch-icon', 'rel', array('sizes' => '144x144'));
+		$this->document->setMetaData('msapplication-TileColor', '#2b5797');
+		$this->document->setMetaData('theme-color', '#ffffff');
 
-		$this->document->addHeadLink($baseUrl . 'apple-touch-icon-152x152.png',
-			'apple-touch-icon', 'rel', array('sizes' => '152x152'));
+		$this->document->setMetaData('msapplication-config',
+			'/templates/telcentral/images/favicons/browserconfig.xml');
+
 	}
 
 
