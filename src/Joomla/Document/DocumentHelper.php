@@ -21,14 +21,16 @@ class DocumentHelper
 
     /**
      * Proxy for adding an external script to the document, except a
-     * little easier/cleaner when SRI hashes need to be added.
+     * little easier/cleaner when SRI or defer is needed.
      * -------------------------------------------------------------------------
      * @param string    $url           URL to the eternal javascript
-     * @param string    $integrity     An SRI hash
+     * @param string    $integrity     An SRI hash\
+     * @param bool      $defer         Add a 'defer' attribute
      *
      * @return  void
      */
-    public static function addScript(string $url, string $integrity = '')
+    public static function addScript(string $url, string $integrity = '',
+    bool $defer = false)
     {
         // Initialise some local variables
         $options    = array();
@@ -40,10 +42,15 @@ class DocumentHelper
             $attributes['crossorigin'] = 'anonymous';
         }
 
+        // Add the defer attribute
+        if ($defer) {
+            $attributes['defer'] = 'defer';
+        }
+
         // Add the script to the document
         Factory::getDocument()->addScript($url, $options, $attributes);
     }
-    
+
 
 
     /**
