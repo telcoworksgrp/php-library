@@ -7,7 +7,6 @@
 
 namespace TCorp\Joomla\Template;
 
-use \TCorp\Joomla\Document\DocumentHelper;
 use \Joomla\CMS\Factory;
 use \Joomla\CMS\Uri\Uri;
 
@@ -33,16 +32,6 @@ class TemplateHelper
 	 * @var string
 	 */
 	public $basUrl = '';
-
-
-
-    /**
-     * Default value for the viewport meta tag
-     *
-     * @var string
-     */
-    protected $viewport =
-        'width=device-width, initial-scale=1, maximum-scale=1';
 
 
 
@@ -97,9 +86,8 @@ class TemplateHelper
 	 */
 	public function addStylesheets()
 	{
-		// Add stylesheets specific to this template
-        DocumentHelper::addStylesheet($this->baseUrl . 'css/template.css');
 	}
+
 
 
 	/**
@@ -109,9 +97,8 @@ class TemplateHelper
 	 */
 	public function addScripts()
 	{
-		// Add scripts specific to this template
-        DocumentHelper::addScript($this->baseUrl . 'js/template.js', '', true);
 	}
+
 
 
 	/**
@@ -121,32 +108,6 @@ class TemplateHelper
 	 */
 	public function addFavicons()
 	{
-        // Initialise some local variables
-		$baseUrl  = $this->baseUrl . 'images/favicons/';
-
-        // Add favicons to the HTML document
-		$this->document->addHeadLink($baseUrl . 'apple-touch-icon.png',
-			'apple-touch-icon', 'rel', array('sizes' => '180x180'));
-
-		$this->document->addHeadLink($baseUrl . 'favicon-32x32.png',
-			'icon', 'rel', array('sizes' => '32x32'));
-
-		$this->document->addHeadLink($baseUrl . 'favicon-16x16.png',
-			'icon', 'rel', array('sizes' => '16x16'));
-
-		$this->document->addHeadLink($baseUrl . 'site.webmanifest', 'manifest');
-
-		$this->document->addHeadLink($baseUrl . 'safari-pinned-tab.svg',
-			'mask-icon', 'rel', array('color' => '#5bbad5'))
-
-		$this->document->addHeadLink($baseUrl . 'favicon.ico', 'shortcut icon');
-
-		$this->document->setMetaData('msapplication-TileColor', '#2b5797');
-		$this->document->setMetaData('theme-color', '#ffffff');
-
-		$this->document->setMetaData('msapplication-config',
-			'/templates/telcentral/images/favicons/browserconfig.xml');
-
 	}
 
 
@@ -158,16 +119,6 @@ class TemplateHelper
 	 */
 	public function updateMetaTags()
 	{
-        // Set the meta title to the same value as the document title
-        $this->document->setMetaData('title', $this->document->getTitle());
-
-        // Remove the generator tag added by Joomla.
-		$this->document->setGenerator('');
-
-        // Set the document's viewport meta tag
-        $this->document->setMetaData('viewport', $this->viewport);
 	}
-
-
 
 }
