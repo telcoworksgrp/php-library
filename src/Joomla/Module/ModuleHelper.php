@@ -9,7 +9,7 @@ namespace TCorp\Joomla\Module;
 
 defined('_JEXEC') or die();
 
-class Helper
+class ModuleHelper
 {
     /**
      * A copy of the module originally passed to the constructor
