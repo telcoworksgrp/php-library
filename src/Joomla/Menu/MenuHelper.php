@@ -68,7 +68,9 @@ class MenuHelper
 
         // Turn the flat list of menu items into a hierarchy of menu item
         // objects
-        $result = JoomlaMenuHelper::createLevels($result);
+        if ($maxLevel > 1){
+            $result = JoomlaMenuHelper::createLevels($result);
+        }
 
         // Return the result
         return $result;
