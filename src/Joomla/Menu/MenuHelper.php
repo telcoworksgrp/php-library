@@ -12,7 +12,7 @@ defined('_JEXEC') or die();
 
 
 use \Joomla\CMS\Factory;
-use \Joomla\CMD\Menu\MenuHelper AS JoomlaMenuHelper;
+use \Joomla\CMS\Menu\MenuHelper AS JoomlaMenuHelper;
 
 
 class MenuHelper
@@ -26,7 +26,7 @@ class MenuHelper
      *
      * @return array    An list menu items arranged into a hierarchy of objects
      */
-    protected static function getItems(string $menuType, int $maxLevel = 0)
+    public static function getItems(string $menuType, int $maxLevel = 0)
     {
         // Initialise some local variables
         $application = Factory::getApplication();
