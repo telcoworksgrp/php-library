@@ -13,6 +13,7 @@ defined('_JEXEC') or die();
 
 use \Joomla\CMS\Factory;
 use \Joomla\CMS\Menu\MenuHelper AS JoomlaMenuHelper;
+use \Joomla\CMS\Router\Route;
 
 
 class MenuHelper
