@@ -76,9 +76,8 @@ class MenuHelper
 
             case 'alias':
                 $target        = $menu->getItem($result->params->get('aliasoptions'));
-                $oldTitle      = $result->title;
-                $result        = $target;
-                $result->title = $oldTitle;
+                $result->link  = $target->link;
+                $result->route  = $target->route;                
                 break;
 
             case 'url':
