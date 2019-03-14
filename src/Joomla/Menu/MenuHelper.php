@@ -20,6 +20,29 @@ class MenuHelper
 
 
     /**
+     * Perform additional preparations on a list of menu items
+     * -------------------------------------------------------------------------
+     * @param  object[]     $menuItemList   A list of menu items
+     *
+     * @return object[]     A list of prepared menu items
+     */
+    public static function prepareMenuItemList(array $menuItemList)
+    {
+        // Initialise some local variables
+        $result = $menuItemList;
+
+        // Perform additional preparations on each menu item
+        foreach ($result as &$item) {
+            $item = self::prepareMenuItem($item);
+        }
+
+        // Return the result
+        return $result;
+    }
+
+
+
+    /**
      * Perform additional preparations on a menu item
      * -------------------------------------------------------------------------
      * @param  object   $menuItem   The menu item to prepare
@@ -38,11 +61,15 @@ class MenuHelper
 
         // Add a property to indicate that the menu item currently
         // is/is not active
-        $menuItem->active = $menuItem->id == $active->id;
+        $result->active = $result->id == $active->id;
 
         // Add a property to indicate that the menu item the site's
         // default menu item
-        $menuItem->active = $menuItem->id == $default->id;
+        $result->default = $result->id == $default->id;
+
+        // If the menu item is the site's default menu item, set route to
+        // just a backslash
+        $result->route = ($result->default) ? '/' : $result->default;
 
         // Prepare the menu item based on the type of menu item it is
         switch($result->type) {
@@ -64,6 +91,8 @@ class MenuHelper
         // Return the result
         return $result;
     }
+
+
 
     /**
      *  Get the currently active menu item
