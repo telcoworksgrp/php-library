@@ -65,26 +65,18 @@ class MenuHelper
 
         // Add a property to indicate that the menu item the site's
         // default menu item
-        $result->default = $result->id == $default->id;
+        $result->default = (bool) $result->home;
 
-        // If the menu item is the site's default menu item, set route to
-        // just a backslash
-        $result->route = ($result->default) ? '/' : $result->default;
+        // If the menu item is an alias then set the route
+        // to the targets route
+        if ($result->type == 'alias') {
+            $result->route = $result->flink;
+        }
 
-        // Prepare the menu item based on the type of menu item it is
-        switch($result->type) {
-
-            case 'alias':
-                $target        = $menu->getItem($result->params->get('aliasoptions'));
-                $result->link  = $target->link;
-                $result->route  = $target->route;                
-                break;
-
-            case 'url':
-                $menuItem->route = ($menuItem->link == '#')
-                    ? '#' : Route::_($menuItem->link);
-                break;
-
+        // If the menu item is a URL menu item set the route
+        if ($result->type == 'url') {
+            $result->route = ($result->link == '#')
+                ? '#' : Route::_($result->link);
         }
 
         // Return the result
