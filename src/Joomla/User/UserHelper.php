@@ -7,7 +7,9 @@
 
 namespace TCorp\Joomla\User;
 
+
 defined('_JEXEC') or die();
+
 
 use \Joomla\CMS\Factory;
 
@@ -15,7 +17,7 @@ use \Joomla\CMS\Factory;
 /**
  * Helper class for working with Joomla user info
  */
-class Helper
+class UserHelper
 {
 
 

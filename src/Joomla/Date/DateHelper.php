@@ -7,13 +7,14 @@
 
 namespace TCorp\Joomla\Date;
 
+
 use \Joomla\CMS\HTML\HTMLHelper;
 
 
 /**
  * Helper class for working with dates
  */
-class Helper
+class DateHelper
 {
 
     /**
