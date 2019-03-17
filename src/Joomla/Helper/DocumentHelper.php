@@ -5,7 +5,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace TCorp\Joomla\Document;
+namespace TCorp\Joomla\Helper;
 
 
 use \Joomla\CMS\Factory;

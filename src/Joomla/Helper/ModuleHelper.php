@@ -5,9 +5,11 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace TCorp\Joomla\Module;
+namespace TCorp\Joomla\Helper;
+
 
 defined('_JEXEC') or die();
+
 
 class ModuleHelper
 {

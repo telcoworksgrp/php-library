@@ -7,7 +7,6 @@
 
 namespace TCorp\Joomla\Helper;
 
-defined('_JEXEC') or die();
 
 use \Joomla\CMS\Component\ComponentHelper AS JoomlaComponentHelper;
 use \Joomla\CMS\Factory;

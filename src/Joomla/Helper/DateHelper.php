@@ -5,10 +5,11 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace TCorp\Joomla\Date;
+namespace TCorp\Joomla\Helper;
 
 
 use \Joomla\CMS\HTML\HTMLHelper;
+
 
 
 /**

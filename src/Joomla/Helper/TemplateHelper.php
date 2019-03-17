@@ -5,7 +5,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace TCorp\Joomla\Template;
+namespace TCorp\Joomla\Helper;
+
 
 use \Joomla\CMS\Factory;
 use \Joomla\CMS\Uri\Uri;
