@@ -5,15 +5,15 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace TCorp\Joomla\Component;
+namespace TCorp\Joomla\Helper;
 
 defined('_JEXEC') or die();
 
+use \Joomla\CMS\Component\ComponentHelper AS JoomlaComponentHelper;
 use \Joomla\CMS\Factory;
-use \Joomla\CMS\Component\ComponentHelper;
 
 
-class Helper
+class ComponentHelper
 {
 
     /**
@@ -30,7 +30,7 @@ class Helper
             $name = Factory::getApplication()->input->get('option');
         }
 
-        return ComponentHelper::getParams($name)->toObject();
+        return JoomlaComponentHelper::getParams($name)->toObject();
     }
 
 }
