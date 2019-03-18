@@ -7,10 +7,10 @@
 
 namespace TCorp\Joomla\Model\Admin;
 
-defined('_JEXEC') or die();
 
 use \TCorp\Joomla\Model\Admin\Generic;
 use \Joomla\CMS\Factory;
+
 
 class Dashboard extends Generic
 {

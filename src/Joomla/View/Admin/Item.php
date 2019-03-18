@@ -7,7 +7,6 @@
 
 namespace TCorp\Joomla\View\Admin;
 
-defined('_JEXEC') or die();
 
 use \TCorp\Joomla\Helper\ComponentHelper;
 use \TCorp\Joomla\Helper\MenuHelper;
@@ -23,6 +22,7 @@ class Item extends HtmlView
      * Execute and display a view layout.
      * -------------------------------------------------------------------------
      * @param  string   $tpl    The name of the view layout to parse
+     *
      * @return mixed            A string if successful, Error object if not
      */
     public function display($tpl = null)

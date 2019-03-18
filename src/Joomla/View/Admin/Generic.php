@@ -7,7 +7,6 @@
 
 namespace TCorp\Joomla\View\Admin;
 
-defined('_JEXEC') or die();
 
 use \TCorp\Joomla\Helper\ComponentHelper;
 use \TCorp\Joomla\Helper\MenuHelper;
@@ -34,9 +33,6 @@ class Generic extends HtmlView
         // Add component toolbar items
         $this->addAdministratonToolbar();
 
-        // Get a rendered administraton sidebar
-        $this->sidebar = $this->getAdministratonSidebar();
-
         // Call and return the parent method
         return parent::display($tpl);
     }
@@ -48,16 +44,6 @@ class Generic extends HtmlView
      */
     protected function addAdministratonToolbar()
     {
-    }
-
-
-    /**
-     * Build and render an administraton sidebar
-     * -------------------------------------------------------------------------
-     */
-    public function getAdministratonSidebar()
-    {
-        return '';
     }
 
 }

@@ -7,9 +7,9 @@
 
 namespace TCorp\Joomla\Controller\Admin;
 
-defined('_JEXEC') or die();
 
 use \TCorp\Joomla\Controller\Admin\Generic;
+
 
 class Dashboard extends Generic
 {

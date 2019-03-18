@@ -7,13 +7,15 @@
 
 namespace TCorp\Joomla\Model\Admin;
 
-defined('_JEXEC') or die();
 
 use \Joomla\CMS\MVC\Model\AdminModel;
+use \Joomla\CMS\Form\Form;
 use \Joomla\CMS\Factory;
+
 
 class Item extends AdminModel
 {
+
 
     /**
      * Get a form for the model
@@ -22,7 +24,7 @@ class Item extends AdminModel
      * @param  boolean  $loadData   True if the form is to load its
      *                                  own data (default case)
      *
-     * @return mixed    A JForm object on success, false on failure
+     * @return Form    A JForm object on success, false on failure
      */
     public function getForm($data = array(), $loadData = true)
     {
@@ -30,8 +32,13 @@ class Item extends AdminModel
         $result = $this->loadForm($this->option . '.' . $this->name,
             $this->name, array('control' => 'jform', 'load_data' => $loadData));
 
+        // If no form was found/loaded then return false
+        if (empty($result)) {
+            $result = false;
+        }
+
         // Return the result
-        return (empty($result)) ? false : $result;
+        return $result;
     }
 
 
@@ -43,12 +50,17 @@ class Item extends AdminModel
      */
     protected function loadFormData()
     {
+        // Initialise some local variables
+        $application = Factory::getApplication();
+
         // Try to load the form data from the user state
-        $key    = $this->option . '.edit.' . $this->name . '.data';
-        $result = Factory::getApplication()->getUserState($key, array());
+        $result = $application->getUserState($this->option . '.edit.' .
+            $this->name .'.data', array());
 
         // If no data was found,  try the getItem method
-        $result = (empty($result)) ? $this->getItem() : $result;
+        if (empty($result)) {
+            $result = $this->getItem();
+        }
 
         // If there is still no data return false
         $result = (empty($result)) ? false : $result;
@@ -57,24 +69,5 @@ class Item extends AdminModel
         return $result;
     }
 
-
-    /**
-     * Get a table object, load it if necessary.
-     * -------------------------------------------------------------------------
-     * @param  string   $type       The table name.
-     * @param  string   $prefix     The class prefix.
-     * @param  array    $config     Configuration array for table.
-     *
-     * @return \JTable              A JTable object
-     */
-    public function getTable($type = '', $prefix = '', $config = array())
-    {
-        // If not given, detect type and prefix based on the class name
-        $type   = (empty($type)) ? $this->getName() : $type;
-        $prefix = (empty($prefix)) ? ucfirst($this->option) . 'Table' : $prefix;
-
-        // Call and return the parent method
-        return parent::getTable($type, $prefix, $config);
-    }
 
 }

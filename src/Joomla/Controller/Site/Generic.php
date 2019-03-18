@@ -7,9 +7,9 @@
 
 namespace TCorp\Joomla\Controller\Site;
 
-defined('_JEXEC') or die();
 
 use \Joomla\CMS\MVC\Controller\BaseController;
+
 
 class Generic extends BaseController
 {

@@ -7,9 +7,9 @@
 
 namespace TCorp\Joomla\Model\Admin;
 
-defined('_JEXEC') or die();
 
 use \Joomla\CMS\MVC\Model\ListModel;
+
 
 class ItemList extends ListModel
 {

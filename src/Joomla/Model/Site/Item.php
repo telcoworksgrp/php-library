@@ -7,9 +7,9 @@
 
 namespace TCorp\Joomla\Model\Site;
 
-defined('_JEXEC') or die();
 
 use \Joomla\CMS\MVC\Model\ItemModel;
+
 
 class Item extends ItemModel
 {

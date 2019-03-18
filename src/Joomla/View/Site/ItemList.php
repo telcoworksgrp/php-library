@@ -7,7 +7,6 @@
 
 namespace TCorp\Joomla\View\Site;
 
-defined('_JEXEC') or die();
 
 use \TCorp\Joomla\Helper\ComponentHelper;
 use \TCorp\Joomla\Helper\MenuHelper;

@@ -28,6 +28,29 @@ class Nested extends NestedTable
         $applciation   = Factory::getApplication();
         $ipAddress     = $applciation->input->server->get('REMOTE_ADDR','');
         $isNew         = empty($this->id);
+        if (property_exists($this, 'alias')) {
+
+            //  If the alias field is empty then generate an alias
+            //  based on the title
+            if (empty($this->alias)) {
+                $this->alias = ApplicationHelper::stringURLSafe($this->title);
+                $this->alias = trim($this->alias);
+            }
+
+            // Check that the alias doesn't already exist for another item
+            $query = $database->getQuery(true);
+            $query->select('id');
+            $query->from($this->getTableName());
+            $query->where('alias = "' . $this->alias . '"');
+            $query->where('id <> ' . $this->id);
+            $aliasExists = (bool) $database->setQuery($query)->loadResult();
+
+            if ($aliasExists) {
+                $this->setError('Alias Already Exists');
+                return false;
+            }
+
+        }
 
         // If a created property exists, and we are creating a new record then
         // set the property's value to the current date and time

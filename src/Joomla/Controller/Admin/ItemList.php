@@ -7,9 +7,9 @@
 
 namespace TCorp\Joomla\Controller\Admin;
 
-defined('_JEXEC') or die();
 
 use \Joomla\CMS\MVC\Controller\AdminController;
+
 
 class ItemList extends AdminController
 {

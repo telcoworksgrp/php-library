@@ -7,9 +7,9 @@
 
 namespace TCorp\Joomla\Controller\Site;
 
-defined('_JEXEC') or die();
 
 use \TCorp\Joomla\Controller\Site\Generic;
+
 
 class ItemList extends Generic
 {
