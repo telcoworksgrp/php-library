@@ -7,10 +7,11 @@
 
 namespace TCorp\Joomla\Table\Site;
 
-defined('_JEXEC') or die();
 
 use \Joomla\CMS\Table\Table;
+use \Joomla\CMS\Application\ApplicationHelper;
 use \Joomla\CMS\Factory;
+
 
 class Generic extends Table
 {
