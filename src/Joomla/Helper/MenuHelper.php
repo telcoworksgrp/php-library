@@ -17,68 +17,116 @@ class MenuHelper
 
 
     /**
-     * Perform additional preparations on a list of menu items
+     * Get a list of menu items from a given menu
      * -------------------------------------------------------------------------
-     * @param  object[]     $menuItemList   A list of menu items
+     * @param  string   $menuType   Name of the menu to get the items from
      *
-     * @return object[]     A list of prepared menu items
+     * @return array    An array of menu item objects
      */
-    public static function prepareMenuItemList(array $menuItemList)
-    {
-        // Initialise some local variables
-        $result = $menuItemList;
-
-        // Perform additional preparations on each menu item
-        foreach ($result as &$item) {
-            $item = self::prepareMenuItem($item);
-        }
-
-        // Return the result
-        return $result;
-    }
-
-
-
-    /**
-     * Perform additional preparations on a menu item
-     * -------------------------------------------------------------------------
-     * @param  object   $menuItem   The menu item to prepare
-     *
-     * @return object   A prepared menu item
-     */
-    public static function prepareMenuItem($menuItem)
+    public static function getItems(string $menuType)
     {
         // Initialise some local variables
         $application = Factory::getApplication();
         $menu        = $application->getMenu();
         $default     = $menu->getDefault();
         $active      = $menu->getActive();
-        $active      = (empty($active)) ? $default : $active ;
-        $result      = $menuItem;
+        $result      = array();
 
-        // Add a property to indicate that the menu item currently
-        // is/is not active
-        $result->active = $result->id == $active->id;
 
-        // Add a property to indicate that the menu item the site's
-        // default menu item
-        $result->default = (bool) $result->home;
+        // Get the list of menu items
+        $items = $menu->getItems('menutype', $menuType);
 
-        // If the menu item is an alias then set the route
-        // to the targets route
-        if ($result->type == 'alias') {
-            $result->route = $result->flink;
+
+        // Process and add additional information to each item.
+        foreach ($items as $k => $item) {
+
+            // Process the item based on it's type
+            switch($item->type) {
+
+                case 'alias':
+                    $item->link .= $item->params->get('aliasoptions');
+                    $item->route = Route::_($item->link);
+                    break;
+
+                case 'url' :
+                    break;
+
+                case 'header' :
+                    $item->route ='#';
+                    break;
+
+                case 'separator' :
+                    $item->route ='#';
+                    break;
+            }
+
+            // Check if the current item is the active item. If so add this
+            // information to the item (for conviencae)
+            $item->active = $item->id == $active->id;
+
+
+            // Check if the current item is the default item. If so add this
+            // information to the item (for convienance) and replace the route
+            if ($item->default = $item->id == $default->id) {
+                $item->route = '/';
+            }
+
+            // Add the item to the list of results
+            $result[$item->id] = $item;
         }
 
-        // If the menu item is a URL menu item set the route
-        if ($result->type == 'url') {
-            $result->route = ($result->link == '#')
-                ? '#' : Route::_($result->link);
-        }
-
-        // Return the result
+        // Return the result;
         return $result;
     }
+
+
+
+
+    /**
+     * Arrange a flat list of menu items into a hierarchy of menu item objects
+     * -------------------------------------------------------------------------
+     * @param  array    $items  A flat list of menu items
+     *
+     * @return  array   The same list of menu items arranged into a hierarchy
+     */
+    public static function createHierarchy(array $items)
+    {
+        // Initialise some local variables
+        $result = array();
+
+        // Define a recusrsive ananonomous function for adding child items
+        // to a menu item.
+        $addChildren = function ($node, $items) use ( &$addChildren )
+        {
+            $result = $node;
+            $result->children = array();
+
+            foreach ($items as $item) {
+                if ($item->parent_id == $result->id) {
+                    $result->children[] = $item;
+                }
+            }
+
+            if (!empty($result->children)) {
+                foreach ($result->children as &$child) {
+                    $child = $addChildren($child, $items);
+                }
+            }
+
+            return $result;
+        };
+
+        // Recursively add all top level menu items
+        foreach ($items as $item) {
+            if (empty($item->parent_id) OR $item->parent_id == 1) {
+                $result[] = $addChildren($item, $items);
+            }
+        }
+
+        // Return the result;
+        return $result;
+    }
+
 
 
 
