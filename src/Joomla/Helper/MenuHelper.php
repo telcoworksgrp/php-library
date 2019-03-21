@@ -44,7 +44,7 @@ class MenuHelper
             switch($item->type) {
 
                 case 'alias':
-                    $item->link .= $item->params->get('aliasoptions');
+                    $item->link = 'index.php?Itemid=' . $item->params->get('aliasoptions');
                     $item->route = Route::_($item->link);
                     break;
 
@@ -60,9 +60,11 @@ class MenuHelper
                     break;
             }
 
-            // Check if the current item is the active item. If so add this
-            // information to the item (for conviencae)
-            $item->active = $item->id == $active->id;
+            // Check if the current item is the active item, or an alias of
+            // the active item. If so add this information to the item
+            // (for convience)
+            $item->active = ($item->id == $active->id) ||
+                ($item->params->get('aliasoptions') == $active->id);
 
 
             // Check if the current item is the default item. If so add this
