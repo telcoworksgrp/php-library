@@ -167,7 +167,7 @@ class AvailNumbersRequest extends Request
     {
         $itemNo = ($itemNo <  0) ? 0 : $itemNo;
         $limit  = $this->getLimit();
-        $pageNo = ($item / $limit) + 1;
+        $pageNo = ($itemNo / $limit) + 1;
         $this->setPage($pageNo);
     }
 
