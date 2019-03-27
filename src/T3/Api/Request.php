@@ -72,10 +72,10 @@ class Request
      * Sets the value for a given parameter, with overwrite option
      * -------------------------------------------------------------------------
      * @param string    $name       Name of the parameter
-     * @param string    $value      Value for the parameter
+     * @param mixed     $value      Value for the parameter
      * @param bool      $overwrite  Overwrite value if param already exists
      */
-    public function setParam(string $name, string $value, bool $overwrite = true)
+    public function setParam(string $name, $value, bool $overwrite = true)
     {
         if (isset($this->params[$name]) && $overwrite == false) {
             return;

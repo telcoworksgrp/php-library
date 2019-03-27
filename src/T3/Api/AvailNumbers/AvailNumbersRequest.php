@@ -58,7 +58,7 @@ class AvailNumbersRequest extends Request
      * -------------------------------------------------------------------------
      * @param int   $value     A new value
      */
-    public function setPrefix(int $value)
+    public function setPrefix($value)
     {
         $value = (in_array($value, array(1300,1800))) ? $value : null;
         $this->setParam('query', $value);
@@ -105,7 +105,7 @@ class AvailNumbersRequest extends Request
      * -------------------------------------------------------------------------
      * @param int   $value   a new value
      */
-    public function setMinPrice(int $value)
+    public function setMinPrice($value)
     {
         $value = ($value >= 0) ? $value :  0 ;
         $this->setParam('minPriceDollars', $value);
@@ -128,7 +128,7 @@ class AvailNumbersRequest extends Request
      * -------------------------------------------------------------------------
      * @param int   $value   a new value
      */
-    public function setMaxPrice(int $value)
+    public function setMaxPrice($value)
     {
         $value = ($value >= 0) ? $value : 0 ;
         $this->setParam('maxPriceDollars', $value);
@@ -151,7 +151,7 @@ class AvailNumbersRequest extends Request
      * -------------------------------------------------------------------------
      * @param int   $value  A new value
      */
-    public function setPage(int $value)
+    public function setPage($value)
     {
         $value = ($value > 0) ? $value : 1 ;
         $this->getParam('pageNum', $value);
