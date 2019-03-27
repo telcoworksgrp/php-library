@@ -254,22 +254,29 @@ class Client
 
         // Initialise a HTTP client
         $httpClient = new \GuzzleHttp\Client([
-            'base_uri'         => $this->baseUrl . $this->request->getAction(),
+            'base_uri'         => $this->baseUrl . '/' . $this->request->getAction(),
             'allow_redirects'  => true,
             'auth'             => [$this->username, $this->password],
-            'timeout'          => 5;
+            'timeout'          => 5,
             'decode_content'   => true,
             'force_ip_resolve' => 'v4',
             'query'            => $this->request->getParam(),
-            'headers'          => ['User-Agent' => 'TCorp PHP Library'],
+            'headers'          => array('User-Agent' => 'TCorp PHP Library'),
             'verify'           => true,
         ]);
 
-        $response = $httpClient->send();
+        $response = $httpClient->request('GET');
 
+        // Compose the result
+        $result             = new Response();
+        $result->statusCode = $response->getStatusCode();
+        $result->statusStr  = $response->getReasonPhrase();
+        $result->headers    = $response->getHeaders();
+        $result->body       = $response->getBody()->getContents();
+        $result->body       = json_decode($result->body);
 
-
-
+        // Return the result
+        return $result;
     }
 
 

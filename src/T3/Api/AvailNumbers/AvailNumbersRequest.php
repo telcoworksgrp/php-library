@@ -94,7 +94,7 @@ class AvailNumbersRequest extends Request
      */
     public function getPrefix()
     {
-        return $this->prefix;
+        return $this->getParam('query');
     }
 
 
@@ -106,7 +106,7 @@ class AvailNumbersRequest extends Request
     public function setPrefix(int $value)
     {
         $value = (in_array($value, array(1300,1800))) ? $value : null;
-        $this->prefix = $value;
+        $this->setParam('query', $value);
     }
 
 
@@ -117,7 +117,7 @@ class AvailNumbersRequest extends Request
      */
     public function getType()
     {
-        return $this->type;
+        return return $this->getParam('serviceNumberTypes');
     }
 
 
@@ -130,7 +130,7 @@ class AvailNumbersRequest extends Request
     {
         $value = strtoupper($value);
         $value = (in_array($value, array('FLASH','LUCKY_DIP'))) ? $value : null;
-        $this->type = $value;
+        $this->setParam('serviceNumberTypes', $value);
     }
 
 
@@ -141,7 +141,7 @@ class AvailNumbersRequest extends Request
      */
     public function getMinPrice()
     {
-        return $this->minPrice;
+        return $this->getParam('minPriceDollars');
     }
 
 
@@ -153,7 +153,7 @@ class AvailNumbersRequest extends Request
     public function setMinPrice(int $value)
     {
         $value = ($value >= 0) $value ? 0 ;
-        $this->minPrice = $value;
+        $this->setParam('minPriceDollars', $value);
     }
 
 
@@ -164,7 +164,7 @@ class AvailNumbersRequest extends Request
      */
     public function getMaxPrice()
     {
-        return $this->maxPrice;
+        return $this->getParam('maxPriceDollars');
     }
 
 
@@ -176,7 +176,7 @@ class AvailNumbersRequest extends Request
     public function setMaxPrice(int $value)
     {
         $value = ($value >= 0) $value ? 0 ;
-        $this->maxPrice = $value;
+        $this->setParam('maxPriceDollars', $value);
     }
 
 
@@ -187,7 +187,7 @@ class AvailNumbersRequest extends Request
      */
     public function getPage()
     {
-        return $this->page;
+        return $this->getParam('pageNum');
     }
 
 
@@ -199,7 +199,7 @@ class AvailNumbersRequest extends Request
     public function setPage(int $value)
     {
         $value = ($value > 0) $value ? 1 ;
-        $this->page = $page;
+        $this->getParam('pageNum', $value);
     }
 
 
@@ -224,7 +224,7 @@ class AvailNumbersRequest extends Request
      */
     public function getLimit()
     {
-        return $this->limit;
+        return $this->getParam('pageSize');
     }
 
 
@@ -237,7 +237,7 @@ class AvailNumbersRequest extends Request
     {
         $value       = ($value < 0) 0 ? $value;
         $value       = ($value > 1000) 1000 ? $value ;
-        $this->limit = $value;
+        $this->setParam('pageSize', $value);
     }
 
 
@@ -248,7 +248,7 @@ class AvailNumbersRequest extends Request
      */
     public function getOrdering()
     {
-        return $this->ordering;
+        return $this->getParam('sortBy');
     }
 
 
@@ -261,7 +261,7 @@ class AvailNumbersRequest extends Request
     {
         $value = strtoupper($value);
         $value = (in_array($value, array('PRICE','NUMBER'))) ? $value : 'PRICE';
-        $this->ordering = $value;
+        $this->setParam('sortBy', $value);
     }
 
 
@@ -272,7 +272,7 @@ class AvailNumbersRequest extends Request
      */
     public function getDirection()
     {
-        return $this->direction;
+        return $this->getParam('sortDirection');
     }
 
 
@@ -286,10 +286,12 @@ class AvailNumbersRequest extends Request
         $value = strtoupper($value);
 
         if ($value == 'DESC' || $value == 'DESCENDING') {
-            $this->direction = 'DESCENDING';
+            $value = 'DESCENDING';
         } else {
-            $this->direction = 'ASCENDING';
+            $value = 'ASCENDING';
         }
+
+        $this->setParam('sortDirection', $value);
     }
 
 

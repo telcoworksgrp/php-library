@@ -18,7 +18,7 @@ class Request
      *
      * @var string
      */
-    protected $action = 'numbers-service-impl/api/Activations';
+    protected $action = '';
 
 
     /**
