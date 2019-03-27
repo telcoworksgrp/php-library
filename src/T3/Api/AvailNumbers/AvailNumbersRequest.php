@@ -24,67 +24,22 @@ class AvailNumbersRequest extends Request
 
 
     /**
-     * Prefix to filter the results with
-     *
-     * @var int
+     * Constructor for initialising new instances of this class
+     * -------------------------------------------------------------------------
      */
-    protected $prefix = null;
-
-
-    /**
-     * The type of number to filter the results with
-     *
-     * @var string
-     */
-    protected $type = '';
-
-
-    /**
-     * Minimum price (in dollars) to filter the results with
-     *
-     * @var int
-     */
-    protected $minPrice = 0;
-
-
-    /**
-     * Maximum price (in dollars) to filter the results with
-     *
-     * @var int
-     */
-    protected $maxPrice = 1000;
-
-
-    /**
-     * Page number to start at
-     *
-     * @var int
-     */
-    protected $page = 1;
-
-
-    /**
-     * Maximum number of results to return
-     *
-     * @var int
-     */
-    protected $limit = 25;
-
-    /**
-     * 'Column' to sort the results by
-     *
-     * @var string
-     */
-    protected $ordering = 'PRICE';
-
-
-    /**
-     * Direction to sort the results in
-     *
-     * @var string
-     */
-    protected $direction = 'ASCENDING';
-
+    public function __construct()
+    {
+        // Initlialise some of the request's parameters
+        $this->setPrefix(1300);
+        $this->setParam('numberTypes', 'SERVICE_NUMBER');
+        $this->setType('LUCKY_DIP');
+        $this->setMinPrice(0);
+        $this->setMaxPrice(1000);
+        $this->setPage(1);
+        $this->setLimit(25);
+        $this->setOrdering('PRICE');
+        $this->setDirection('ASCENDING');
+    }
 
 
     /**
@@ -117,7 +72,7 @@ class AvailNumbersRequest extends Request
      */
     public function getType()
     {
-        return return $this->getParam('serviceNumberTypes');
+        return $this->getParam('serviceNumberTypes');
     }
 
 
@@ -129,7 +84,7 @@ class AvailNumbersRequest extends Request
     public function setType(string $value)
     {
         $value = strtoupper($value);
-        $value = (in_array($value, array('FLASH','LUCKY_DIP'))) ? $value : null;
+        $value = (in_array($value, array('FLASH','LUCKY_DIP'))) ? $value : '';
         $this->setParam('serviceNumberTypes', $value);
     }
 
@@ -152,7 +107,7 @@ class AvailNumbersRequest extends Request
      */
     public function setMinPrice(int $value)
     {
-        $value = ($value >= 0) $value ? 0 ;
+        $value = ($value >= 0) ? $value :  0 ;
         $this->setParam('minPriceDollars', $value);
     }
 
@@ -175,7 +130,7 @@ class AvailNumbersRequest extends Request
      */
     public function setMaxPrice(int $value)
     {
-        $value = ($value >= 0) $value ? 0 ;
+        $value = ($value >= 0) ? $value : 0 ;
         $this->setParam('maxPriceDollars', $value);
     }
 
@@ -198,7 +153,7 @@ class AvailNumbersRequest extends Request
      */
     public function setPage(int $value)
     {
-        $value = ($value > 0) $value ? 1 ;
+        $value = ($value > 0) ? $value : 1 ;
         $this->getParam('pageNum', $value);
     }
 
@@ -235,8 +190,8 @@ class AvailNumbersRequest extends Request
      */
     public function setLimit(int $value)
     {
-        $value       = ($value < 0) 0 ? $value;
-        $value       = ($value > 1000) 1000 ? $value ;
+        $value       = ($value < 0) ? 0 : $value;
+        $value       = ($value > 1000) ? 1000 : $value ;
         $this->setParam('pageSize', $value);
     }
 
