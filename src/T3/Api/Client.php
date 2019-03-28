@@ -262,7 +262,7 @@ class Client
             'force_ip_resolve' => 'v4',
             'query'            => $this->request->getParam(),
             'headers'          => array('User-Agent' => 'TCorp PHP Library'),
-            'verify'           => true,
+            'verify'           => false,
         ]);
 
         $response = $httpClient->request('GET');
