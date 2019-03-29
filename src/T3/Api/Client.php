@@ -259,9 +259,8 @@ class Client
             'auth'             => [$this->username, $this->password],
             'timeout'          => 5,
             'decode_content'   => true,
-            'force_ip_resolve' => 'v4',
             'query'            => $this->request->getParam(),
-            'headers'          => array('User-Agent' => 'TCorp PHP Library'),
+            'headers'          => array('User-Agent' => 'TCorp PHP Library (https://github.com/telecomcorp/tcorplib)'),
             'verify'           => false,
         ]);
 
