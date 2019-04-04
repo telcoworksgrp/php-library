@@ -30,6 +30,7 @@ class MenuHelper
         $menu        = $application->getMenu();
         $default     = $menu->getDefault();
         $active      = $menu->getActive();
+        $active      = (empty($active)) ? $default : $active;
         $result      = array();
 
 
