@@ -18,17 +18,34 @@ abstract class Form extends FormModel
     /**
      * Get a form for the model
      * -------------------------------------------------------------------------
-     * @param  array    $data       Data for the form.
-     * @param  boolean  $loadData   True if the form is to load its
-     *                                  own data (default case)
-     *
-     * @return Form    A JForm object on success, false on failure
      */
     public function getForm($data = array(), $loadData = true)
     {
-        // Get the form
-        $result = $this->loadForm($this->option . '.' . $this->name,
-            $this->name, array('control' => 'jform', 'load_data' => $loadData));
+        // Get the form with values
+        $name    = $this->option . '.' . $this->name;
+        $source  = $this->name;
+        $options = array('control' => 'jform', 'load_data' => $loadData);
+        $result  = $this->loadForm($name, $source, $options);
+
+        // Return the result
+        return $result;
+    }
+
+
+    /**
+     * Load the data that should be injected in the form
+     * -------------------------------------------------------------------------
+     */
+    protected function loadFormData()
+    {
+        // Initialise some local variables
+        $application = Factory::getApplication();
+
+        // Try to load the form data from the user state
+        $key = $this->option . '.edit.' . $this->name . 'data';
+
+        $result = $application->getUserStateFromRequest(
+            $key, 'jform', array(), 'ARRAY');
 
         // Return the result
         return $result;
