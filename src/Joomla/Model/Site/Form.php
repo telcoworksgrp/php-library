@@ -43,7 +43,7 @@ abstract class Form extends FormModel
         $application = Factory::getApplication();
 
         // Try to load the form data from the user state
-        $key = $this->option . '.edit.' . $this->name . 'data';
+        $key = $this->option . '.edit.' . $this->name . '.data';
 
         $result = $application->getUserStateFromRequest(
             $key, 'jform', array(), 'ARRAY');
