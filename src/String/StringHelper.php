@@ -12,7 +12,7 @@
 
 namespace TCorp\String;
 
-class Helper
+class StringHelper
 {
 
     /**
