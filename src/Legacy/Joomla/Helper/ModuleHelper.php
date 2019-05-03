@@ -10,7 +10,7 @@
  * =============================================================================
  */
 
-namespace TCorp\Joomla\Helper;
+namespace TCorp\Legacy\Joomla\Helper;
 
 
 defined('_JEXEC') or die();
