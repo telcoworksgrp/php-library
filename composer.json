@@ -22,8 +22,7 @@
     },
 
     "autoload": {
-        "psr-4": {"TCorp\\": "src/"},
-        "files": ["src/deprecated.php"]        
+        "psr-4": {"TCorp\\": "src/"}      
     }
 
 }
