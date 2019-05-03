@@ -12,14 +12,16 @@
 
 namespace TCorp\Telephony;
 
-class Helper
+
+class TelephonyHelper
 {
 
     /**
      * Converts all letters in a given value to phone numbers
      * -------------------------------------------------------------------------
      * @param  string   $value  The value to digitise
-     * @return string           A digitised version of the value given
+     *
+     * @return string   A digitised version of the value given
      */
     public static function digitise(string $value)
     {
@@ -42,13 +44,13 @@ class Helper
      * Compacts/ removes all whitespace the given value
      * -------------------------------------------------------------------------
      * @param  string   $value  Value to compact/remove all whitespace from
-     * @return string           A compacted version of the value given
+     *
+     * @return string   A compacted version of the value given
      */
     public static function compact(string $value)
     {
         return preg_replace('|\s|','', $value);
     }
-
 
 
     /**
@@ -57,8 +59,9 @@ class Helper
      * @param   string   $value        The value to truncate
      * @param   int      $length       Max length the result should be
      * @param   bool     $whitspace    Include whitespace in char count
-     * @param   bool     $truncLeft    TRUE= truncate left, FALSE = truncate right
-     * @return  string                 A truncated version of the value given
+     * @param   bool     $truncLeft    TRUE=truncate left, FALSE=truncate right
+     *
+     * @return  string  A truncated version of the value given
      */
     public static function truncate(string $value, int $length = 0, bool
     $whitspace = false, bool $truncLeft = false)
@@ -92,8 +95,6 @@ class Helper
     }
 
 
-
-
     /**
      * Format a prefix, number option and suffix
      * -------------------------------------------------------------------------
@@ -101,6 +102,7 @@ class Helper
      * @param  string $prefix  [description]
      * @param  string $numopt  [description]
      * @param  string $suffix  [description]
+     *
      * @return [type]          [description]
      *
      * P = Prefix
@@ -113,7 +115,7 @@ class Helper
      * L = Truncate left (instead of right)
      */
     public static function format(string $pattern, string $prefix,
-    string $numopt, string $suffix)
+        string $numopt, string $suffix)
     {
         // Initlise some local variables
         $result = trim($pattern);
@@ -142,7 +144,6 @@ class Helper
             return $replace;
 
         }, $result);
-
 
         // Return the result
         return $result;
