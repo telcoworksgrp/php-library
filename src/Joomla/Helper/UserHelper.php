@@ -10,7 +10,7 @@
  * =============================================================================
  */
 
-namespace TCorp\Legacy\Joomla\Helper;
+namespace TCorp\Joomla\Helper;
 
 
 use \Joomla\CMS\Factory;
