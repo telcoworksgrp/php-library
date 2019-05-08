@@ -12,6 +12,7 @@
 
 namespace TCorp\Google;
 
+
 /**
  * Helper class for working with Google Analytics
  */

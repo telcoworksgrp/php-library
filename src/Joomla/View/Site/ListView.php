@@ -12,7 +12,6 @@
 
 namespace TCorp\Joomla\View\Site;
 
-
 use \TCorp\Joomla\Helper\JoomlaHelper;
 use \Joomla\CMS\MVC\View\HtmlView;
 use \Joomla\CMS\Factory;

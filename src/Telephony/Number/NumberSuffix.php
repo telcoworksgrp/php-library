@@ -13,7 +13,6 @@
 namespace TCorp\Telephony\Number;
 
 
-
 /**
  * Class that represents ..
  * Remaining part of a landline number (eg:xxxx 1234), OR

@@ -10,9 +10,7 @@
  * =============================================================================
  */
 
-
 namespace TCorp\T3\Api\AvailNumbers;
-
 
 use \TCorp\T3\Api\Response;
 

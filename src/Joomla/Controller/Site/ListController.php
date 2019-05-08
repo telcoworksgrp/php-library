@@ -12,7 +12,6 @@
 
 namespace TCorp\Joomla\Controller\Site;
 
-
 use \TCorp\Joomla\Controller\Site\GenericController;
 
 

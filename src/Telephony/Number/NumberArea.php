@@ -13,7 +13,6 @@
 namespace TCorp\Telephony\Number;
 
 
-
 /**
  * Class that represents a phone number's area code. In Australia this
  * would be 02,03,04,07 or 08

@@ -13,7 +13,6 @@
 namespace TCorp\Telephony\Number;
 
 
-
 /**
  * Class that represents a phone number's country code. In Australia this
  * is 61

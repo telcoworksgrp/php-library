@@ -13,7 +13,6 @@
 namespace TCorp\Telephony\Number;
 
 
-
 /**
  * Base class the various parts of a phone number
  */

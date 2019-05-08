@@ -12,7 +12,6 @@
 
 namespace TCorp\Joomla\View\Admin;
 
-
 use \TCorp\Joomla\View\Admin\GenericView;
 
 

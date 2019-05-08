@@ -12,7 +12,6 @@
 
 namespace TCorp\Joomla\Controller\Site;
 
-
 use \Joomla\CMS\MVC\Controller\BaseController;
 
 

@@ -12,7 +12,6 @@
 
 namespace TCorp\Joomla\Table\Admin;
 
-
 use \Joomla\CMS\Table\Table;
 use \Joomla\CMS\Application\ApplicationHelper;
 use \Joomla\CMS\Factory;

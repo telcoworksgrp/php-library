@@ -12,7 +12,6 @@
 
 namespace TCorp\Joomla\Model\Site;
 
-
 use \Joomla\CMS\MVC\Model\ItemModel;
 use \Joomla\CMS\Factory;
 

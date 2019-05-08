@@ -12,7 +12,6 @@
 
 namespace TCorp\Joomla\Model\Admin;
 
-
 use \Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
 

@@ -13,7 +13,6 @@
 namespace TCorp\Telephony\Number;
 
 
-
 /**
  * Class that represents a phone number's extension code.
  */

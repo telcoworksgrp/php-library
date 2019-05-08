@@ -12,7 +12,6 @@
 
 namespace TCorp\Joomla\Model\Admin;
 
-
 use \TCorp\Joomla\Model\Admin\GenericModel;
 use \Joomla\CMS\Factory;
 

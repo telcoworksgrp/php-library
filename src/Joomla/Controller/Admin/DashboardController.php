@@ -12,7 +12,6 @@
 
 namespace TCorp\Joomla\Controller\Admin;
 
-
 use \TCorp\Joomla\Controller\Admin\GenericController;
 
 
