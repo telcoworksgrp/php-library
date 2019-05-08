@@ -13,9 +13,9 @@
 namespace TCorp\Joomla\Model\Site;
 
 
-use \Joomla\CMS\MVC\Model\ListModel;
+use \Joomla\CMS\MVC\Model\ListModel AS JoomlaListModel;
 
 
-class ListModel extends ListModel
+class ListModel extends JoomlaListModel
 {
 }
