@@ -10,7 +10,7 @@
  * =============================================================================
  */
 
-namespace TCorp\String;
+namespace TCorp\Helper;
 
 class StringHelper
 {
