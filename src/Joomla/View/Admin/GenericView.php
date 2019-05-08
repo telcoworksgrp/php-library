@@ -13,8 +13,7 @@
 namespace TCorp\Joomla\View\Admin;
 
 
-use \TCorp\Joomla\Helper\ComponentHelper;
-use \TCorp\Joomla\Helper\MenuHelper;
+use \TCorp\Joomla\Helper\JoomlaHelper;
 use \Joomla\CMS\MVC\View\HtmlView;
 use \Joomla\CMS\Factory;
 
@@ -32,8 +31,8 @@ class GenericView extends HtmlView
     {
         // Add data to the view
         $this->state    = $this->get('State');
-        $this->config   = ComponentHelper::getComponentConfig();
-        $this->menuitem = MenuHelper::getActive();
+        $this->config   = JoomlaHelper::getComponentConfig();
+        $this->menuitem = JoomlaHelper::getActiveMenuItem();
 
         // Add component toolbar items
         $this->addAdministratonToolbar();
