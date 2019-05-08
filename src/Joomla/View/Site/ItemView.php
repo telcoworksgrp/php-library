@@ -10,7 +10,7 @@
  * =============================================================================
  */
 
-namespace TCorp\Joomla\View\Admin;
+namespace TCorp\Joomla\View\Site;
 
 
 use \TCorp\Joomla\Helper\ComponentHelper;
@@ -19,7 +19,7 @@ use \Joomla\CMS\MVC\View\HtmlView;
 use \Joomla\CMS\Factory;
 
 
-class Generic extends HtmlView
+class ItemView extends HtmlView
 {
 
     /**
@@ -31,24 +31,19 @@ class Generic extends HtmlView
     public function display($tpl = null)
     {
         // Add data to the view
+        $this->item     = $this->get('Item');
         $this->state    = $this->get('State');
         $this->config   = ComponentHelper::getComponentConfig();
         $this->menuitem = MenuHelper::getActive();
 
-        // Add component toolbar items
-        $this->addAdministratonToolbar();
+        // If the item has a title then use it for the document title
+        if (!empty($this->item)) {
+            if (property_exists($this->item, 'title')) {
+                $this->setDocumentTitle($this->item->title);
+            }
+        }
 
         // Call and return the parent method
         return parent::display($tpl);
     }
-
-
-    /**
-     * Add items to the administration toolbar for this view
-     * -------------------------------------------------------------------------
-     */
-    protected function addAdministratonToolbar()
-    {
-    }
-
 }

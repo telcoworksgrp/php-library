@@ -10,32 +10,29 @@
  * =============================================================================
  */
 
-namespace TCorp\Joomla\Model\Site;
+namespace TCorp\Joomla\View\Admin;
 
 
-use \Joomla\CMS\MVC\Model\ItemModel;
-use \Joomla\CMS\Factory;
+use \TCorp\Joomla\View\Admin\GenericView;
 
 
-class Item extends ItemModel
+class DashboardView extends GenericView
 {
 
     /**
-     * Auto-populate the model state.
+     * Execute and display a view layout.
      * -------------------------------------------------------------------------
-     * @return  void
+     * @param  string   $tpl    The name of the view layout to parse
+     *
+     * @return mixed            A string if successful, Error object if not
      */
-    protected function populateState()
+    public function display($tpl = null)
     {
-        // Initialize some local variables
-        $application = Factory::getApplication();
-        $input       = $application->input;
+        // Add data to the view
+        $this->server = $this->get('ServerInfo');
 
-        // Set the item id in the model state
-		$this->setState('id', $input->getInt('id', 0));
-
-        // Call the parent method
-        parent::populateState();
+        // Call and return the parent method
+		return parent::display($tpl);
     }
 
 }

@@ -19,7 +19,7 @@ use \Joomla\CMS\MVC\View\HtmlView;
 use \Joomla\CMS\Factory;
 
 
-class Form extends HtmlView
+class GenericView extends HtmlView
 {
 
     /**
@@ -32,7 +32,6 @@ class Form extends HtmlView
     public function display($tpl = null)
     {
         // Add data to the view
-        $this->form     = $this->get('Form');
         $this->state    = $this->get('State');
         $this->config   = ComponentHelper::getComponentConfig();
         $this->menuitem = MenuHelper::getActive();

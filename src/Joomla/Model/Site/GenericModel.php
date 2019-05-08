@@ -10,12 +10,12 @@
  * =============================================================================
  */
 
-namespace TCorp\Joomla\Controller\Site;
+namespace TCorp\Joomla\Model\Site;
 
 
-use \TCorp\Joomla\Controller\Site\Generic;
+use \Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
 
-class ItemList extends Generic
+class GenericModel extends BaseDatabaseModel
 {
 }

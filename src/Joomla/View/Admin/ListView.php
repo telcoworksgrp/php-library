@@ -19,7 +19,7 @@ use \Joomla\CMS\MVC\View\HtmlView;
 use \Joomla\CMS\Factory;
 
 
-class ItemList extends HtmlView
+class ListView extends HtmlView
 {
 
     /**

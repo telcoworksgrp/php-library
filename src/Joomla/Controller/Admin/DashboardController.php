@@ -13,9 +13,9 @@
 namespace TCorp\Joomla\Controller\Admin;
 
 
-use \TCorp\Joomla\Controller\Admin\Generic;
+use \TCorp\Joomla\Controller\Admin\GenericController;
 
 
-class Dashboard extends Generic
+class DashboardController extends GenericController
 {
 }

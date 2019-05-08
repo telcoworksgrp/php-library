@@ -13,9 +13,9 @@
 namespace TCorp\Joomla\Controller\Admin;
 
 
-use \Joomla\CMS\MVC\Controller\BaseController;
+use \Joomla\CMS\MVC\Controller\FormController;
 
 
-class Generic extends BaseController
+class ItemController extends FormController
 {
 }

@@ -18,7 +18,7 @@ use \Joomla\CMS\Application\ApplicationHelper;
 use \Joomla\CMS\Factory;
 
 
-class Generic extends Table
+class GenericTable extends Table
 {
     /**
      * Store a row in the database from the JTable instance properties

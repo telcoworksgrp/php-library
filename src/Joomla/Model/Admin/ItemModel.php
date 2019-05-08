@@ -18,7 +18,7 @@ use \Joomla\CMS\Form\Form;
 use \Joomla\CMS\Factory;
 
 
-class Item extends AdminModel
+class ItemModel extends AdminModel
 {
 
 

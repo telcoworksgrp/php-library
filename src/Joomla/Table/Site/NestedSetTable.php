@@ -13,12 +13,12 @@
 namespace TCorp\Joomla\Table\Site;
 
 
-use \Joomla\CMS\Table\Nested AS NestedTable;
+use \Joomla\CMS\Table\Nested;
 use \Joomla\CMS\Application\ApplicationHelper;
 use \Joomla\CMS\Factory;
 
 
-class Nested extends NestedTable
+class NestedSetTable extends Nested
 {
     /**
      * Store a row in the database from the JTable instance properties

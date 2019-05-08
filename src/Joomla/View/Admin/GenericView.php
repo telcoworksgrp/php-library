@@ -10,7 +10,7 @@
  * =============================================================================
  */
 
-namespace TCorp\Joomla\View\Site;
+namespace TCorp\Joomla\View\Admin;
 
 
 use \TCorp\Joomla\Helper\ComponentHelper;
@@ -19,14 +19,13 @@ use \Joomla\CMS\MVC\View\HtmlView;
 use \Joomla\CMS\Factory;
 
 
-class Generic extends HtmlView
+class GenericView extends HtmlView
 {
 
     /**
      * Execute and display a view layout.
      * -------------------------------------------------------------------------
      * @param  string   $tpl    The name of the view layout to parse
-     *
      * @return mixed            A string if successful, Error object if not
      */
     public function display($tpl = null)
@@ -36,7 +35,20 @@ class Generic extends HtmlView
         $this->config   = ComponentHelper::getComponentConfig();
         $this->menuitem = MenuHelper::getActive();
 
+        // Add component toolbar items
+        $this->addAdministratonToolbar();
+
         // Call and return the parent method
         return parent::display($tpl);
     }
+
+
+    /**
+     * Add items to the administration toolbar for this view
+     * -------------------------------------------------------------------------
+     */
+    protected function addAdministratonToolbar()
+    {
+    }
+
 }

@@ -10,13 +10,16 @@
  * =============================================================================
  */
 
-namespace TCorp\Joomla\View\Admin;
+namespace TCorp\Joomla\View\Site;
 
 
-use \TCorp\Joomla\View\Admin\Generic;
+use \TCorp\Joomla\Helper\ComponentHelper;
+use \TCorp\Joomla\Helper\MenuHelper;
+use \Joomla\CMS\MVC\View\HtmlView;
+use \Joomla\CMS\Factory;
 
 
-class Dashboard extends Generic
+class FormView extends HtmlView
 {
 
     /**
@@ -29,10 +32,12 @@ class Dashboard extends Generic
     public function display($tpl = null)
     {
         // Add data to the view
-        $this->server = $this->get('ServerInfo');
+        $this->form     = $this->get('Form');
+        $this->state    = $this->get('State');
+        $this->config   = ComponentHelper::getComponentConfig();
+        $this->menuitem = MenuHelper::getActive();
 
         // Call and return the parent method
-		return parent::display($tpl);
+        return parent::display($tpl);
     }
-
 }

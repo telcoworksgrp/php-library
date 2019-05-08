@@ -10,12 +10,12 @@
  * =============================================================================
  */
 
-namespace TCorp\Joomla\Controller\Site;
+namespace TCorp\Joomla\Model\Admin;
 
 
-use \TCorp\Joomla\Controller\Site\Generic;
+use \Joomla\CMS\MVC\Model\ListModel;
 
 
-class Item extends Generic
+class ListModel extends ListModel
 {
 }

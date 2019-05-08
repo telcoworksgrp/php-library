@@ -19,7 +19,7 @@ use \Joomla\CMS\MVC\View\HtmlView;
 use \Joomla\CMS\Factory;
 
 
-class Item extends HtmlView
+class ListView extends HtmlView
 {
 
     /**
@@ -31,17 +31,17 @@ class Item extends HtmlView
     public function display($tpl = null)
     {
         // Add data to the view
-        $this->item     = $this->get('Item');
-        $this->state    = $this->get('State');
-        $this->config   = ComponentHelper::getComponentConfig();
-        $this->menuitem = MenuHelper::getActive();
-
-        // If the item has a title then use it for the document title
-        if (!empty($this->item)) {
-            if (property_exists($this->item, 'title')) {
-                $this->setDocumentTitle($this->item->title);
-            }
-        }
+        $this->items         = $this->get('Items');
+        $this->pagination    = $this->get('Pagination');
+        $this->total         = $this->get('Total');
+        $this->start         = $this->get('Start');
+        $this->filterForm    = $this->get('FilterForm');
+        $this->activeFilters = $this->get('ActiveFilters');
+        $this->state         = $this->get('State');
+        $this->ordering      = $this->escape($this->state->get('list.ordering'));
+        $this->direction     = $this->escape($this->state->get('list.direction'));
+        $this->config        = ComponentHelper::getComponentConfig();
+        $this->menuitem      = MenuHelper::getActive();
 
         // Call and return the parent method
         return parent::display($tpl);

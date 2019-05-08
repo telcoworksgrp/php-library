@@ -10,12 +10,12 @@
  * =============================================================================
  */
 
-namespace TCorp\Joomla\Model\Site;
+namespace TCorp\Joomla\Model\Admin;
 
 
-use \Joomla\CMS\MVC\Model\ListModel;
+use \Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
 
-class ItemList extends ListModel
+class GenericModel extends BaseDatabaseModel
 {
 }

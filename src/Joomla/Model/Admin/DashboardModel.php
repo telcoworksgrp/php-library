@@ -13,11 +13,11 @@
 namespace TCorp\Joomla\Model\Admin;
 
 
-use \TCorp\Joomla\Model\Admin\Generic;
+use \TCorp\Joomla\Model\Admin\GenericModel;
 use \Joomla\CMS\Factory;
 
 
-class Dashboard extends Generic
+class DashboardModel extends Generic
 {
 
 
