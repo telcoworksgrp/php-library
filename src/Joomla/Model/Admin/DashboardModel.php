@@ -17,7 +17,7 @@ use \TCorp\Joomla\Model\Admin\GenericModel;
 use \Joomla\CMS\Factory;
 
 
-class DashboardModel extends Generic
+class DashboardModel extends GenericModel
 {
 
 
