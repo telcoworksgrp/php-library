@@ -21,7 +21,7 @@ use \Joomla\CMS\Factory;
 /**
  * Generic helper class fpr working with Joomla
  */
-class JoomlaHelper
+class Helper
 {
 
 
