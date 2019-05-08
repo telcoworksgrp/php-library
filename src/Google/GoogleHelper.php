@@ -13,9 +13,9 @@
 namespace TCorp\Google;
 
 /**
- * Class for working with Google Analytics
+ * Helper class for working with Google Analytics
  */
-class Analytics
+class GoogleHelper
 {
 
     /**
@@ -24,7 +24,7 @@ class Analytics
      * @param  string   $tackingId  A tracking id obtained from Google Analytics
      * @return string   Tracking code snippet
      */
-    public static function getTrackingCode(string $tackingId)
+    public static function getAnalyticsTrackingCode(string $tackingId)
     {
         return "<script async src=""https://www.googletagmanager.com/gtag/" .
             "js?id=$trackingId""></script><script>window.dataLayer = window.".
