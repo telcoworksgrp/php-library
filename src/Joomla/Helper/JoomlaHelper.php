@@ -10,7 +10,7 @@
  * =============================================================================
  */
 
-namespace TCorp\Joomla;
+namespace TCorp\Joomla\Helper;
 
 use \Joomla\CMS\Component\ComponentHelper;
 use \Joomla\CMS\HTML\HTMLHelper;
