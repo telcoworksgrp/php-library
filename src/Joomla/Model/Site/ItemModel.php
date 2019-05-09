@@ -12,11 +12,11 @@
 
 namespace TCorp\Joomla\Model\Site;
 
-use \Joomla\CMS\MVC\Model\ItemModel;
+use \Joomla\CMS\MVC\Model\ItemModel AS JoomlaItemModel;
 use \Joomla\CMS\Factory;
 
 
-class ItemModel extends ItemModel
+class ItemModel extends JoomlaItemModel
 {
 
     /**
