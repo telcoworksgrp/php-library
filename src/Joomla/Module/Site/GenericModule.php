@@ -88,7 +88,7 @@ class GenericModule
         $this->moduleType     = $module->module;
         $this->modulePosition = $module->position;
         $this->basePath       = JPATH_BASE . "/modules/{$this->moduleType}/";
-        $this->containerId    = "#module-{$this->moduleId}";
+        $this->containerId    = "module-{$this->moduleId}";
         $this->containerClass = $this->moduleType;
     }
 
