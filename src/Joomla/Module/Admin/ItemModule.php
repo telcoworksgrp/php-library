@@ -10,9 +10,9 @@
  * =============================================================================
  */
 
-namespace TCorp\Joomla\Module\Helper;
+namespace TCorp\Joomla\Module\Admin;
 
 
-class ItemModuleHelper extends GenericModuleHelper
+class ItemModule extends GenericModule
 {
 }
