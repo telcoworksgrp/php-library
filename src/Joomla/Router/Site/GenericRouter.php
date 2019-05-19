@@ -20,7 +20,7 @@ use \Joomla\CMS\Component\Router\Rules\NomenuRules;
 use \Joomla\CMS\Component\Router\Rules\StandardRules;
 
 
-abstract class Generic extends RouterView
+abstract class GenericRouter extends RouterView
 {
 
     /**
