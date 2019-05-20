@@ -16,6 +16,7 @@ use \Joomla\CMS\Component\ComponentHelper;
 use \Joomla\CMS\HTML\HTMLHelper;
 use \Joomla\CMS\Router\Route;
 use \Joomla\CMS\Factory;
+use \Joomla\CMS\Toolbar\ToolbarHelper;
 
 
 /**
@@ -283,5 +284,82 @@ class JoomlaHelper
         // Get and return the user's name
         return (empty($userId)) ? $default : Factory::getUser($userId)->name;
     }
-    
+
+
+
+    /**
+     * Set the title of the administration toolbar
+     * -------------------------------------------------------------------------
+     * @param string    $title  A new title
+     */
+    public static function setToolbarTitle(string $title)
+    {
+        ToolBarHelper::title(Text::_($title));
+    }
+
+
+
+    /**
+     * Adds a standard set of toolbar items while editing an item
+     * -------------------------------------------------------------------------
+     * @param string    $component      Component to which the item controller belongs to
+     * @param string    $controller     Controller to execute actions on
+     */
+    public static function addStandardItemToolbarBtns(string $component,
+        string $controller)
+    {
+        // Add apply, save and save2new buttons
+       if (self::isAuthorised('core.edit', $component)) {
+           ToolbarHelper::apply($controller . '.apply');
+           ToolbarHelper::save($controller . '.save');
+
+           if (self::isAuthorised('core.create',  $component)) {
+               ToolbarHelper::save2new($controller . '.save2new');
+           }
+       }
+
+       // Add a cancel button
+       ToolBarHelper::cancel($controller . '.cancel');
+    }
+
+
+
+    /**
+     * Adds a standard set of toolbar items while viewing a list of items
+     * -------------------------------------------------------------------------
+     * @param string    $component          Component to which the controllers belong to
+     * @param string    $itemController     Controller for executing item actions
+     * @param string    $listController     Controller for executing list actions
+     */
+    public static function addStandardListToolbarBtns(string $component,
+        string $itemController, string $listController)
+    {
+
+        // Add an new button
+       if (self::isAuthorised('core.create', $component)) {
+           ToolBarHelper::addNew($itemController . '.add');
+       }
+
+       // Add an Edit" button
+       if (self::isAuthorised('core.edit', $component)) {
+           ToolBarHelper::editList($itemController . '.edit');
+       }
+
+       // Add an publish and unpublish button
+       if (self::isAuthorised('core.edit.state', $component)) {
+
+           ToolBarHelper::publish($listController . '.publish',
+           'JTOOLBAR_PUBLISH', true);
+           ToolBarHelper::unpublish($listController . '.unpublish',
+           'JTOOLBAR_UNPUBLISH', true);
+       }
+
+       // Add a delete button
+       if (self::isAuthorised('core.delete', $component)) {
+           ToolBarHelper::deleteList('', $listController . '.delete');
+       }
+
+    }
+
+
 }
