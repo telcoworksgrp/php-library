@@ -362,4 +362,18 @@ class JoomlaHelper
     }
 
 
+    /**
+     * Add a global options button for this component to the
+     * administration toolbar
+     * -------------------------------------------------------------------------
+     * @param string    $component  Component to show the button for.
+     */
+    public static function addToolbarOptionsBtn(string $component)
+    {
+        if (self::isAuthorised('core.admin', $component)) {
+          ToolBarHelper::preferences($component);
+      }
+    }
+
+
 }
