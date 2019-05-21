@@ -44,4 +44,19 @@ class SecurityHelper
             ($_REQUEST['Lvg5RukdDoWmXF1OOWc0'] === '');
     }
 
+
+    /**
+     * Block access to the site
+     * -------------------------------------------------------------------------
+     * @param   int     $httpCode   HTTP code to return
+     * @param   string  $message    Message to display with HTTP code
+     *
+     * @return void
+     */
+    public static function blockAccess(int $httpCode = 403,
+        string $message = 'Forbidden') : void
+    {
+        header("HTTP/1.0 $httpCode  $message");
+    }
+
 }
