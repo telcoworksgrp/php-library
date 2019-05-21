@@ -26,21 +26,22 @@ class SecurityHelper
      */
     public static function getHoneyPot()
     {
-        return '<input type="text" name="hpot" value="" label="Name"' .
-            ' style="display: none;" >';
+        return '<input type="text" name="Lvg5RukdDoWmXF1OOWc0" value="" ' .
+            'label="Name" style="display: none !important;" >';
     }
 
 
     /**
-     * Checks if a honeypot field has a value. If the honeypot field has a
-     * value AND the honeypot field was hidden from human users then the form
-     * data was submitted by a bot
+     * Checks if a honeypot field has a value. If the honeypot field is not set
+     * or has a value AND the honeypot field was hidden from human users then
+     * the form data was submitted by a bot
      * -------------------------------------------------------------------------
      * @return  bool    TRUE = user is human, FALSE = user is a robot
      */
     public static function checkHoneyPot()
     {
-        return isset($_REQUEST['hpot']) && ($_REQUEST['hpot'] === '');
+        return isset($_REQUEST['Lvg5RukdDoWmXF1OOWc0']) &&
+            ($_REQUEST['Lvg5RukdDoWmXF1OOWc0'] === '');
     }
 
 }
