@@ -152,6 +152,39 @@ class SecurityHelper
     }
 
 
+    /**
+     * Get the HTML/Javascript for displaying a reCAPTCHA 3
+     * -------------------------------------------------------------------------
+     * @param  string   $key        reCAPTCHA Site Key (issued by Google)
+     * @param  string   $action     A reCAPTCHA action name
+     *
+     * @return string   HTML/Javascript needed to render reCAPTCHA 3
+     */
+    public function getReCaptchaHtml(string $siteKey, string $action)
+    {
+        $result  = "<script src=\"https://www.google.com/recaptcha/api.js?render=$siteKey\"></script>";
+        $result .= "<script>grecaptcha.ready(function() { "
+        $result .= "grecaptcha.execute('$siteKey', {action: '$action'}).then("
+        $result .= "function(token) {}); });</script>";
+        return $result;
+    }
+
+
+    /**
+     * Check if the user was successfully completed a reCAPTCHA 3
+     * -------------------------------------------------------------------------
+     * @param  string   $key    reCAPTCHA Secret Key (issued by Google)
+     *
+     * @return  bool
+     */
+    public function checkReCaptcha(string $secretKey)
+    {
+        $response  = $_POST['g-recaptcha-response'] ?? '';
+        $ipaddress = $_SERVER['REMOTE_ADDR'];
+
+    }
+
+
 
     /**
       * Block access to the site with a given HTTP response code and message
