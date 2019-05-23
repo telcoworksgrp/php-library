@@ -156,16 +156,13 @@ class SecurityHelper
      * Get the HTML/Javascript for displaying a reCAPTCHA 3
      * -------------------------------------------------------------------------
      * @param  string   $key        reCAPTCHA Site Key (issued by Google)
-     * @param  string   $action     A reCAPTCHA action name
      *
      * @return string   HTML/Javascript needed to render reCAPTCHA 3
      */
-    public static function getReCaptchaHtml(string $siteKey, string $action)
+    public static function getReCaptchaHtml(string $siteKey)
     {
-        $result  = "<script src=\"https://www.google.com/recaptcha/api.js?render=$siteKey\"></script>";
-        $result .= "<script>grecaptcha.ready(function() { ";
-        $result .= "grecaptcha.execute('$siteKey', {action: '$action'}).then(";
-        $result .= "function(token) {}); });</script>";
+        $result  = "<script src=\"https://www.google.com/recaptcha/api.js\" async defer></script>\n";
+        $result .= "<div class=\"g-recaptcha\" data-sitekey=\"$siteKey\"></div>";
         return $result;
     }
 
@@ -179,9 +176,6 @@ class SecurityHelper
      */
     public static function checkReCaptcha(string $secretKey)
     {
-        $response  = $_POST['g-recaptcha-response'] ?? '';
-        $ipaddress = $_SERVER['REMOTE_ADDR'];
-
     }
 
 
