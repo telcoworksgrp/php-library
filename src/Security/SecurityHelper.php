@@ -163,8 +163,8 @@ class SecurityHelper
     public function getReCaptchaHtml(string $siteKey, string $action)
     {
         $result  = "<script src=\"https://www.google.com/recaptcha/api.js?render=$siteKey\"></script>";
-        $result .= "<script>grecaptcha.ready(function() { "
-        $result .= "grecaptcha.execute('$siteKey', {action: '$action'}).then("
+        $result .= "<script>grecaptcha.ready(function() { ";
+        $result .= "grecaptcha.execute('$siteKey', {action: '$action'}).then(";
         $result .= "function(token) {}); });</script>";
         return $result;
     }
