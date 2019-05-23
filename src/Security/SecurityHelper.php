@@ -103,7 +103,7 @@ class SecurityHelper
      * -------------------------------------------------------------------------
      * @return  string  HTML for rendering a hidden honeypot text field
      */
-    public function getHoneypotHtml() : string
+    public static function getHoneypotHtml() : string
     {
         return "<input type=\"text\" name=\"c67538\" value=\"\" " .
             "style=\"display: none !important;\">";
