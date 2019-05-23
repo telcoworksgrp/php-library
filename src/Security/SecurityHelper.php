@@ -160,7 +160,7 @@ class SecurityHelper
      *
      * @return string   HTML/Javascript needed to render reCAPTCHA 3
      */
-    public function getReCaptchaHtml(string $siteKey, string $action)
+    public static function getReCaptchaHtml(string $siteKey, string $action)
     {
         $result  = "<script src=\"https://www.google.com/recaptcha/api.js?render=$siteKey\"></script>";
         $result .= "<script>grecaptcha.ready(function() { ";
@@ -177,7 +177,7 @@ class SecurityHelper
      *
      * @return  bool
      */
-    public function checkReCaptcha(string $secretKey)
+    public static function checkReCaptcha(string $secretKey)
     {
         $response  = $_POST['g-recaptcha-response'] ?? '';
         $ipaddress = $_SERVER['REMOTE_ADDR'];
