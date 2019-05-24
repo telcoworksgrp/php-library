@@ -119,8 +119,6 @@ class Helper
         exit();
     }
 
-
-
     /**
      * Disable browser caching of this request
      * -------------------------------------------------------------------------
@@ -131,6 +129,59 @@ class Helper
         header("Cache-Control: post-check=0, pre-check=0", false);
         header("Pragma: no-cache");
         header('Expires: Sun, 01 Jan 2014 00:00:00 GMT');
+    }
+
+
+    /**
+     *  Block the user if thier IP belongs to a banned country. SecurityHelper::
+     *  WORST_SPAM_COUNTRIES is a predefined list of the worst spam/bot
+     *  countries according to Spamhaus. To avoid blocking Googlebot, the US is
+     *  exluded from this predefined list.
+     *  ------------------------------------------------------------------------
+     */
+    public static function blockBannedCountries()
+    {
+        if (SecurityHelper::checkIpLocation(
+            SecurityHelper::WORST_SPAM_COUNTRIES)) {
+
+            SecurityHelper::blockAccess();
+        }
+    }
+
+    /**
+     * Check the hidden honeypot form field. If it is missing or invalid then
+     * the user will be blocked
+     * -------------------------------------------------------------------------
+     */
+    public static function blockIfInvalidHoneypot()
+    {
+        if (!SecurityHelper::checkHoneypot()) {
+            SecurityHelper::blockAccess();
+        }
+    }
+
+    /**
+     * Check the CSRF token. If it is missing or doesn't match the one stored
+     * in the user's session then the user will be blocked
+     * -------------------------------------------------------------------------
+     */
+    public static function blockIfInvalidCSRFToken()
+    {
+        if (!SecurityHelper::checkCSRFToken()) {
+            SecurityHelper::blockAccess();
+        }
+    }
+
+    /**
+     * Check if the form ReCaptcha was successfully completed. If not, then
+     * the user will be blocked
+     * -------------------------------------------------------------------------
+     */
+    public static function blockIfInvalidReCaptcha()
+    {
+        if (!SecurityHelper::checkReCaptcha()) {
+            SecurityHelper::blockAccess();
+        }
     }
 
 }
