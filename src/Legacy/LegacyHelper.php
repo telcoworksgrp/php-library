@@ -148,6 +148,7 @@ class Helper
         }
     }
 
+
     /**
      * Check the hidden honeypot form field. If it is missing or invalid then
      * the user will be blocked
@@ -159,6 +160,7 @@ class Helper
             SecurityHelper::blockAccess();
         }
     }
+
 
     /**
      * Check the CSRF token. If it is missing or doesn't match the one stored
@@ -172,6 +174,7 @@ class Helper
         }
     }
 
+
     /**
      * Check if the form ReCaptcha was successfully completed. If not, then
      * the user will be blocked
@@ -183,5 +186,19 @@ class Helper
             SecurityHelper::blockAccess();
         }
     }
+
+
+    /**
+     * Start the user's session if not already started
+     * -------------------------------------------------------------------------
+     * @return void
+     */
+    public static function startSession()
+    {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+    }
+
 
 }
