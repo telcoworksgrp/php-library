@@ -19,6 +19,13 @@ namespace TCorp\Legacy;
 class Helper
 {
 
+    /**
+     * An array for holding a list of settings
+     *
+     * @var string[]
+     */
+    public static $SETTINGS = array();
+
 
     /**
      * Send a very basic HTTP request and return the response body
