@@ -30,6 +30,31 @@ class LegacyHelper
 
 
     /**
+     * An API key issued by IP Geolocation
+     *
+     * @var string
+     */
+    public static $ipGeolocationApiKey = '';
+
+
+    /**
+     * A ReCaptcha v2 site key issued by Google
+     *
+     * @var string
+     */
+    public static $recaptchaSiteKey = '';
+
+
+    /**
+     * A ReCaptcha v2 secret issued by Google
+     *
+     * @var string
+     */
+    public static $recaptchaSecret = '';
+
+
+
+    /**
      * Send a very basic HTTP request and return the response body
      * -------------------------------------------------------------------------
      * @param  string   $url        The URL to send the quest to
@@ -42,7 +67,6 @@ class LegacyHelper
     public static function sendRequest(string $url, string $method = 'GET',
         $data =array(), $headers = array())
     {
-
         // Compose a HTTP request using Guzzle HTTP
         $request = new \GuzzleHttp\Psr7\Request($method, $url, $headers);
 
@@ -190,6 +214,7 @@ class LegacyHelper
     }
 
 
+
     /**
      *  Block the user if thier IP belongs to a banned country. SecurityHelper::
      *  WORST_SPAM_COUNTRIES is a predefined list of the worst spam/bot
@@ -198,13 +223,24 @@ class LegacyHelper
      *  ------------------------------------------------------------------------
      *  @return void
      */
-    public static function blockBannedCountries(string $apiKey) : void
+    public static function blockBannedCountries() : void
     {
-        if (SecurityHelper::checkIpLocation(
-            SecurityHelper::WORST_SPAM_COUNTRIES, $apiKey)) {
+        if (SecurityHelper::checkIpLocation(SecurityHelper::
+            WORST_SPAM_COUNTRIES, self::$ipGeolocationApiKey)) {
 
             SecurityHelper::blockAccess();
         }
+    }
+
+
+    /**
+     * Proxy for the SecurityHelper::getHoneypotHtml() method
+     * -------------------------------------------------------------------------
+     * @return  string  HTML for rendering a hidden honeypot text field
+     */
+    public static function getHoneypotHtml()
+    {
+        return SecurityHelper::getHoneypotHtml();
     }
 
 
@@ -223,6 +259,17 @@ class LegacyHelper
 
 
     /**
+     * Proxy for the SecurityHelper::getCSRFTokenHtml() method
+     * -------------------------------------------------------------------------
+     * @return  string  HTML for rendering a CSRF token inside a web form
+     */
+    public static function getCSRFTokenHtml()
+    {
+        return SecurityHelper::getCSRFTokenHtml();
+    }
+
+
+    /**
      * Check the CSRF token. If it is missing or doesn't match the one stored
      * in the user's session then the user will be blocked
      * -------------------------------------------------------------------------
@@ -237,18 +284,26 @@ class LegacyHelper
 
 
     /**
+     * Proxy for the SecurityHelper::getReCaptchaHtml() method
+     * -------------------------------------------------------------------------
+     * @return  string  HTML for rendering a CSRF token inside a web form
+     */
+    public static function getReCaptchaHtml()
+    {
+        return SecurityHelper::getReCaptchaHtml(self::$recaptchaSiteKey);
+    }
+
+
+    /**
      * Check if the form ReCaptcha was successfully completed. If not, then
      * the user will be redirected
      * -------------------------------------------------------------------------
-     * @param  string   $key    reCAPTCHA Secret Key (issued by Google)
-     *
      * @return void
      */
-    public static function redirectIfInvalidReCaptcha(string $secretKey,
-        string $redirectUrl) : void
+    public static function redirectIfInvalidReCaptcha(string $redirectUrl) : void
     {
-        if (!SecurityHelper::checkReCaptcha($secretKey)) {
-            self::redirect($redirectUrl. false, 303);
+        if (!SecurityHelper::checkReCaptcha(self::$recaptchaSecret)) {
+            self::redirect($redirectUrl, false, 303);
         }
     }
 
