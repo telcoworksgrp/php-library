@@ -91,7 +91,7 @@ class LegacyHelper
             'GET', $params, array('Content-type: application/json'));
 
         // Decode JSON response
-        $result = \jsoon_decode($result);
+        $result = json_decode($result);
 
         // Add additional meta data
         foreach($result as $number) {
