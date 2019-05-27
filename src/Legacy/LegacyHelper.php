@@ -95,19 +95,10 @@ class LegacyHelper
 
         // Add additional meta data
         foreach($result as $number) {
-
-            $number->format1 = substr($number->number,0,4). substr(
-                $number->number,4,3). substr($number->number,7,3);
-
-	        $number->format2 = substr($number->number,0,4). " " . substr(
-                $number->number,4,3). " " . substr($number->number,7,3);
-
-            $number->format3 = substr($number->number,0,4) . " " . substr(
-                $number->number,4,2) . " " . substr($number->number,6,2)." " .
-                substr($number->number,8,2);
-
-            $number->format4 = (!empty($number->word) ? $number->word :
-                $number->format3);
+            $number->format1 = preg_replace('|^(\d{4})(\d{6})$|i', '$1 $2', $number->number);
+	        $number->format2 = preg_replace('|^(\d{4})(\d{3})(\d{3})$|i', '$1 $2 $3', $number->number);
+            $number->format3 = preg_replace('|^(\d{4})(\d{2})(\d{2})(\d{2})$|i', '$1 $2 $3 $4', $number->number);
+            $number->format4 = (!empty($number->word) ? $number->word : $number->format3);
         }
 
         // Return the result
