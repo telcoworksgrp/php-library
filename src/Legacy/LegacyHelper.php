@@ -70,7 +70,7 @@ class LegacyHelper
         // Compose a HTTP request using Guzzle HTTP
         $request = new \GuzzleHttp\Psr7\Request($method, $url, $headers);
 
-        // Exeute the http request with Guzzle HTTP
+        // Execute the http request with Guzzle HTTP
         $client  = new \GuzzleHttp\Client();
         $result = $client->send($request, array('query' => $data));
 
