@@ -16,7 +16,7 @@ namespace TCorp\Legacy;
 /**
  * Helper class for working with Telecom Corp's Legacy sites/projects
  */
-class Helper
+class LegacyHelper
 {
 
     /**
