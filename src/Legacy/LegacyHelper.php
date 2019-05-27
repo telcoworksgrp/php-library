@@ -63,7 +63,6 @@ class LegacyHelper
      * @param  int      $maxPrice   Max number price
      * @param  int      $pageNo     Page to start at
      * @param  int      $pageSize   Max numbers per page
-     * @param  bool     $showAll    Show all numbers
      * @param  string   $sortBy     Column to sort the results by
      * @param  string   $direction  Direction to sort the results by
      *
@@ -71,7 +70,7 @@ class LegacyHelper
      */
     public static function getNumbers($prefix = '1300', $type = 'FLASH',
         $minPrice = 0, $maxPrice = 1000, $pageNo = 1, $pageSize = 500,
-        $showAll = true, $sortBy = 'PRICE', $direction = 'ASCENDING')
+        $sortBy = 'PRICE', $direction = 'ASCENDING')
     {
 
         // Compose an enpoint URL
