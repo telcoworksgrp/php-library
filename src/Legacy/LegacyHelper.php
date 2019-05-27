@@ -12,6 +12,8 @@
 
 namespace TCorp\Legacy;
 
+use \TCorp\Security\SecurityHelper;
+
 
 /**
  * Helper class for working with Telecom Corp's Legacy sites/projects
@@ -127,9 +129,9 @@ class LegacyHelper
      * of the remote user. This is a quick and dirty way some of the older
      * sites display form data in email notifications
      * -------------------------------------------------------------------------
-     * @return  stying  An email message
+     * @return  string  An email message
      */
-    public static function composeMessageFromPostParams()
+    public static function composeMessageFromPostParams() : string
     {
         // Initialise some local variables
         $params       = $_POST;
@@ -155,9 +157,11 @@ class LegacyHelper
      * @param  string   $url             URL to redirect the user to
      * @param  bool     $preserveParams  Pass existing URL params to the redirect
      * @param  int      $statusCode      HTTP status code (usually 301 or 303)
+     *
+     * @return  void
      */
     public static function redirect(string $url, bool $preserveParams = TRUE,
-        int $statusCode = 301)
+        int $statusCode = 301) : void
     {
         // Append the exitsing params if needed
         if ($preserveParams) {
@@ -175,8 +179,9 @@ class LegacyHelper
     /**
      * Disable browser caching of this request
      * -------------------------------------------------------------------------
+     * @return  void
      */
-    public static function disableCache()
+    public static function disableCache() : void
     {
         header("Cache-Control: max-age=0, no-cache, no-store, must-revalidate");
         header("Cache-Control: post-check=0, pre-check=0", false);
@@ -191,11 +196,12 @@ class LegacyHelper
      *  countries according to Spamhaus. To avoid blocking Googlebot, the US is
      *  exluded from this predefined list.
      *  ------------------------------------------------------------------------
+     *  @return void
      */
-    public static function blockBannedCountries()
+    public static function blockBannedCountries(string $apiKey) : void
     {
         if (SecurityHelper::checkIpLocation(
-            SecurityHelper::WORST_SPAM_COUNTRIES)) {
+            SecurityHelper::WORST_SPAM_COUNTRIES, $apiKey)) {
 
             SecurityHelper::blockAccess();
         }
@@ -206,8 +212,9 @@ class LegacyHelper
      * Check the hidden honeypot form field. If it is missing or invalid then
      * the user will be blocked
      * -------------------------------------------------------------------------
+     * @return  void
      */
-    public static function blockIfInvalidHoneypot()
+    public static function blockIfInvalidHoneypot() : void
     {
         if (!SecurityHelper::checkHoneypot()) {
             SecurityHelper::blockAccess();
@@ -219,8 +226,9 @@ class LegacyHelper
      * Check the CSRF token. If it is missing or doesn't match the one stored
      * in the user's session then the user will be blocked
      * -------------------------------------------------------------------------
+     * @return  void
      */
-    public static function blockIfInvalidCSRFToken()
+    public static function blockIfInvalidCSRFToken() : void
     {
         if (!SecurityHelper::checkCSRFToken()) {
             SecurityHelper::blockAccess();
@@ -230,13 +238,17 @@ class LegacyHelper
 
     /**
      * Check if the form ReCaptcha was successfully completed. If not, then
-     * the user will be blocked
+     * the user will be redirected
      * -------------------------------------------------------------------------
+     * @param  string   $key    reCAPTCHA Secret Key (issued by Google)
+     *
+     * @return void
      */
-    public static function blockIfInvalidReCaptcha()
+    public static function redirectIfInvalidReCaptcha(string $secretKey,
+        string $redirectUrl) : void
     {
-        if (!SecurityHelper::checkReCaptcha()) {
-            SecurityHelper::blockAccess();
+        if (!SecurityHelper::checkReCaptcha($secretKey)) {
+            self::redirect($redirectUrl. false, 303);
         }
     }
 
