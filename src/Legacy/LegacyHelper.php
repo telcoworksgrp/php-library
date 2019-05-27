@@ -34,22 +34,86 @@ class LegacyHelper
      * @param  string   $method     The HTTP verb/type of request to use
      * @param  array    $data       Data to send with the request
      * @param  string[] $headers    Data to send with the request
+     *
      * @return string               The reponse body
      */
-    public static function sendRequest(string $url, string $method = 'GET', $data =
-        array(), $headers = array('Content-type: application/x-www-form-urlencoded'))
+    public static function sendRequest(string $url, string $method = 'GET',
+        $data =array(), $headers = array())
     {
         $context = stream_context_create(array
         (
             'http' => array(
                 'method' => $method,
                 'header' => $headers,
-                'content' => http_build_query( $data )
+                'content' => http_build_query($data)
             )
         ));
 
         return file_get_contents($url, false, $context);
 
+    }
+
+
+    /**
+     * Get a list of numbers from the T3 API
+     * -------------------------------------------------------------------------
+     * @param  string   $prefix     Numbe prefix ('1300' or '1800')
+     * @param  string   $type       Type of numbers to get ('FLASH' or 'LUCKYDIP')
+     * @param  int      $minPrice   Minimum number price
+     * @param  int      $maxPrice   Max number price
+     * @param  int      $pageNo     Page to start at
+     * @param  int      $pageSize   Max numbers per page
+     * @param  bool     $showAll    Show all numbers
+     * @param  string   $sortBy     Column to sort the results by
+     * @param  string   $direction  Direction to sort the results by
+     *
+     * @return  object[]    A list of numbers with meta data
+     */
+    public static function getNumbers($prefix = '1300', $type = 'FLASH',
+        $minPrice = 0, $maxPrice = 1000, $pageNo = 1, $pageSize = 500,
+        $showAll = true, $sortBy = 'PRICE', $direction = 'ASCENDING')
+    {
+
+        // Compose an enpoint URL
+        $params                       = array();
+        $params['query']              = $prefix;
+        $params['numberTypes']        = 'SERVICE_NUMBER';
+        $params['serviceNumberTypes'] = $type;
+        $params['minPriceDollars']    = $minPrice;
+        $params['maxPriceDollars']    = $maxPrice;
+        $params['pageNum']            = $pageNo;
+        $params['pageSize']           = $pageSize;
+        $params['sortBy']             = $sortBy;
+        $params['sortDirection']      = $direction;
+
+
+        // Get the data from the API
+        $result = self::sendRequest(
+            'https://portal.tbill.live/numbers-service-impl/api/Activations',
+            'GET', $params, array('Content-type: application/json'));
+
+        // Decode JSON response
+        $result = jsoon_decode($result);
+
+        // Add additional meta data
+        foreach($result as $number) {
+
+            $number->format1 = substr($number->number,0,4). substr(
+                $number->number,4,3). substr($number->number,7,3);
+
+	        $number->format2 = substr($number->number,0,4). " " . substr(
+                $number->number,4,3). " " . substr($number->number,7,3);
+
+            $number->format3 = substr($number->number,0,4) . " " . substr(
+                $number->number,4,2) . " " . substr($number->number,6,2)." " .
+                substr($number->number,8,2);
+
+            $number->format4 = (!empty($number->word) ? $number->word :
+                $number->format3);
+        }
+
+        // Return the result
+        return $result;
     }
 
 
