@@ -40,17 +40,16 @@ class LegacyHelper
     public static function sendRequest(string $url, string $method = 'GET',
         $data =array(), $headers = array())
     {
-        $context = stream_context_create(array
-        (
-            'http' => array(
-                'method' => $method,
-                'header' => $headers,
-                'content' => http_build_query($data)
-            )
-        ));
 
-        return file_get_contents($url, false, $context);
+        // Compose a HTTP request using Guzzle HTTP
+        $request = new \GuzzleHttp\Psr7\Request($method, $url, $headers);
 
+        // Exeute the http request with Guzzle HTTP
+        $client  = new \GuzzleHttp\Client();
+        $result = $client->send($request, array('query' => $data));
+
+        // Return the result body
+        return $result->getBody();
     }
 
 
@@ -92,7 +91,7 @@ class LegacyHelper
             'GET', $params, array('Content-type: application/json'));
 
         // Decode JSON response
-        $result = jsoon_decode($result);
+        $result = \jsoon_decode($result);
 
         // Add additional meta data
         foreach($result as $number) {
