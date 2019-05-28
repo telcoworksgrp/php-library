@@ -152,11 +152,16 @@ class LegacyHelper
             $headers['Content-type']      = "text/html; charset=iso-8859-1";
         }
 
+        // Add a From header
+        if (!empty($from)) {
+            headers['From'] = $from;
+        }
+
         // Add some additional metadata to headers
         $headers['X-WebForm-ServerIP']   = $_SERVER['SERVER_ADDR'];
         $headers['X-WebForm-ServerName'] = $_SERVER['SERVER_NAME'];
         $headers['X-WebForm-Host']       = $_SERVER['HTTP_HOST'];
-        $headers['X-WebForm-Referer']    = $_SERVER['HTTP_REFERER'];
+        $headers['X-WebForm-Referrer']   = $_SERVER['HTTP_REFERER'];
         $headers['X-WebForm-UserAgent']  = $_SERVER['HTTP_USER_AGENT'];
         $headers['X-WebForm-RemoteIP']   = $_SERVER['REMOTE_ADDR'];
         $headers['X-WebForm-RemoteName'] = $_SERVER['REMOTE_HOST'];
