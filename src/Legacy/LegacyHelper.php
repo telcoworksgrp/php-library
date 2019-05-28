@@ -154,7 +154,7 @@ class LegacyHelper
 
         // Add a From header
         if (!empty($from)) {
-            headers['From'] = $from;
+            $headers['From'] = $from;
         }
 
         // Add some additional metadata to headers
