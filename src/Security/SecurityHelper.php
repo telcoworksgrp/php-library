@@ -176,6 +176,21 @@ class SecurityHelper
      */
     public static function checkReCaptcha(string $secretKey)
     {
+        // Initialise some local variables
+        $response  = $_POST['g-recaptcha-response'] ?? '';
+
+        // Send POST http request to verify the response with Google
+        $client = new \GuzzleHttp\Client();
+        $url    = 'https://www.google.com/recaptcha/api/siteverify';
+        $params = ['secret' => $secretKey, 'response' => $response];
+        $result = $client->post($url, ['form_params' => $params]);
+        $result = json_decode($result->getBody());
+
+        // Check google's response
+        $result = $result->success == true;
+
+        // Return the result
+        return $result;
     }
 
 
