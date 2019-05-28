@@ -136,15 +136,33 @@ class LegacyHelper
      * Send an email
      * -------------------------------------------------------------------------
      * @param  string $to           Receiver, or receivers of the mail.
+     * @param  string $from         A From address
      * @param  string $subject      Subject of the email to be sent.
      * @param  string $message      Message to be sent.
      * @param  mixed  $headers      String/array of additional headers to add
+     *
      * @return bool                 TRUE if successfully sent, FALSE otherwise
      */
-    public static function sendEmail(string $to, string $subject,
-        string $message, $headers = '')
+    public static function sendEmail(string $to, string $from, string $subject,
+        string $message, $headers = array())
     {
-        return mail($to, $subject, $message, $headers);
+        // Add some mime headers if the message contains HTML
+        if ($message != strip_tags($message)) {
+            $headers['MIME-Version']      = "1.0";
+            $headers['Content-type']      = "text/html; charset=iso-8859-1";
+        }
+
+        // Add some additional metadata to headers
+        $headers['X-WebForm-IPAddress'] = $_SERVER['REMOTE_ADDR'];
+        $headers['X-WebForm-UserAgent'] = $_SERVER['HTTP_USER_AGENT'];
+        $headers['X-WebForm-URL']       = $_SERVER['HTTP_USER_AGENT'];
+        $headers['X-WebForm-Domain']    = $_SERVER['HTTP_HOST'];
+
+        // Send the email
+        $result = mail($to, $subject, $message, $headers);
+
+        // Return the result
+        return $result;
     }
 
 
