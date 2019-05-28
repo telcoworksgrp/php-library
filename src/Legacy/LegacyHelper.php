@@ -153,10 +153,15 @@ class LegacyHelper
         }
 
         // Add some additional metadata to headers
-        $headers['X-WebForm-IPAddress'] = $_SERVER['REMOTE_ADDR'];
-        $headers['X-WebForm-UserAgent'] = $_SERVER['HTTP_USER_AGENT'];
-        $headers['X-WebForm-URL']       = $_SERVER['HTTP_USER_AGENT'];
-        $headers['X-WebForm-Domain']    = $_SERVER['HTTP_HOST'];
+        $headers['X-WebForm-ServerIP']   = $_SERVER['SERVER_ADDR'];
+        $headers['X-WebForm-ServerName'] = $_SERVER['SERVER_NAME'];
+        $headers['X-WebForm-Host']       = $_SERVER['HTTP_HOST'];
+        $headers['X-WebForm-Referer']    = $_SERVER['HTTP_REFERER'];
+        $headers['X-WebForm-UserAgent']  = $_SERVER['HTTP_USER_AGENT'];
+        $headers['X-WebForm-RemoteIP']   = $_SERVER['REMOTE_ADDR'];
+        $headers['X-WebForm-RemoteName'] = $_SERVER['REMOTE_HOST'];
+        $headers['X-WebForm-URI']        = $_SERVER['REQUEST_URI'];
+        $headers['X-WebForm-Script']     = $_SERVER['SCRIPT_NAME'];
 
         // Send the email
         $result = mail($to, $subject, $message, $headers);
