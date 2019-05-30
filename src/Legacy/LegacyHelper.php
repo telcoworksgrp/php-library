@@ -382,7 +382,7 @@ class LegacyHelper
      *
      * @return mixed    A value for the given key, or the default value
      */
-    public static function getSessionVar(string $key, $default = null) : mixed
+    public static function getSessionVar(string $key, $default = null)
     {
         return $_SESSION[$key] ?? $default;
     }
