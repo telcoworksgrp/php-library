@@ -268,11 +268,31 @@ class LegacyHelper
         $data = new \SimpleXMLElement($data);
         $data = $data->response;
 
-        $result->usageStatement = (string) $data->usageStatement;
-        $result->current        = (string) $data->businessEntity->ABN->isCurrentIndicator;
-        $result->entityType     = (string) $data->businessEntity->entityType->entityDescription;
-        $result->asicNo         = (string) $data->businessEntity->ASICNumber;
-        $result->mainName       = (string) $data->businessEntity->mainName->organisationName;        
+        $result->statement = (string) $data->usageStatement;
+        $result->abn       = (string) $data->businessEntity->ABN->identifierValue;
+        $result->current   = (string) $data->businessEntity->ABN->isCurrentIndicator;
+        $result->asicNo    = (string) $data->businessEntity->ASICNumber;
+
+        $entityType               = $data->businessEntity->entityType;
+        $result->entityType       = new \stdClass;
+        $result->entityType->code = (string) $entityType->entityTypeCode;
+        $result->entityType->desc = (string) $entityType->entityDescription;
+
+        $legalName                    = $data->businessEntity->legalName;
+        $result->legalName            = new \stdClass;
+        $result->legalName->firstname = (string) $legalName->givenName;
+        $result->legalName->othername = (string) $legalName->otherGivenName;
+        $result->legalName->lastname  = (string) $legalName->familyName;
+
+        $mainName                       = $data->businessEntity->mainName;
+        $result->mainName               = new \stdClass;
+        $result->mainName->organisation = (string) $mainName->organisationName;
+        $result->mainName->effective    = (string) $mainName->effectiveFrom;
+
+        $tradeName                       = $data->businessEntity->mainTradingName;
+        $result->tradeName               = new \stdClass;
+        $result->tradeName->organisation = (string) $tradeName->organisationName;
+        $result->tradeName->effective    = (string) $tradeName->effectiveFrom;
 
         // Return the result
         return $result;
