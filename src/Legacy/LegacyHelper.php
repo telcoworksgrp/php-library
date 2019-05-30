@@ -44,6 +44,13 @@ class LegacyHelper
      */
     public static $recaptchaSecret = '';
 
+    /**
+     * GUID used for looking up ABN Details
+     *
+     * @var string
+     */
+    public static $abnLookupGuid = '';
+
 
 
     /**
@@ -231,6 +238,44 @@ class LegacyHelper
         header("Cache-Control: post-check=0, pre-check=0", false);
         header("Pragma: no-cache");
         header('Expires: Sun, 01 Jan 2014 00:00:00 GMT');
+    }
+
+
+
+    /**
+     * Look up the details for a given ABN using an API
+     * -------------------------------------------------------------------------
+     * @param  string   $abn    The ABN to lookup
+     *
+     * @return object   ABN details, or False if ABN not found
+     */
+    public static function getABNDetails(string $abn)
+    {
+        // Initialise some local variables
+        $result = new \stdClass();
+
+        // Look up the ABN details using ABR's API
+        $url = "https://abr.business.gov.au/abrxmlsearch/" .
+            "AbrXmlSearch.asmx/ABRSearchByABN";
+
+        $data = self::sendRequest($url, 'GET', array(
+            'searchString'             => $abn,
+            'includeHistoricalDetails' => 'Y',
+            'authenticationGuid'       => self::$abnLookupGuid
+        ));
+
+        // Parse the data returned by the API
+        $data = new \SimpleXMLElement($data);
+        $data = $data->response;
+
+        $result->usageStatement = (string) $data->usageStatement;
+        $result->current        = (string) $data->businessEntity->ABN->isCurrentIndicator;
+        $result->entityType     = (string) $data->businessEntity->entityType->entityDescription;
+        $result->asicNo         = (string) $data->businessEntity->ASICNumber;
+        $result->mainName       = (string) $data->businessEntity->mainName->organisationName;        
+
+        // Return the result
+        return $result;
     }
 
 
