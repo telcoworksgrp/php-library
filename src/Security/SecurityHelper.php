@@ -30,7 +30,7 @@ class SecurityHelper
      * @link  https://www.spamhaus.org/statistics/botnet-cc/
      */
     const WORST_SPAM_COUNTRIES = array('CN','RU','UA','IN','FR','JP','GB',
-    'HK','DE','EG','VN','IR','BR','TH','ID');
+    'HK','DE','EG','VN','IR','BR','TH','ID','PA','GG');
 
 
 
