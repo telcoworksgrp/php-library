@@ -24,8 +24,8 @@ class LegacyHelper
     /**
      * A list of months of the year
      */
-    const $MONTHS = array('January','February','March','April','May', 'June',
-        'July', 'August',  'September','October','November', 'December');
+    const MONTHS = array('January','February','March','April','May','June',
+        'July','August','September','October','November','December');
 
 
     /**
