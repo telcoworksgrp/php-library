@@ -22,6 +22,13 @@ class LegacyHelper
 {
 
     /**
+     * A list of months of the year
+     */
+    const $MONTHS = array('January','February','March','April','May', 'June',
+        'July', 'August',  'September','October','November', 'December');
+
+
+    /**
      * An API key issued by IP Geolocation
      *
      * @var string
