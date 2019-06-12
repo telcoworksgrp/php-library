@@ -377,4 +377,16 @@ class JoomlaHelper
     }
 
 
+    /**
+     * Dumps a Joomla Database query with db table prefixes
+     * ------------------------------------------------------------------------
+     * @param  JDatabaseQuery   $query  The database query to dump
+     */
+    public function dumpDBQuery($query)
+    {
+        $database = Factory::getDbo();
+        echo $database->replacePrefix((string) $query); 
+    }
+
+
 }
