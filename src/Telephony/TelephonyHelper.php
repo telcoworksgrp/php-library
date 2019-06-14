@@ -150,4 +150,11 @@ class TelephonyHelper
     }
 
 
+    public static function format2($prefix, $suffix)
+    {
+
+    }
+
+
+
 }
