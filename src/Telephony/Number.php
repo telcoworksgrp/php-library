@@ -95,7 +95,7 @@ class Number
      * @var string
      * @see Number::$suffix     For more info about suffixes and overdial
      */
-    protected $overdial = ""
+    protected $overdial = "";
 
 
     /**
@@ -113,7 +113,7 @@ class Number
      *
      * @return void
      */
-    public function setIntlCode(string $value = '') : void
+    public function setIntlCode(string $value) : void
     {
         $this->intlCode = preg_replace('|\D|i', '', $value);
     }
@@ -137,7 +137,7 @@ class Number
      *
      * @return void
      */
-    public function setCountryCode(string $value = '') : void
+    public function setCountryCode(string $value) : void
     {
         $this->countryCode = preg_replace('|\D|i', '', $value);
     }
@@ -169,7 +169,7 @@ class Number
      *
      * @return void
      */
-    public function setCountryCodePrefix(string $value = '') : void
+    public function setCountryCodePrefix(string $value) : void
     {
         $this->countryCodePrefix = trim($value);
     }
@@ -193,7 +193,7 @@ class Number
      *
      * @return void
      */
-    public function setAreaCode(string $value = '') : void
+    public function setAreaCode(string $value) : void
     {
         $this->areaCode = preg_replace('|\D|i', '', $value);
     }
@@ -211,7 +211,7 @@ class Number
         $result = $this->areaCode;
 
         if ($withPadding) {
-            $result = $this->getAreaCodePrefix() . $result;
+            $result = $this->getAreaCodePadChar() . $result;
         }
 
         return $result;
@@ -225,9 +225,9 @@ class Number
      *
      * @return void
      */
-    public function setAreaCodePrefix(string $value = '') : void
+    public function setAreaCodePadChar(string $value) : void
     {
-        $this->areaCodePrefix = trim($value);
+        $this->areaCodePadChar = trim($value);
     }
 
 
@@ -236,9 +236,9 @@ class Number
      * -------------------------------------------------------------------------
      * @return string   The number's area code prefix
      */
-    public function getAreaCodePrefix() : string
+    public function getAreaCodePadChar() : string
     {
-        return $this->areaCodePrefix;
+        return $this->areaCodePadChar;
     }
 
 
@@ -249,10 +249,20 @@ class Number
      *
      * @return void
      */
-    public function setPrefix(string $value = '') : void
+    public function setPrefix(string $value) : void
     {
         $this->prefix = preg_replace('|\D|i', '', $value);
-        $this->prefix = substr($this->prefix, 0, 4);
+
+        // Set the max suffix length for known number prefixes
+        switch ($this->prefix) {
+            case "1300":
+            case "1800":
+                $this->setMaxSuffixLength(6);
+                break;
+
+            case "13":
+                $this->setMaxSuffixLength(4);
+        }
     }
 
 
@@ -277,9 +287,9 @@ class Number
      *
      * @return void
      */
-    public function setSuffix(string $value = '', bool $setOverdial = true) : void
+    public function setSuffix(string $value, bool $setOverdial = true) : void
     {
-        $value           = preg_replace('|[^0-9A-Z]|i', '', $value);
+        $value = preg_replace('|[^0-9A-Z]|i', '', $value);
         $maxSuffixLength = $this->getMaxSuffixLength();
 
         $this->suffix = substr($value, 0, $maxSuffixLength);
@@ -293,23 +303,38 @@ class Number
     /**
      * Get the number's suffix
      * -------------------------------------------------------------------------
+     * @param  boolean $asDigits        Convert all letters to digits
+     * @param  integer $grpLength       Group size/length to seperate chars into
+     * @param  string  $grpSeperator    String to seperate chars with
+     *
      * @return string   The number's suffix
      */
-    public function getSuffix() : string
+    public function getSuffix(bool $asDigits = false, int $grpLength = 0,
+        string $grpSeperator = ' ') : string
     {
-        return $this->suffix;
+        $result = $this->suffix;
+
+        if ($asDigits) {
+            $result = TelephonyHelper::digitise($result);
+        }
+
+        if ($grpLength) {
+            $result = implode($grpSeperator, str_split($result, $grpLength));
+        }
+
+        return $result;
     }
 
 
     /**
-     * Set the maximum suffix length. The number's prefix, suffix and overdial
+     * Set the maximum suffix length. The number's suffix and overdial
      * is automatically adjusted according to the new maximum suffix length.
      * -------------------------------------------------------------------------
      * @param string    $value  A new value
      *
      * @return void
      */
-    public function setMaxSuffixLength(int $value = '') : void
+    public function setMaxSuffixLength(int $value) : void
     {
         $this->maxSuffixLength = $value;
         $this->setSuffix($this->getSuffix() . $this->getOverdial(), true);
@@ -334,7 +359,7 @@ class Number
      *
      * @return void
      */
-    public function setOverdial(string $value = '') : void
+    public function setOverdial(string $value) : void
     {
         $this->overdial = preg_replace('|[^0-9A-Z]|i', '', $value);
     }
@@ -343,11 +368,26 @@ class Number
     /**
      * Get the number's overdial
      * -------------------------------------------------------------------------
+     * @param  boolean $asDigits        Convert all letters to digits
+     * @param  integer $grpLength       Group size/length to seperate chars into
+     * @param  string  $grpSeperator    String to seperate chars with
+     *
      * @return string   The number's overdial
      */
-    public function getOverdial() : string
+    public function getOverdial(bool $asDigits = false, int $grpLength = 0,
+        string $grpSeperator = ' ') : string
     {
-        return $this->overdial;
+        $result = $this->overdial;
+
+        if ($asDigits) {
+            $result = TelephonyHelper::digitise($result);
+        }
+
+        if ($grpLength) {
+            $result = implode($grpSeperator, str_split($result, $grpLength));
+        }
+
+        return $result;
     }
 
 
@@ -358,7 +398,7 @@ class Number
      *
      * @return void
      */
-    public function setExtension(string $value = '') : void
+    public function setExtension(string $value) : void
     {
         $this->extension = preg_replace('|\D|i', '', $value);
     }
@@ -372,6 +412,81 @@ class Number
     public function getExtension() : string
     {
         return $this->extension;
+    }
+
+
+    /**
+     * Composes a number based on a custom pattern
+     * -------------------------------------------------------------------------
+     * @param  string   $pattern    Pattern to format the number to. Tokens:
+     *                              I - International Code
+     *                              C - Country Code (with prefix)
+     *                              c - Country Code (without prefix)
+     *                              A - Area Code (with padding)
+     *                              a - Area Code (without Padding)
+     *                              P - Prefix
+     *                              S - Suffix
+     *                              s - Suffix (as Digits)
+     *                              T - Suffix (in 2 char groups)
+     *                              U - Suffix (in 3 char groups)
+     *                              V - Suffix (as Digits, 2 char groups)
+     *                              W - Suffix (as Digits, 3 char groups)
+     *                              O - Overdial
+     *                              o - Overdial (as Digits)
+     *                              Q - Overdial (in 2 char groups)
+     *                              R - Overdial (in 3 char groups)
+     *                              X - Overdial (as Digits, 2 char groups)
+     *                              Y - Overdial (as Digits, 3 char groups)
+     *                              E - Extension
+     *
+     *                              Escape any of the above charictars with "\".
+     *                              eg: "\The \Prefix i\s P"
+     *
+     *
+     * @return string   A custom formatted number
+     */
+    public function format(string $pattern = "") : string
+    {
+        // Intialise some local variables
+        $tokens = "ICcAaPSsTUVWOoQRXYE";
+        $result = $pattern;
+
+        // Replace tokens with the corrasponding values
+        $result = preg_replace_callback("|(?<!\\\\)[$tokens]|",
+        function($match) {
+
+            switch ($match[0]) {
+                case 'I': return $this->getIntlCode();
+                case 'C': return $this->getCountryCode();
+                case 'c': return $this->getCountryCode(false);
+                case 'A': return $this->getAreaCode();
+                case 'a': return $this->getAreaCode(false);
+                case 'P': return $this->getPrefix();
+                case 'S': return $this->getSuffix();
+                case 's': return $this->getSuffix(true);
+                case 'T': return $this->getSuffix(false, 2);
+                case 'U': return $this->getSuffix(false, 3);
+                case 'V': return $this->getSuffix(true, 2);
+                case 'W': return $this->getSuffix(true, 3);
+                case 'O': return $this->getOverdial();
+                case 'o': return $this->getOverdial(true);
+                case 'Q': return $this->getOverdial(false, 2);
+                case 'R': return $this->getOverdial(false, 3);
+                case 'X': return $this->getOverdial(true, 2);
+                case 'Y': return $this->getOverdial(true, 3);
+                case 'E': return $this->getExtension();
+            }
+
+        }, $result);
+
+        // Replace any escaped charictars
+        $result = preg_replace("|\\\\([$tokens])|", '$1', $result);
+
+        // Clean up the result
+        $result = trim($result);
+
+        // Return the result
+        return $result;
     }
 
 
