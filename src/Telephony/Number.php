@@ -421,26 +421,26 @@ class Number
      * @param  string   $pattern    Pattern to format the number to. Tokens:
      *                              I - International Code
      *                              C - Country Code (with prefix)
-     *                              c - Country Code (without prefix)
+     *                              D - Country Code (without prefix)
      *                              A - Area Code (with padding)
-     *                              a - Area Code (without Padding)
+     *                              B - Area Code (without Padding)
      *                              P - Prefix
      *                              S - Suffix
-     *                              s - Suffix (as Digits)
+     *                              M - Suffix (as Digits)
      *                              T - Suffix (in 2 char groups)
      *                              U - Suffix (in 3 char groups)
      *                              V - Suffix (as Digits, 2 char groups)
      *                              W - Suffix (as Digits, 3 char groups)
      *                              O - Overdial
-     *                              o - Overdial (as Digits)
+     *                              L - Overdial (as Digits)
      *                              Q - Overdial (in 2 char groups)
      *                              R - Overdial (in 3 char groups)
      *                              X - Overdial (as Digits, 2 char groups)
      *                              Y - Overdial (as Digits, 3 char groups)
      *                              E - Extension
      *
-     *                              Escape any of the above charictars with "\".
-     *                              eg: "\The \Prefix i\s P"
+     *                              Escape any of the above charictars
+     *                              preceding it with a "\".
      *
      *
      * @return string   A custom formatted number
@@ -448,7 +448,7 @@ class Number
     public function format(string $pattern = "") : string
     {
         // Intialise some local variables
-        $tokens = "ICcAaPSsTUVWOoQRXYE";
+        $tokens = "ICDABPSMTUVWOLQRXYE";
         $result = $pattern;
 
         // Replace tokens with the corrasponding values
@@ -458,18 +458,18 @@ class Number
             switch ($match[0]) {
                 case 'I': return $this->getIntlCode();
                 case 'C': return $this->getCountryCode();
-                case 'c': return $this->getCountryCode(false);
+                case 'D': return $this->getCountryCode(false);
                 case 'A': return $this->getAreaCode();
-                case 'a': return $this->getAreaCode(false);
+                case 'B': return $this->getAreaCode(false);
                 case 'P': return $this->getPrefix();
                 case 'S': return $this->getSuffix();
-                case 's': return $this->getSuffix(true);
+                case 'M': return $this->getSuffix(true);
                 case 'T': return $this->getSuffix(false, 2);
                 case 'U': return $this->getSuffix(false, 3);
                 case 'V': return $this->getSuffix(true, 2);
                 case 'W': return $this->getSuffix(true, 3);
                 case 'O': return $this->getOverdial();
-                case 'o': return $this->getOverdial(true);
+                case 'L': return $this->getOverdial(true);
                 case 'Q': return $this->getOverdial(false, 2);
                 case 'R': return $this->getOverdial(false, 3);
                 case 'X': return $this->getOverdial(true, 2);
