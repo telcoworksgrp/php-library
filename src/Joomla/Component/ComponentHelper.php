@@ -12,10 +12,31 @@
 
 namespace TCorp\Joomla\Component;
 
+use \Joomla\CMS\Factory;
+use \Joomla\CMS\Component\ComponentHelper;
+
 
 /**
  * Helper class for working with joomla components
  */
 class ComponentHelper
 {
+
+    /**
+     * Get the component's global configuration
+     * -------------------------------------------------------------------------
+     * @param   string  $name   The name of the component (eg. com_articles).
+     *                          If no name is given the name of the current/
+     *                          active component is used.
+     * @return  object   The components global configuration
+     */
+    public static function getComponentConfig(string $name = '')
+    {
+        if (empty($name)) {
+            $name = Factory::getApplication()->input->get('option');
+        }
+
+        return ComponentHelper::getParams($name)->toObject();
+    }
+
 }
