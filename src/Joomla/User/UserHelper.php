@@ -12,6 +12,8 @@
 
 namespace TCorp\Joomla\User;
 
+use \Joomla\CMS\Factory;
+
 
 /**
  * Helper class for working with Joomla users
