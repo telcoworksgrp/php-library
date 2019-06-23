@@ -263,9 +263,13 @@ class JoomlaHelper
      * @param  mixed    $userId     Id of the user, or null for the current user
      *
      * @return bool     TRUE if authorised, FALSE is not authorised
+     *
+     * @deprecated  Use \TCorp\Joomla\User\UserHelper::isAuthorised() instead
      */
     public static function isAuthorised(string $action, string $asset, $userId = null)
     {
+        trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
+
         // Check if the user is authorised to perform the action on
         // the given asset and return the result
         return Factory::getUser($userId)->authorise($action, $asset);
@@ -278,10 +282,14 @@ class JoomlaHelper
      * @param   int     $userId     The id of the user
      * @param   string  $default    A value to return if unsucessful
      *
-     * @return  string The full name of the given user
+     * @return  string The full name of the given user0
+     *
+     * @deprecated  Use \TCorp\Joomla\User\UserHelper::getFullName() instead
      */
     public static function getFullName($userId = 0, string $default = '-')
     {
+        trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
+
         // Get and return the user's name
         return (empty($userId)) ? $default : Factory::getUser($userId)->name;
     }
@@ -385,7 +393,7 @@ class JoomlaHelper
     public function dumpDBQuery($query)
     {
         $database = Factory::getDbo();
-        echo $database->replacePrefix((string) $query); 
+        echo $database->replacePrefix((string) $query);
     }
 
 
