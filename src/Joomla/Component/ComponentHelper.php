@@ -13,7 +13,7 @@
 namespace TCorp\Joomla\Component;
 
 use \Joomla\CMS\Factory;
-use \Joomla\CMS\Component\ComponentHelper;
+use \Joomla\CMS\Component\ComponentHelper AS JoomlaComponentHelper;
 
 
 /**
@@ -36,7 +36,7 @@ class ComponentHelper
             $name = Factory::getApplication()->input->get('option');
         }
 
-        return ComponentHelper::getParams($name)->toObject();
+        return JoomlaComponentHelper::getParams($name)->toObject();
     }
 
 }
