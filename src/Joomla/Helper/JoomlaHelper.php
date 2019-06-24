@@ -57,9 +57,13 @@ class JoomlaHelper
      *                          If no name is given the name of the current/
      *                          active component is used.
      * @return  object   The components global configuration
+     *
+     * @deprecated  Use \TCorp\Joomla\Component\ComponentHelper::getConfig() instead
      */
     public static function getComponentConfig(string $name = '')
     {
+        trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
+
         if (empty($name)) {
             $name = Factory::getApplication()->input->get('option');
         }
