@@ -18,13 +18,13 @@ use \Joomla\CMS\Form\FormHelper;
 
 
 // Load the parent FormField class
-FormHelper::loadFieldClass('list');
+FormHelper::loadFieldClass('radio');
 
 
 /**
  * Custom Form field for selecting "AM" or "PM"
  */
-class AmPm extends \JFormFieldList
+class AmPm extends \JFormFieldRadio
 {
 
     protected $type = 'KWSAmPm';

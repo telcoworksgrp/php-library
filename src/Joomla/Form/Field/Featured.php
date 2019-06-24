@@ -18,13 +18,13 @@ use \Joomla\CMS\Form\FormHelper;
 
 
 // Load the parent FormField class
-FormHelper::loadFieldClass('list');
+FormHelper::loadFieldClass('radio');
 
 
 /**
  * Custom Form field for selecting a "Featured" or "Unfeatured"
  */
-class Featured extends \JFormFieldList
+class Featured extends \JFormFieldRadio
 {
 
     protected $type = 'KWSFeatured';

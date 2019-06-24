@@ -18,13 +18,13 @@ use \Joomla\CMS\Form\FormHelper;
 
 
 // Load the parent FormField class
-FormHelper::loadFieldClass('list');
+FormHelper::loadFieldClass('radio');
 
 
 /**
  * Custom Form field for selecting a "Published" or "Unpublished"
  */
-class Published extends \JFormFieldList
+class Published extends \JFormFieldRadio
 {
 
     protected $type = 'KWSPublished';

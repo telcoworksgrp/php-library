@@ -18,13 +18,13 @@ use \Joomla\CMS\Form\FormHelper;
 
 
 // Load the parent FormField class
-FormHelper::loadFieldClass('list');
+FormHelper::loadFieldClass('radio');
 
 
 /**
  * Custom Form field for selecting a "Enable" or "Disable"
  */
-class EnableDisable extends \JFormFieldList
+class EnableDisable extends \JFormFieldRadio
 {
 
     protected $type = 'KWSEnableDisable';

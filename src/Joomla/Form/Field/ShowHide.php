@@ -18,13 +18,13 @@ use \Joomla\CMS\Form\FormHelper;
 
 
 // Load the parent FormField class
-FormHelper::loadFieldClass('list');
+FormHelper::loadFieldClass('radio');
 
 
 /**
  * Custom Form field for selecting a "Show" or "Hide"
  */
-class ShowHide extends \JFormFieldList
+class ShowHide extends \JFormFieldRadio
 {
 
     protected $type = 'KWSShowHide';

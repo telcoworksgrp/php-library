@@ -18,13 +18,13 @@ use \Joomla\CMS\Form\FormHelper;
 
 
 // Load the parent FormField class
-FormHelper::loadFieldClass('list');
+FormHelper::loadFieldClass('radio');
 
 
 /**
  * Custom Form field for selecting a "Yes" or "No"
  */
-class YesNo extends \JFormFieldList
+class YesNo extends \JFormFieldRadio
 {
 
     protected $type = 'KWSYesNo';
