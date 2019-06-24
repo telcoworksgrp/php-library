@@ -31,7 +31,7 @@ class SidebarHelper
      *
      * @return  void
      */
-    protected static function addSidebarItem(string $caption, string $view,
+    public static function addSidebarItem(string $caption, string $view,
         string $component) : void
     {
         // Prepare the sidebar item
