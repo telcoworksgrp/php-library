@@ -30,7 +30,7 @@ class ComponentHelper
      *                          active component is used.
      * @return  object   The components global configuration
      */
-    public static function getComponentConfig(string $name = '')
+    public static function getConfig(string $name = '')
     {
         if (empty($name)) {
             $name = Factory::getApplication()->input->get('option');
