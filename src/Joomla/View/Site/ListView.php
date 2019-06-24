@@ -13,6 +13,7 @@
 namespace TCorp\Joomla\View\Site;
 
 use \TCorp\Joomla\Helper\JoomlaHelper;
+use \TCorp\Joomla\Component\ComponentHelper;
 use \Joomla\CMS\MVC\View\HtmlView;
 use \Joomla\CMS\Factory;
 
@@ -38,7 +39,7 @@ class ListView extends HtmlView
         $this->state         = $this->get('State');
         $this->ordering      = $this->escape($this->state->get('list.ordering'));
         $this->direction     = $this->escape($this->state->get('list.direction'));
-        $this->config        = JoomlaHelper::getComponentConfig();
+        $this->config        = ComponentHelper::getConfig();
         $this->menuitem      = JoomlaHelper::getActiveMenuItem();
 
         // Call and return the parent method

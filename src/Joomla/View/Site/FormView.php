@@ -13,6 +13,7 @@
 namespace TCorp\Joomla\View\Site;
 
 use \TCorp\Joomla\Helper\JoomlaHelper;
+use \TCorp\Joomla\Component\ComponentHelper;
 use \Joomla\CMS\MVC\View\HtmlView;
 use \Joomla\CMS\Factory;
 
@@ -32,7 +33,7 @@ class FormView extends HtmlView
         // Add data to the view
         $this->form     = $this->get('Form');
         $this->state    = $this->get('State');
-        $this->config   = JoomlaHelper::getComponentConfig();
+        $this->config   = ComponentHelper::getConfig();
         $this->menuitem = JoomlaHelper::getActiveMenuItem();
 
         // Call and return the parent method
