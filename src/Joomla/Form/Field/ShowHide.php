@@ -27,7 +27,7 @@ FormHelper::loadFieldClass('radio');
 class ShowHide extends \JFormFieldRadio
 {
 
-    protected $type = 'KWSShowHide';
+    protected $type = 'ShowHide';
 
 
     /**

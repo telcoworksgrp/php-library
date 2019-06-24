@@ -27,7 +27,7 @@ FormHelper::loadFieldClass('radio');
 class YesNo extends \JFormFieldRadio
 {
 
-    protected $type = 'KWSYesNo';
+    protected $type = 'YesNo';
 
 
     /**

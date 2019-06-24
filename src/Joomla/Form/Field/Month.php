@@ -27,7 +27,7 @@ FormHelper::loadFieldClass('list');
 class Month extends \JFormFieldList
 {
 
-    protected $type = 'KWSMonth';
+    protected $type = 'Month';
 
 
     /**

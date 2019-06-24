@@ -27,7 +27,7 @@ FormHelper::loadFieldClass('radio');
 class Published extends \JFormFieldRadio
 {
 
-    protected $type = 'KWSPublished';
+    protected $type = 'Published';
 
 
     /**

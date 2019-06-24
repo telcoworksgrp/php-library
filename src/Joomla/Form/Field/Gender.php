@@ -27,7 +27,7 @@ FormHelper::loadFieldClass('list');
 class Gender extends \JFormFieldList
 {
 
-    protected $type = 'KWSGender';
+    protected $type = 'Gender';
 
 
     /**

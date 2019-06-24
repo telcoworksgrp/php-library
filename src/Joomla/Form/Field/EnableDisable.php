@@ -27,7 +27,7 @@ FormHelper::loadFieldClass('radio');
 class EnableDisable extends \JFormFieldRadio
 {
 
-    protected $type = 'KWSEnableDisable';
+    protected $type = 'EnableDisable';
 
 
     /**

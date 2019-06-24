@@ -27,7 +27,7 @@ FormHelper::loadFieldClass('list');
 class DayOfWeek extends \JFormFieldList
 {
 
-    protected $type = 'KWSDayOfWeek';
+    protected $type = 'DayOfWeek';
 
 
     /**

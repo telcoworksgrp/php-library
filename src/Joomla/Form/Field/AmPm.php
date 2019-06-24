@@ -27,7 +27,7 @@ FormHelper::loadFieldClass('radio');
 class AmPm extends \JFormFieldRadio
 {
 
-    protected $type = 'KWSAmPm';
+    protected $type = 'AmPm';
 
 
     /**
