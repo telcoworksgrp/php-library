@@ -24,7 +24,7 @@ FormHelper::loadFieldClass('list');
 /**
  * Custom Form field for selecting a "Featured" or "Unfeatured"
  */
-class Featured extends JFormFieldList
+class Featured extends \JFormFieldList
 {
 
     protected $type = 'KWSFeatured';

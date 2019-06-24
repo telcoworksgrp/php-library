@@ -24,7 +24,7 @@ FormHelper::loadFieldClass('list');
 /**
  * Custom Form field for selecting a gender
  */
-class Gender extends JFormFieldList
+class Gender extends \JFormFieldList
 {
 
     protected $type = 'KWSGender';

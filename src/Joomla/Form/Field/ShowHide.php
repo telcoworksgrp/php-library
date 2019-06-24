@@ -24,7 +24,7 @@ FormHelper::loadFieldClass('list');
 /**
  * Custom Form field for selecting a "Show" or "Hide"
  */
-class ShowHide extends JFormFieldList
+class ShowHide extends \JFormFieldList
 {
 
     protected $type = 'KWSShowHide';

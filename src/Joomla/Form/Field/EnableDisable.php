@@ -24,7 +24,7 @@ FormHelper::loadFieldClass('list');
 /**
  * Custom Form field for selecting a "Enable" or "Disable"
  */
-class EnableDisable extends JFormFieldList
+class EnableDisable extends \JFormFieldList
 {
 
     protected $type = 'KWSEnableDisable';

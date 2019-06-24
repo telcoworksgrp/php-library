@@ -24,7 +24,7 @@ FormHelper::loadFieldClass('list');
 /**
  * Custom Form field for selecting "AM" or "PM"
  */
-class AmPm extends JFormFieldList
+class AmPm extends \JFormFieldList
 {
 
     protected $type = 'KWSAmPm';

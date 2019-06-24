@@ -24,7 +24,7 @@ FormHelper::loadFieldClass('list');
 /**
  * Custom Form field for selecting a "Published" or "Unpublished"
  */
-class Published extends JFormFieldList
+class Published extends \JFormFieldList
 {
 
     protected $type = 'KWSPublished';

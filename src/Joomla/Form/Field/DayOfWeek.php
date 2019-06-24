@@ -24,7 +24,7 @@ FormHelper::loadFieldClass('list');
 /**
  * Custom Form field for selecting a day of the week
  */
-class DayOfWeek extends JFormFieldList
+class DayOfWeek extends \JFormFieldList
 {
 
     protected $type = 'KWSDayOfWeek';

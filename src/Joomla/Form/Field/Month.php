@@ -24,7 +24,7 @@ FormHelper::loadFieldClass('list');
 /**
  * Custom Form field for selecting a month of the year
  */
-class Month extends JFormFieldList
+class Month extends \JFormFieldList
 {
 
     protected $type = 'KWSMonth';
