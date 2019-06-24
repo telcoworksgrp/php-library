@@ -304,9 +304,13 @@ class JoomlaHelper
      * Set the title of the administration toolbar
      * -------------------------------------------------------------------------
      * @param string    $title  A new title
+     *
+     * @deprecated  Use \TCorp\Joomla\Toolbar\ToolbarHelper::setTitle instead
      */
     public static function setToolbarTitle(string $title)
     {
+        trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
+
         ToolBarHelper::title(Text::_($title));
     }
 
@@ -317,10 +321,14 @@ class JoomlaHelper
      * -------------------------------------------------------------------------
      * @param string    $component      Component to which the item controller belongs to
      * @param string    $controller     Controller to execute actions on
+     *
+     *  @deprecated  Use \TCorp\Joomla\Toolbar\ToolbarHelper::addStandardItemToolbarBtns instead
      */
     public static function addStandardItemToolbarBtns(string $component,
         string $controller)
     {
+        trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
+
         // Add apply, save and save2new buttons
        if (self::isAuthorised('core.edit', $component)) {
            ToolbarHelper::apply($controller . '.apply');
@@ -343,10 +351,14 @@ class JoomlaHelper
      * @param string    $component          Component to which the controllers belong to
      * @param string    $itemController     Controller for executing item actions
      * @param string    $listController     Controller for executing list actions
+     *
+     *  @deprecated  Use \TCorp\Joomla\Toolbar\ToolbarHelper::addStandardListToolbarBtns instead
      */
     public static function addStandardListToolbarBtns(string $component,
         string $itemController, string $listController)
     {
+
+        trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
 
         // Add an new button
        if (self::isAuthorised('core.create', $component)) {
@@ -380,9 +392,13 @@ class JoomlaHelper
      * administration toolbar
      * -------------------------------------------------------------------------
      * @param string    $component  Component to show the button for.
+     *
+     *  @deprecated  Use \TCorp\Joomla\Toolbar\ToolbarHelper::addOptionsBtn instead
      */
     public static function addToolbarOptionsBtn(string $component)
     {
+        trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
+
         if (self::isAuthorised('core.admin', $component)) {
           ToolBarHelper::preferences($component);
       }
