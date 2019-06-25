@@ -22,7 +22,7 @@ FormHelper::loadFieldClass('list');
 
 
 /**
- * Custom Form field for selecting a day of the week
+ * Custom Form field for selecting a value for the background-repeat CSS property
  */
 class CssRepeat extends \JFormFieldList
 {
