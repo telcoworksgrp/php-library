@@ -12,6 +12,8 @@
 
 namespace TCorp\Legacy;
 
+use \TCorp\Helper\SecurityHelper;
+
 
 /**
  * Helper class for working with Telecom Corp's Legacy sites/projects
