@@ -10,9 +10,7 @@
  * =============================================================================
  */
 
-namespace TCorp\Legacy;
-
-use \TCorp\Security\SecurityHelper;
+namespace TCorp\Helper;
 
 
 /**
