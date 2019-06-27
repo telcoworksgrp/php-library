@@ -10,7 +10,7 @@
  * =============================================================================
  */
 
-namespace TCorp\T3\Api;
+namespace TCorp\Legacy\Api;
 
 
 class Client
