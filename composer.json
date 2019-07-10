@@ -18,7 +18,8 @@
         "composer/installers": "^1.6",
         "league/flysystem-ziparchive": "^1.0",
         "league/csv": "^9.1",
-        "guzzlehttp/guzzle": "^6.3.3"
+        "guzzlehttp/guzzle": "^6.3.3",
+        "scssphp/scssphp": "^1.0"
     },
 
     "autoload": {
