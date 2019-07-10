@@ -26,11 +26,11 @@ class TemplateHelper
     public static function compileSCSS(string $inputFile, string $outputFile)
     {
         // Load the SCSS code from file
-        $scss = file_get_content($inputFile);
+        $scss = file_get_contents($inputFile);
 
         // Compile the SCSS to CSS
         $compiler = new SCSSCompiler();
-        $compiler->setFormatter('ScssPhp\ScssPhp\Formatter\Expanded');
+        $compiler->setFormatter('ScssPhp\ScssPhp\Formatter\Compact');
         $css = $compiler->compile($scss);
 
         // save the generated CSS to file
