@@ -12,6 +12,8 @@
 
 namespace TCorp\Joomla\Template;
 
+use \ScssPhp\ScssPhp\Compiler AS SCSSCompiler;
+
 
 
 /**
@@ -19,5 +21,20 @@ namespace TCorp\Joomla\Template;
  */
 class TemplateHelper
 {
+
+
+    public static function compileSCSS(string $inputFile, string $outputFile)
+    {
+        // Load the SCSS code from file
+        $scss = file_get_content($inputFile);
+
+        // Compile the SCSS to CSS
+        $compiler = new SCSSCompiler();
+        $compiler->setFormatter('ScssPhp\ScssPhp\Formatter\Expanded');
+        $css = $compiler->compile($scss);
+
+        // save the generated CSS to file
+        file_put_contents($outputFile, $css);
+    }
 
 }
