@@ -23,7 +23,15 @@ class TemplateHelper
 {
 
 
-    public static function compileSCSS(string $inputFile, string $outputFile)
+    /**
+     * Compile SCSS code to CSS
+     * -------------------------------------------------------------------------
+     * @param  string   $inputFile    File containing SCSS code
+     * @param  string   $outputFile   File to output the CSS to
+     *
+     * @return void
+     */
+    public static function compileSCSS(string $inputFile, string $outputFile) : void;
     {
         // Load the SCSS code from file
         $scss = file_get_contents($inputFile);
