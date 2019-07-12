@@ -39,6 +39,7 @@ class TemplateHelper
         // Compile the SCSS to CSS
         $compiler = new SCSSCompiler();
         $compiler->setFormatter('ScssPhp\ScssPhp\Formatter\Compact');
+        $compiler->addImportPath(dirname($inputFile));
         $css = $compiler->compile($scss);
 
         // save the generated CSS to file
