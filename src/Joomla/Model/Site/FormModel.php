@@ -12,11 +12,11 @@
 
 namespace TCorp\Joomla\Model\Site;
 
-use \Joomla\CMS\MVC\Model\FormModel;
+use \Joomla\CMS\MVC\Model\FormModel AS JFormModel;
 use \Joomla\CMS\Factory;
 
 
-abstract class FormModel extends FormModel
+abstract class FormModel extends JFormModel
 {
 
 
