@@ -26,11 +26,9 @@ abstract class FormModel extends JFormModel
      */
     public function getForm($data = array(), $loadData = true)
     {
-        // Get the form with values
-        $name    = $this->option . '.' . $this->name;
-        $source  = $this->name;
-        $options = array('control' => 'jform', 'load_data' => $loadData);
-        $result  = $this->loadForm($name, $source, $options);
+        // Get the form
+        $result  = $this->loadForm("{$this->option}.{}$this->name}",
+            $this->name, ['control' => 'jform', 'load_data' => $loadData]);
 
         // Return the result
         return $result;
@@ -43,14 +41,9 @@ abstract class FormModel extends JFormModel
      */
     protected function loadFormData()
     {
-        // Initialise some local variables
-        $application = Factory::getApplication();
-
-        // Try to load the form data from the user state
-        $key = $this->option . '.edit.' . $this->name . '.data';
-
-        $result = $application->getUserStateFromRequest(
-            $key, 'jform', array(), 'ARRAY');
+        // Get the form data from the current user state (the user's session)
+        $result = Factory::getApplication()->getUserState(
+            "{$this->option}.edit.{$this->name}.data", 'jform', [], 'array');
 
         // Return the result
         return $result;
