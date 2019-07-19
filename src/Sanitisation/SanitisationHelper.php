@@ -29,7 +29,7 @@ class SanitisationHelper
      *
      * @return  mixed   The original value, but sanitised.
      */
-    public static function sanitise(mixed $value, $type = 'STRING') : mixed
+    public static function sanitise($value, $type = 'STRING')
     {
         // If the given value is an array sanitise each element
         if (is_array($value)) {
