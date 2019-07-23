@@ -12,6 +12,8 @@
 
 namespace TCorp\WebApi\Model;
 
+use \TCorp\WebApi\Client;
+
 
 /**
  * Base class for working with single API items
@@ -32,7 +34,7 @@ class ItemModel extends BaseModel
      *
      * @var mixed[]
      */
-    protected $data = [];
+    protected $values = [];
 
 
 
@@ -46,6 +48,7 @@ class ItemModel extends BaseModel
     public function load($id) : bool
     {
         echo "Load\n";
+        return true;
     }
 
 
@@ -56,13 +59,13 @@ class ItemModel extends BaseModel
      *
      * @return void
      */
-    public function bind(mixed $data) : void
+    public function bind($data) : void
     {
         if (is_object($data)) {
             $data = (array) $data;
         }
 
-        foreach(self::$properties as $name) {
+        foreach(static::$properties as $name) {
             if (isset($data[$name])) {
                 $this->values[$name] = $data[$name];
             }
@@ -120,7 +123,7 @@ class ItemModel extends BaseModel
         }
 
         // Create or update the item with the current data
-        if (empty($this->id)) {
+        if ($this->id === null) {
             return $this->create();
         } else {
             return $this->update();
@@ -136,6 +139,7 @@ class ItemModel extends BaseModel
     protected function create()
     {
         echo "Create\n";
+        return true;
     }
 
 
@@ -147,6 +151,7 @@ class ItemModel extends BaseModel
     protected function update()
     {
         echo "Update\n";
+        return true;
     }
 
 
@@ -158,6 +163,7 @@ class ItemModel extends BaseModel
     public function delete()
     {
         echo "Delete\n";
+        return true;
     }
 
 
@@ -181,7 +187,7 @@ class ItemModel extends BaseModel
      */
     public function __get($name)
     {
-        if (in_array($name, self::$properties)) {
+        if (in_array($name, static::$properties)) {
             return $this->values[$name] ?? null;
         } else {
             return null;
@@ -197,9 +203,9 @@ class ItemModel extends BaseModel
      *
      * @return void
      */
-    public function __set(string $name , mixed $value) : void
+    public function __set(string $name , $value) : void
     {
-        if (in_array($name, self::$properties)) {
+        if (in_array($name, static::$properties)) {
             $this->values[$name] = $value;
         }
     }

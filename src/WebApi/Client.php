@@ -91,7 +91,7 @@ class Client
      *
      * @return $this
      */
-    public function setBaseUrl(string $value) : void
+    public function setBaseUrl(string $value) : Client
     {
         $this->baseUrl = rtrim($value, '/');
         return $this;

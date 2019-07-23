@@ -18,4 +18,25 @@ namespace TCorp\WebApi\Model;
  */
 class BaseModel
 {
+
+    /**
+     * An instance of a WebApi client for send/receiving
+     * data from the API
+     *
+     * @var \TCorp\WebApi\Client
+     */
+    protected $apiClient = null;
+
+
+    /**
+     * Constructor for initialising new instances of this class
+     * -------------------------------------------------------------------------
+     * @param \TCorp\WebApi\Client    $apiClient    An WebApi client instance
+     */
+    public function __construct(Client $apiClient)
+    {
+        // Initialise some class properties
+        $this->apiClient = $apiClient;
+    }
+
 }
