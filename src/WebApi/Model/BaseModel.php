@@ -31,6 +31,14 @@ class BaseModel
 
 
     /**
+     * Enpoint URL to send. Relative URLs are relative
+     * the base Url defined in the WebApi Client
+     * @var
+     */
+    protected static $endpoint = '';
+
+
+    /**
      * Constructor for initialising new instances of this class
      * -------------------------------------------------------------------------
      * @param \TCorp\WebApi\Client    $apiClient    An WebApi client instance

@@ -47,7 +47,8 @@ class ItemModel extends BaseModel
      */
     public function load($id) : bool
     {
-        echo "Load\n";
+        $data = $this->apiClient->execute('GET', static::$endpoint . $id);
+        $this->bind($data->result->item);
         return true;
     }
 
