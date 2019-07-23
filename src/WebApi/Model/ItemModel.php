@@ -138,6 +138,7 @@ class ItemModel extends Model
      */
     protected function create()
     {
+        $this->apiClient->execute('POST', '', $this->data);
         return true;
     }
 
@@ -149,6 +150,7 @@ class ItemModel extends Model
      */
     protected function update()
     {
+        $this->apiClient->execute('PUT', static::$endpoint . $id, $this->data);
         return true;
     }
 
@@ -160,6 +162,7 @@ class ItemModel extends Model
      */
     public function delete()
     {
+        $this->apiClient->execute('DELETE', static::$endpoint . $id);
         return true;
     }
 
