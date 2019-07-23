@@ -10,7 +10,7 @@
  * =============================================================================
  */
 
-namespace TCorp\WebApi\Model;
+namespace TCorp\WebApi\Model\Clients;
 
 use \TCorp\WebApi\Model\ItemModel;
 
