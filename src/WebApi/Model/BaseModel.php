@@ -12,6 +12,8 @@
 
 namespace TCorp\WebApi\Model;
 
+use \TCorp\WebApi\Client;
+
 
 /**
  * Base class for creating models that abstract the web api
