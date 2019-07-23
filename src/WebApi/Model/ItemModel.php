@@ -83,7 +83,6 @@ class ItemModel extends Model
      */
     public function validate() : bool
     {
-        echo "Validate\n";
         return true;
     }
 
@@ -96,7 +95,6 @@ class ItemModel extends Model
      */
     public function sanitise() : void
     {
-        echo "Sanitise\n";
     }
 
 
@@ -140,7 +138,6 @@ class ItemModel extends Model
      */
     protected function create()
     {
-        echo "Create\n";
         return true;
     }
 
@@ -152,7 +149,6 @@ class ItemModel extends Model
      */
     protected function update()
     {
-        echo "Update\n";
         return true;
     }
 
@@ -164,7 +160,6 @@ class ItemModel extends Model
      */
     public function delete()
     {
-        echo "Delete\n";
         return true;
     }
 
