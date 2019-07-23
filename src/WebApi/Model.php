@@ -16,7 +16,7 @@ namespace TCorp\WebApi;
 /**
  * Base class for creating models that abstract the web api
  */
-class BaseModel
+class Model
 {
 
     /**
