@@ -19,6 +19,7 @@ namespace TCorp\WebApi;
 class Client
 {
 
+
     /**
      * Base URL for all entpoints
      *
@@ -65,23 +66,6 @@ class Client
     * @var float
     */
     protected $timeout = 5;
-
-
-    /**
-     * The request to send to the API
-     *
-     * @var \TCorp\WebApi\Request
-     */
-    protected $request = null;
-
-
-    /**
-     * The last response returned by the API
-     *
-     * @var \TCorp\WebApi\Response
-     */
-    protected $response = null;
-
 
 
     /**
@@ -235,87 +219,36 @@ class Client
 
 
     /**
-     * Set the request to be sent to the API
-     * -------------------------------------------------------------------------
-     * @param \TCorp\WebApi\Request     $value  An API Request
-     *
-     * @return \TCorp\WebApi\Client
-     */
-    public function setRequest(Request $value) : Client
-    {
-        $this->request = $value;
-        return $this;
-    }
-
-
-    /**
-     * Get the request to be sent to the API
-     * -------------------------------------------------------------------------
-     * @return  \TCorp\WebApi\Request   The API Request
-     */
-    public function getRequest() : Request
-    {
-        return $this->request;
-    }
-
-
-    /**
-     * Set the response returned from the API
-     * -------------------------------------------------------------------------
-     * @param \TCorp\WebApi\Response    $value  An API Response
-     *
-     * @return \TCorp\WebApi\Client
-     */
-    public function setResponse(Response $value) : Client
-    {
-        $this->response = $value;
-        return $this;
-    }
-
-
-    /**
-     * Get the the response returned from the API
-     * -------------------------------------------------------------------------
-     * @return  \TCorp\WebApi\Response   The API Response
-     */
-    public function getResponse() : Response
-    {
-        return $this->response;
-    }
-
-
-    /**
      * Send the API request and return/store the Response
      *  -------------------------------------------------------------------------
-     * @return \TCorp\WebApi\Response   The API Response
+     * @return stdClass
      */
-    public function execute()
+    public function execute(string $method, string $relEndpoint,
+        array $params = [] )
     {
-        // Check that we have a valid request
-        $request = $this->getRequest();
-        if (empty($request)) {
-            throw new \Exception("No request has been set", 500);
-        }
 
         // Compose and execute the HTTP request
-        $httpClient = \GuzzleHttp\Client([
+        $httpClient = new \GuzzleHttp\Client([
             'base_uri'        => $this->getBaseUrl(),
             'allow_redirects' => $this->getRedirects(),
             'auth'            => [$this->getUsername(), $this->getPassword()],
-            'verify'          => $this->verifySSL(),
+            'verify'          => $this->getVerifySSL(),
             'timeout'         => $this->getTimeout(),
             'version'         => '1.1',
         ]);
 
-        $httpResponse = $httpClient->request();
+        if (strtoupper($method) == 'GET') {
+            $params = ['query' => $params];
+        } else {
+            $params = ['form_params' => $params];
+        }
 
+        $result = $httpClient->request($method, $relEndpoint, $params);
+        $result = (string) $result->getBody();
+        $result = json_decode($result);
 
-
-
-        // Store the API's response
-
-        // Return the API's response
-        return $this->getResponse();
+        // Return the result
+        return $result;
     }
 
 
