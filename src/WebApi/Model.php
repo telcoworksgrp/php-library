@@ -10,9 +10,7 @@
  * =============================================================================
  */
 
-namespace TCorp\WebApi\Model;
-
-use \TCorp\WebApi\Client;
+namespace TCorp\WebApi;
 
 
 /**

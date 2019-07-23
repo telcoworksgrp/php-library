@@ -10,15 +10,14 @@
  * =============================================================================
  */
 
-namespace TCorp\WebApi\Model\Clients;
-
-use \TCorp\WebApi\Model\ItemModel;
+namespace TCorp\WebApi\Model;
 
 
-class ClientModel extends ItemModel
+
+class AffiliateModel extends ItemModel
 {
 
-    protected static $endpoint = 'clients/';
+    protected static $endpoint = 'affiliates/';
 
     protected static $properties = [
         'id',
@@ -43,6 +42,7 @@ class ClientModel extends ItemModel
     	'image',
     	'logo',
     	'video',
+    	't3code',
     	'published',
     	'featured',
     	'created',

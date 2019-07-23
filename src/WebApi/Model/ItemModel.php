@@ -12,13 +12,14 @@
 
 namespace TCorp\WebApi\Model;
 
+use \TCorp\WebApi\Model;
 use \TCorp\WebApi\Client;
 
 
 /**
  * Base class for working with single API items
  */
-class ItemModel extends BaseModel
+class ItemModel extends Model
 {
 
     /**
