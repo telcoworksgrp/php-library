@@ -138,7 +138,7 @@ class ItemModel extends Model
      */
     protected function create()
     {
-        $this->apiClient->execute('POST', '', $this->data);
+        $this->apiClient->execute('POST', '', $this->values);
         return true;
     }
 
@@ -150,7 +150,7 @@ class ItemModel extends Model
      */
     protected function update()
     {
-        $this->apiClient->execute('PUT', static::$endpoint . $id, $this->data);
+        $this->apiClient->execute('PUT', static::$endpoint . $id, $this->values);
         return true;
     }
 
