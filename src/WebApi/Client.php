@@ -595,6 +595,9 @@ class Client
         $this->getEndpoint('');
         $this->getParams([]);
         $this->getHeaders([]);
+
+        // Return the result
+        return $this;
     }
 
 
