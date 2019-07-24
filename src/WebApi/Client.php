@@ -314,7 +314,7 @@ class Client
      *
      * @return  $this
      */
-    public function setParams(mixed $value) : Client
+    public function setParams($value) : Client
     {
         // Make sure the value is an array
         $value = (array) $value;
@@ -537,7 +537,7 @@ class Client
      *
      * @return  mixed
      */
-    public function getParam(string $name, $default = null) : mixed
+    public function getParam(string $name, $default = null)
     {
         // Return the result
         return $this->params[$name] ?? $default;
@@ -564,7 +564,7 @@ class Client
      *
      * @return  mixed
      */
-    public function getHeader(string $name, $default = null) : mixed
+    public function getHeader(string $name, $default = null)
     {
         // Return the result
         return $this->headers[$name] ?? $default;
@@ -576,7 +576,7 @@ class Client
      * -------------------------------------------------------------------------
      * @return mixed
      */
-    public function getResponse() : mixed
+    public function getResponse()
     {
         // Return the result
         return $this->response;
