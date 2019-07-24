@@ -10,26 +10,42 @@
  * =============================================================================
  */
 
-namespace TCorp\WebApi\Model;
+namespace TCorp\WebApi\Orm;
 
 
 
-class MessageModel extends ItemModel
+class ClientModel extends ItemModel
 {
 
-    protected static $endpoint = 'messages/';
+    protected static $endpoint = 'clients/';
 
     protected static $properties = [
         'id',
-       'from',
-       'replyto',
-       'to',
-       'cc',
-       'bcc',
-       'subject',
-       'body',
-       'created',
-       'note'
+    	'company',
+    	'alias',
+    	'intro',
+    	'description',
+    	'abn',
+    	'address',
+    	'suburb',
+    	'state',
+    	'postcode',
+    	'country',
+    	'latitude',
+    	'longitude',
+    	'phone',
+    	'fax',
+    	'mobile',
+    	'email',
+    	'website',
+    	'thumbnail',
+    	'image',
+    	'logo',
+    	'video',
+    	'published',
+    	'featured',
+    	'created',
+    	'note'
     ];
 
 }

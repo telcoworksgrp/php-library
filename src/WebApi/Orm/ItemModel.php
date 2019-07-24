@@ -10,7 +10,7 @@
  * =============================================================================
  */
 
-namespace TCorp\WebApi\Model;
+namespace TCorp\WebApi\Orm;
 
 
 /**
