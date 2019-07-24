@@ -10,13 +10,13 @@
  * =============================================================================
  */
 
-namespace TCorp\WebApi;
+namespace TCorp\WebApi\Client;
 
 
 /**
- * A client for consuming the Telecom Corporate WebAPI
+ * A generic client for consuming the Telecom Corporate WebAPI
  */
-class Client
+class GenericClient extends BaseClient
 {
 
     /**
@@ -130,7 +130,7 @@ class Client
      *
      * @return $this
      */
-    public function setBaseUrl(string $value) : Client
+    public function setBaseUrl(string $value) : BaseClient
     {
         // Remove any trailing slashes
         $value = rtrim($value, '/');
@@ -150,7 +150,7 @@ class Client
      *
      * @return $this
      */
-    public function setSandboxBaseUrl(string $value) : Client
+    public function setSandboxBaseUrl(string $value) : BaseClient
     {
         // Remove any trailing slashes
         $value = rtrim($value, '/');
@@ -170,7 +170,7 @@ class Client
      *
      * @return $this
      */
-    public function setSandboxMode(bool $value) : Client
+    public function setSandboxMode(bool $value) : BaseClient
     {
         // Set the new value
         $this->sandboxMode = $value;
@@ -187,7 +187,7 @@ class Client
      *
      * @return $this
      */
-    public function setClientId(string $value) : Client
+    public function setClientId(string $value) : BaseClient
     {
         // Set the new value
         $this->clientId = $value;
@@ -204,7 +204,7 @@ class Client
      *
      * @return $this
      */
-    public function setClientSecret(string $value) : Client
+    public function setClientSecret(string $value) : BaseClient
     {
         // Set the new value
         $this->clientSecret = $value;
@@ -221,7 +221,7 @@ class Client
      *
      * @return $this
      */
-    public function setTimeout(int $value) : Client
+    public function setTimeout(int $value) : BaseClient
     {
         // Set the new value
         $this->timeout = $value;
@@ -238,7 +238,7 @@ class Client
      *
      * @return  $this
      */
-    public function setVerifySSL(bool $value) : Client
+    public function setVerifySSL(bool $value) : BaseClient
     {
         // Set the new value
         $this->verifySSL = $value;
@@ -255,7 +255,7 @@ class Client
      *
      * @return  $this
      */
-    public function setRedirects(bool $value) : Client
+    public function setRedirects(bool $value) : BaseClient
     {
         // Set the new value
         $this->redirects = $value;
@@ -272,7 +272,7 @@ class Client
      *
      * @return  $this
      */
-    public function setMethod(string $value) : Client
+    public function setMethod(string $value) : BaseClient
     {
         // If valid, set the new value. Otherwise raise a warning
         if (in_array(strtoupper($value), ['GET','POST','PUT','DELETE'])) {
@@ -294,7 +294,7 @@ class Client
      *
      * @return  $this
      */
-    public function setEndpoint(string $value) : Client
+    public function setEndpoint(string $value) : BaseClient
     {
         // Remove any trailing slashes
         $value = rtrim($value, '/');
@@ -314,7 +314,7 @@ class Client
      *
      * @return  $this
      */
-    public function setParams($value) : Client
+    public function setParams($value) : BaseClient
     {
         // Make sure the value is an array
         $value = (array) $value;
@@ -335,7 +335,7 @@ class Client
      *
      * @return  $this
      */
-    public function setParam(string $name, $value) : Client
+    public function setParam(string $name, $value) : BaseClient
     {
         // Set the new value
         $this->params[$name] = $value;
@@ -352,7 +352,7 @@ class Client
      *
      * @return  $this
      */
-    public function setHeaders(array $value) : Client
+    public function setHeaders(array $value) : BaseClient
     {
         // Set the new value
         $this->headers = $value;
@@ -370,7 +370,7 @@ class Client
      *
      * @return  $this
      */
-    public function setHeader(string $name, $value) : Client
+    public function setHeader(string $name, $value) : BaseClient
     {
         // Set the new value
         $this->headers[$name] = $value;
@@ -387,7 +387,7 @@ class Client
      *
      * @return $this
      */
-    protected function setResponse($value) : Client
+    protected function setResponse($value) : BaseClient
     {
         // Set the new value
         $this->response = $value;
@@ -589,7 +589,7 @@ class Client
      * -------------------------------------------------------------------------
      * @return $this
      */
-    public function reset() : Client
+    public function reset() : BaseClient
     {
         $this->getMethod('GET');
         $this->getEndpoint('');
