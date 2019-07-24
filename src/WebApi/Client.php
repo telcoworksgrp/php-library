@@ -120,7 +120,7 @@ class Client
      *
      * @var string[]
      */
-    protected $headers = []
+    protected $headers = [];
 
     /**
      * A copy of the last response returned by the API
