@@ -12,14 +12,11 @@
 
 namespace TCorp\WebApi\Model;
 
-use \TCorp\WebApi\Model;
-use \TCorp\WebApi\Client;
-
 
 /**
- * Base class for working with single API items
+ * Base class for working with individual API items
  */
-class ItemModel extends Model
+class ItemModel extends BaseModel
 {
 
     /**
@@ -31,55 +28,194 @@ class ItemModel extends Model
 
 
     /**
-     * A list of property values for the item
+     * Holds data for the item
      *
      * @var mixed[]
      */
-    protected $values = [];
+    protected $data = [];
 
 
 
     /**
-     * Load data from the API
+     * Create a new item in the API from the current data
      * -------------------------------------------------------------------------
-     * @param  string|int   $id     Id of the item
-     *
-     * @return bool     True on success, False on failure
+     * @return bool TRUE if successful, FALSE if not successful
      */
-    public function load($id) : bool
+    public function create() : bool
     {
-        $data = $this->apiClient->execute('GET', static::$endpoint . $id);
-        $this->bind($data->result->item);
+        // Compose and execute an API request
+        $this->client->reset();
+        $this->client->setMethod('POST');
+        $this->client->setEndpoint(static::$endpoint);
+        $this->client->setParams($this->data);
+        $response = $this->client->execute();
+
+        // If the request failed return false
+        if ($response === false) {
+            return false;
+        }
+
+        // The API will give the item a new id (and
+        // perhaps other values), update the current
+        // data to reflect this
+        $this->bind($response->result->item);
+
+        // Return TRUE to indicate success
         return true;
     }
 
 
     /**
-     * Set the current data using an object or array.
+     * Read data for an item from the API
      * -------------------------------------------------------------------------
-     * @param  mixed    $data   Object or associative array containing values
+     * @param  string|int   $id     The item's id
      *
+     * @return bool TRUE if successful, FALSE if not successful
+     */
+    public function read($id) : bool
+    {
+        // Compose and execute an API request
+        $this->client->reset();
+        $this->client->setMethod('GET');
+        $this->client->setEndpoint(static::$endpoint . $id);
+        $response = $this->client->execute();
+
+        // If the request failed return false
+        if ($response === false) {
+            return false;
+        }
+
+        // Update the current data with the data
+        // received from the API
+        $this->bind($response->result->item);
+
+        // Return TRUE to indicate success
+        return true;
+    }
+
+
+    /**
+     * Update the item in the API using the current data
+     * -------------------------------------------------------------------------
+     * @return bool TRUE if successful, FALSE if not successful
+     */
+    public function update() : bool
+    {
+        // Compose and execute an API request
+        $this->client->reset();
+        $this->client->setMethod('PUT');
+        $this->client->setEndpoint(static::$endpoint . $this->id);
+        $this->client->setParams($this->data);
+        $response = $this->client->execute();
+
+        // If the request failed return false
+        if ($response === false) {
+            return false;
+        }
+
+        // The API may have sanitised or otherwise altered
+        // some the data we sent it , update the current
+        // data to reflect this
+        $this->bind($response->result->item);
+
+        // Return TRUE to indicate success
+        return true;
+    }
+
+
+    /**
+     * Delete the item from the API
+     * -------------------------------------------------------------------------
+     * @return bool TRUE if successful, FALSE if not successful
+     */
+    public function delete() : bool
+    {
+        // Compose and execute an API request
+        $this->client->reset();
+        $this->client->setMethod('DELETE');
+        $this->client->setEndpoint(static::$endpoint . $this->id);
+        $response = $this->client->execute();
+
+        // If the request failed return false
+        if ($response === false) {
+            return false;
+        }
+
+        // Return TRUE to indicate success
+        return true;
+    }
+
+
+    /**
+     * Save the current data to the API. If a current id has been set, then
+     * update the item with that id. If a current id has NOT been set, create
+     * a new item
+     * -------------------------------------------------------------------------
+     * @param  bool  $validate   Validate current data before saving
+     * @param  bool  $sanitise   Sanitise current data before saving
+     *
+     * @return bool TRUE if successful, FALSE if not successful
+     */
+     public function save(bool $validate = true, bool $sanitise = true) : bool
+     {
+         // Sanitise the item before creating/updating
+         if ($sanitise) {
+             $this->sanitise();
+         }
+
+         // Validate the item before creating/updating
+         if ($validate) {
+             if ($this->validate() == false) {
+                 return false;
+             }
+         }
+
+         // Create or update the item with the current data
+         if ($this->id === null) {
+             return $this->create();
+         } else {
+             return $this->update();
+         }
+     }
+
+
+    /**
+     * Clear all current data for the item
+     * -------------------------------------------------------------------------
      * @return void
      */
-    public function bind($data) : void
+    public function clear() : void
     {
-        if (is_object($data)) {
-            $data = (array) $data;
+        $this->data = [];
+    }
+
+
+    /**
+     * Set the current data to values found in an object or associative array.
+     * -------------------------------------------------------------------------
+     * @param \stdClass|array   $newData   Object/assoc array containing values
+     *
+     * @return bool TRUE if successful, FALSE if not successful
+     */
+    public function bind($newData) : bool
+    {
+        if (is_object($newData)) {
+            $newData = (array) $newData;
         }
 
         foreach(static::$properties as $name) {
-            if (isset($data[$name])) {
-                $this->values[$name] = $data[$name];
+            if (isset($newData[$name])) {
+                $this->data[$name] = $newData[$name];
             }
         }
     }
 
 
     /**
-     * Check that the current data valid. By default, this method is called
+     * Check that the current data is valid. By default, this method is called
      * when saving the item
      * -------------------------------------------------------------------------
-     * @return  bool    True if all values are valid, False if not
+     * @return bool TRUE if successful, FALSE if not successful
      */
     public function validate() : bool
     {
@@ -99,82 +235,24 @@ class ItemModel extends Model
 
 
     /**
-     * Save the current data to the API. If no value has been set for the item's
-     * id, then a new item will be created. Otherwise the existing item will
-     * be updated
+     * Get the current data as a plain object
      * -------------------------------------------------------------------------
-     * @param  bool  $validate   Validate current data before saving
-     * @param  bool  $sanitise   Sanitise current data before saving
-     *
-     * @return bool    True on success, False on failure
+     * @return \stdClass    The current data as an object
      */
-    public function save(bool $validate = true, bool $sanitise = true) : bool
+    public function toObject() : \stdClass
     {
-        // Validate the item before creating/updating
-        if ($validate) {
-            if ($this->validate() == false) {
-                return false;
-            }
-        }
-
-        // Sanitise the item before creating/updating
-        if ($sanitise) {
-            $this->sanitise();
-        }
-
-        // Create or update the item with the current data
-        if ($this->id === null) {
-            return $this->create();
-        } else {
-            return $this->update();
-        }
+        return (object) $this->data;
     }
 
 
     /**
-     * Create a new item with the current data
+     * Get the current data as JSON
      * -------------------------------------------------------------------------
-     * @return  bool    True on success, False on failure
+     * @return string   The current data as JSON
      */
-    protected function create()
+    public function toJson() : string
     {
-        $this->apiClient->execute('POST', '', $this->values);
-        return true;
-    }
-
-
-    /**
-     * Update an existing item with the current data
-     * -------------------------------------------------------------------------
-     * @return  bool    True on success, False on failure
-     */
-    protected function update()
-    {
-        $this->apiClient->execute('PUT', static::$endpoint . $id, $this->values);
-        return true;
-    }
-
-
-    /**
-     * Delete the item from the API
-     * -------------------------------------------------------------------------
-     * @return  bool    True on success, False on failure
-     */
-    public function delete()
-    {
-        $this->apiClient->execute('DELETE', static::$endpoint . $id);
-        return true;
-    }
-
-
-    /**
-     * Clear the current data without updating the API
-     * -------------------------------------------------------------------------
-     * @return void
-     */
-    public function clear()
-    {
-        $this->values = [];
+        return json_encode($this->data);
     }
 
 
@@ -183,12 +261,12 @@ class ItemModel extends Model
      * -------------------------------------------------------------------------
      * @param string $name   Name of the property to get
      *
-     * @return mixed    Value of the given property
+     * @return mixed Value of the given property
      */
     public function __get($name)
     {
         if (in_array($name, static::$properties)) {
-            return $this->values[$name] ?? null;
+            return $this->data[$name] ?? null;
         } else {
             return null;
         }
@@ -206,7 +284,7 @@ class ItemModel extends Model
     public function __set(string $name , $value) : void
     {
         if (in_array($name, static::$properties)) {
-            $this->values[$name] = $value;
+            $this->data[$name] = $value;
         }
     }
 

@@ -10,13 +10,15 @@
  * =============================================================================
  */
 
-namespace TCorp\WebApi;
+namespace TCorp\WebApi\Model;
+
+use \TCorp\WebApi\Client;
 
 
 /**
  * Base class for creating models that abstract the web api
  */
-class Model
+class BaseModel
 {
 
     /**
@@ -25,13 +27,14 @@ class Model
      *
      * @var \TCorp\WebApi\Client
      */
-    protected $apiClient = null;
+    protected $client = null;
 
 
     /**
-     * Enpoint URL to send. Relative URLs are relative
-     * the base Url defined in the WebApi Client
-     * @var
+     * Enpoint URL to send. Relative URLs are relative to the base Url
+     * defined in the WebApi Client
+     *
+     * @var string
      */
     protected static $endpoint = '';
 
@@ -41,10 +44,10 @@ class Model
      * -------------------------------------------------------------------------
      * @param \TCorp\WebApi\Client    $apiClient    An WebApi client instance
      */
-    public function __construct(Client $apiClient)
+    public function __construct(Client $client = null)
     {
         // Initialise some class properties
-        $this->apiClient = $apiClient;
+        $this->client = is_null($client) ? new Client()  : $client ;
     }
 
 }
