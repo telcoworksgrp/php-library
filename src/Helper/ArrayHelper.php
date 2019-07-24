@@ -22,9 +22,9 @@ class ArrayHelper
 
 
     /**
-     * Map an array to a stdClass object recursively.
+     * Convert an array to a stdClass object recursively.
      * -------------------------------------------------------------------------
-     * @param   array       $array       The array to map.
+     * @param   array       $array       The array to convert.
      * @param   string      $class       Name of the class to create
      * @param   boolean     $recursive   Convert all nested arrays
      *
@@ -53,9 +53,9 @@ class ArrayHelper
 
 
     /**
-	 * Map an array to a string.
+	 * Convert an array to a string.
 	 * -------------------------------------------------------------------------
-	 * @param   array    $array         The array to map.
+	 * @param   array    $array         The array to convert.
 	 * @param   string   $innerGlue     The glue between the key and the value.
 	 * @param   string   $outerGlue     The glue between array elements.
 	 * @param   boolean  $quoteChar     Charictar to surround the value with.
