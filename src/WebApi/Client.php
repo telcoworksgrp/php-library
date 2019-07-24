@@ -592,6 +592,21 @@ class Client
 
 
     /**
+     * Resets the method, endpoint, params and headers that will be used
+     * with the next API request.
+     * -------------------------------------------------------------------------
+     * @return $this
+     */
+    public function reset() : Client
+    {
+        $this->getMethod('GET');
+        $this->getEndpoint('');
+        $this->getParams([]);
+        $this->getHeaders([]);
+    }
+
+
+    /**
      * Execute an API request
      * -------------------------------------------------------------------------
      * @return mixed    API payload on success, False on failure
