@@ -89,6 +89,27 @@ class ArrayHelper
 	}
 
 
+    /**
+     * Convert an associtive array into a CSS rule. Keys are treated as CSS
+     * property names and values are treated as values for the corrasponding
+     * property.
+     * ------------------------------------------------------------------------
+     * @param  string  $selector       A CSS selector for the CSS rule
+     * @param  array   $properties     A list of CSS property => value pairs
+     *
+     * @return string  A CSS rule
+     */
+     public static function toCSSRule(string $selector, array $properties) : string
+     {
+        $result = $selector . '{ ';
+        $result .= static::toString($test, ': ', '; ', '');
+        $result .= '}';
+
+        // Return the result
+        return $result;
+   }
+
+
 
 
 
@@ -138,34 +159,7 @@ class ArrayHelper
 
 
 
-     /**
-      * Convert an associtive array into a CSS rule. Keys are treated as CSS
-      * property names and values are treated as values for the corrasponding
-      * property.
-      * ------------------------------------------------------------------------
-      * @param  string  $selector       A CSS selector for the CSS rule
-      * @param  array   $properties     A list of CSS property => value pairs
-      *
-      * @return string  A CSS rule
-      */
-      public static function toCSSRule(string $selector, array $properties) : string
-      {
-          // Compose the declaration block
-          $declaration = array();
 
-          foreach ($properties AS $property => $value) {
-              $declaration[] = "$property: $value;";
-          }
-
-          $declaration = implode(' ', $declaration);
-
-
-          // Combine the selector and declaration block
-          $result = "$selector { $declaration }";
-
-          // Return the result
-          return $result;
-    }
 
 
 }
