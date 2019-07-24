@@ -17,7 +17,7 @@ namespace TCorp\WebApi\Model;
 class ClientModel extends ItemModel
 {
 
-    protected static $endpoint = 'clients/';
+    protected static $endpoint = '/clients';
 
     protected static $properties = [
         'id',

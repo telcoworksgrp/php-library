@@ -17,7 +17,7 @@ namespace TCorp\WebApi\Model;
 class AffiliateModel extends ItemModel
 {
 
-    protected static $endpoint = 'affiliates/';
+    protected static $endpoint = '/affiliates';
 
     protected static $properties = [
         'id',
