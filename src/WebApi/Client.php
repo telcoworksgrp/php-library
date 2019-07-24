@@ -461,7 +461,7 @@ class Client
     public function getClientSecret() : string
     {
         // Return the result
-        return $this->setClientSecret;
+        return $this->clientSecret;
     }
 
 
