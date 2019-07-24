@@ -64,7 +64,7 @@ class ArrayHelper
 	 * @return  string
 	 */
      public static function toString(array $array, string $innerGlue = '=',
-         string $outerGlue = ' ', string $quoteChar = '"' bool $finalGlue = true)
+         string $outerGlue = ' ', string $quoteChar = '"', bool $finalGlue = true)
 	{
 		$output = array();
 
