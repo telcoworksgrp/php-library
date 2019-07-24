@@ -58,12 +58,12 @@ class ArrayHelper
 	 * @param   array    $array         The array to map.
 	 * @param   string   $innerGlue     The glue between the key and the value.
 	 * @param   string   $outerGlue     The glue between array elements.
-	 * @param   boolean  $keepOuterKey  True if final key should be kept.
+	 * @param   boolean  $quoteChar     Charictar to surround the value with.
 	 *
 	 * @return  string
 	 */
-	public static function toString(array $array, $innerGlue = '=',
-        $outerGlue = ' ', $keepOuterKey = false)
+     public static function toString(array $array, string $innerGlue = '=',
+         string $outerGlue = ' ', string $quoteChar = '"')
 	{
 		$output = array();
 
@@ -71,16 +71,12 @@ class ArrayHelper
 
             if (\is_array($item)) {
 
-                if ($keepOuterKey) {
-					$output[] = $key;
-				}
-
 				$output[] = static::toString($item, $innerGlue,
-                    $outerGlue, $keepOuterKey);
+                    $outerGlue, $quoteChar);
 
 			} else {
 
-				$output[] = $key . $innerGlue . '"' . $item . '"';
+				$output[] = $key . $innerGlue . $quoteChar . $item . $quoteChar;
 
 			}
 		}
