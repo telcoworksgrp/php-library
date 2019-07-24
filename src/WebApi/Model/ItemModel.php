@@ -195,9 +195,9 @@ class ItemModel extends BaseModel
      * -------------------------------------------------------------------------
      * @param \stdClass|array   $newData   Object/assoc array containing values
      *
-     * @return bool TRUE if successful, FALSE if not successful
+     * @return void
      */
-    public function bind($newData) : bool
+    public function bind($newData) : void
     {
         if (is_object($newData)) {
             $newData = (array) $newData;
