@@ -17,7 +17,7 @@ namespace TCorp\WebApi\Model;
 class MessageModel extends ItemModel
 {
 
-    protected static $endpoint = '/messages';
+    protected static $endpoint = 'messages/';
 
     protected static $properties = [
         'id',
