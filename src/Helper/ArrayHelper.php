@@ -20,6 +20,92 @@ class ArrayHelper
 {
 
 
+
+    /**
+     * Map an array to a stdClass object recursively.
+     * -------------------------------------------------------------------------
+     * @param   array       $array       The array to map.
+     * @param   string      $class       Name of the class to create
+     * @param   boolean     $recursive   Convert all nested arrays
+     *
+     * @return  object
+     */
+    public static function toObject(array $array, $class = 'stdClass',
+        $recursive = true)
+	{
+		$obj = new $class;
+
+		foreach ($array as $k => $v) {
+
+			if ($recursive && \is_array($v)) {
+
+				$obj->$k = static::toObject($v, $class);
+
+			} else {
+
+				$obj->$k = $v;
+
+			}
+		}
+
+		return $obj;
+	}
+
+
+    /**
+	 * Map an array to a string.
+	 * -------------------------------------------------------------------------
+	 * @param   array    $array         The array to map.
+	 * @param   string   $innerGlue     The glue between the key and the value.
+	 * @param   string   $outerGlue     The glue between array elements.
+	 * @param   boolean  $keepOuterKey  True if final key should be kept.
+	 *
+	 * @return  string
+	 */
+	public static function toString(array $array, $innerGlue = '=',
+        $outerGlue = ' ', $keepOuterKey = false)
+	{
+		$output = array();
+
+		foreach ($array as $key => $item) {
+
+            if (\is_array($item)) {
+
+                if ($keepOuterKey) {
+					$output[] = $key;
+				}
+
+				$output[] = static::toString($item, $innerGlue,
+                    $outerGlue, $keepOuterKey);
+
+			} else {
+
+				$output[] = $key . $innerGlue . '"' . $item . '"';
+
+			}
+		}
+
+		return implode($outerGlue, $output);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Find which array element contains the closest value to the one provided.
      * This method only works on arrays containing int or float values
