@@ -55,15 +55,16 @@ class ArrayHelper
     /**
 	 * Convert an array to a string.
 	 * -------------------------------------------------------------------------
-	 * @param   array    $array         The array to convert.
-	 * @param   string   $innerGlue     The glue between the key and the value.
-	 * @param   string   $outerGlue     The glue between array elements.
-	 * @param   boolean  $quoteChar     Charictar to surround the value with.
+	 * @param   array  $array          The array to convert.
+	 * @param   string $innerGlue      The glue between the key and the value.
+	 * @param   string $outerGlue      The glue between array elements.
+	 * @param   bool   $quoteChar      Charictar to surround the value with.
+	 * @param   bool   $finalGlue      Add the outerGlue to the last item
 	 *
 	 * @return  string
 	 */
      public static function toString(array $array, string $innerGlue = '=',
-         string $outerGlue = ' ', string $quoteChar = '"')
+         string $outerGlue = ' ', string $quoteChar = '"' bool $finalGlue = true)
 	{
 		$output = array();
 
@@ -72,7 +73,7 @@ class ArrayHelper
             if (\is_array($item)) {
 
 				$output[] = static::toString($item, $innerGlue,
-                    $outerGlue, $quoteChar);
+                    $outerGlue, $quoteChar, $finalGlue);
 
 			} else {
 
@@ -81,7 +82,10 @@ class ArrayHelper
 			}
 		}
 
-		return implode($outerGlue, $output);
+        $result  = implode($outerGlue, $output);
+        $result .= ($finalGlue) ? $outerGlue  : '';
+
+		return $result;
 	}
 
 
