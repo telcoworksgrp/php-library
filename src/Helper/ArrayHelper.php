@@ -101,7 +101,7 @@ class ArrayHelper
      */
      public static function toCSSRule(string $selector, array $properties) : string
      {
-        $result = $selector . '{ ';
+        $result = $selector . ' { ';
         $result .= static::toString($properties, ': ', '; ', '');
         $result .= '}';
 
