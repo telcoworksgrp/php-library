@@ -84,14 +84,6 @@ class Client
 
 
     /**
-     * A http client for sending/receiving API requests
-     *
-     * @var \GuzzleHttp\Client
-     */
-    protected $httpClient = null;
-
-
-    /**
      * HTTP method to use for the next API request
      *
      * @var string
