@@ -42,6 +42,21 @@ class BaseController extends \Controller_Rest
 
 
     /**
+     * Constructor method for initialising new instances of this class
+     * -------------------------------------------------------------------------
+     * @param \Request  $request    The current request object
+     */
+    public function __construct(\Request $request)
+    {
+        // Call the parent constructor
+        parent::__construct($request);
+
+        // Initialise some class properties
+        $this->result = new \stdClass();
+    }
+
+
+    /**
      * Compose a response from class properties after the approciate controller
      * method has being called.
      * -------------------------------------------------------------------------
