@@ -58,7 +58,7 @@ class ItemModel extends BaseModel
         // The API will give the item a new id (and
         // perhaps other values), update the current
         // data to reflect this
-        $this->bind($response->result->item);
+        $this->bind($response);
 
         // Return TRUE to indicate success
         return true;
@@ -87,7 +87,7 @@ class ItemModel extends BaseModel
 
         // Update the current data with the data
         // received from the API
-        $this->bind($response->result->item);
+        $this->bind($response);
 
         // Return TRUE to indicate success
         return true;
@@ -116,7 +116,7 @@ class ItemModel extends BaseModel
         // The API may have sanitised or otherwise altered
         // some the data we sent it , update the current
         // data to reflect this
-        $this->bind($response->result->item);
+        $this->bind($response);
 
         // Return TRUE to indicate success
         return true;
