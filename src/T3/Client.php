@@ -121,7 +121,7 @@ class Client
     public function setParams($value) : Client
     {
         // Make sure the value is an array
-        $value (array) $value;
+        $value = (array) $value;
 
         // Set the new value
         $this->params = $value;
@@ -223,9 +223,9 @@ class Client
     /**
      * Get the entire list of parameters to send with the request
      * -------------------------------------------------------------------------
-     * @return  string
+     * @return  mixed[]
      */
-    public function getParams() : string
+    public function getParams()
     {
         // Return the result
         return $this->params;
@@ -250,9 +250,9 @@ class Client
     /**
      * Get the entire list of additional headers to send with the request
      * -------------------------------------------------------------------------
-     * @return  string
+     * @return  string[]
      */
-    public function getHeaders() : string
+    public function getHeaders() : array
     {
         // Return the result
         return $this->headers;
@@ -300,7 +300,7 @@ class Client
         $response = $httpClient->request($method, $resource, ['query' => $params]);
 
         $result = ($response->getStatusCode() == 200) ?
-            json_decode((string) $response->getBody()) : false;        
+            json_decode((string) $response->getBody()) : false;
 
         // Return the final result.
         return $result;
