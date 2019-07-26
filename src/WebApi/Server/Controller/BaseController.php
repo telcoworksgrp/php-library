@@ -57,6 +57,62 @@ class BaseController extends \Controller_Rest
 
 
     /**
+     * Get a list of items
+     * -------------------------------------------------------------------------
+     * @return \Response
+     */
+    public function get_list()
+    {
+    }
+
+
+    /**
+     * Create a new item
+     * -------------------------------------------------------------------------
+     * @return \Response
+     */
+    public function post_create()
+    {
+    }
+
+
+    /**
+     * Get a single item
+     * -------------------------------------------------------------------------
+     * @param   mixed   $id     The id of the item to delete
+     *
+     * @return \Response
+     */
+    public function get_read($id)
+    {
+    }
+
+
+    /**
+     * Update a single item
+     * -------------------------------------------------------------------------
+     * @param   mixed   $id     The id of the item to delete
+     *
+     * @return \Response
+     */
+    public function put_update($id)
+    {
+    }
+
+
+    /**
+     * Delete a single item
+     * -------------------------------------------------------------------------
+     * @param   mixed   $id     The id of the item to delete
+     *
+     * @return \Response
+     */
+    public function delete_delete($id)
+    {
+    }
+
+
+    /**
      * Compose a response from class properties after the approciate controller
      * method has being called.
      * -------------------------------------------------------------------------
