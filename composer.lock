@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4619a27ac9fcbe0551d0b4d5958c4cda",
+    "content-hash": "bb0413bdf01413ef0bfcd98a302b05e2",
     "packages": [
         {
             "name": "composer/installers",
@@ -314,17 +314,65 @@
             "time": "2019-07-01T23:21:34+00:00"
         },
         {
-            "name": "league/csv",
-            "version": "9.1.4",
+            "name": "kwebservices/kws",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/thephpleague/csv.git",
-                "reference": "9c8ad06fb5d747c149875beb6133566c00eaa481"
+                "url": "https://github.com/kwebservices/kws.git",
+                "reference": "dda16cd6e238f79fb89626dc54d4dee2799d4eea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/csv/zipball/9c8ad06fb5d747c149875beb6133566c00eaa481",
-                "reference": "9c8ad06fb5d747c149875beb6133566c00eaa481",
+                "url": "https://api.github.com/repos/kwebservices/kws/zipball/dda16cd6e238f79fb89626dc54d4dee2799d4eea",
+                "reference": "dda16cd6e238f79fb89626dc54d4dee2799d4eea",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "^1.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "KWS\\": "src/"
+                }
+            },
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "David Plath",
+                    "email": "webmaster@krealmwebservices.com.au"
+                }
+            ],
+            "description": "KRealm Web Services Composer Library",
+            "keywords": [
+                "base classess",
+                "composer",
+                "helpers",
+                "krealm",
+                "kws",
+                "services",
+                "web"
+            ],
+            "support": {
+                "source": "https://github.com/kwebservices/kws/tree/master",
+                "issues": "https://github.com/kwebservices/kws/issues"
+            },
+            "time": "2019-07-28T10:57:42+00:00"
+        },
+        {
+            "name": "league/csv",
+            "version": "9.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/csv.git",
+                "reference": "b574a7d8b28f1528e011d8652fb7d2e83410d4c9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/csv/zipball/b574a7d8b28f1528e011d8652fb7d2e83410d4c9",
+                "reference": "b574a7d8b28f1528e011d8652fb7d2e83410d4c9",
                 "shasum": ""
             },
             "require": {
@@ -333,7 +381,7 @@
             },
             "require-dev": {
                 "ext-curl": "*",
-                "friendsofphp/php-cs-fixer": "^2.0",
+                "friendsofphp/php-cs-fixer": "^2.12",
                 "phpstan/phpstan": "^0.9.2",
                 "phpstan/phpstan-phpunit": "^0.9.4",
                 "phpstan/phpstan-strict-rules": "^0.9.0",
@@ -378,20 +426,20 @@
                 "read",
                 "write"
             ],
-            "time": "2018-05-01T18:32:48+00:00"
+            "time": "2019-06-07T06:24:33+00:00"
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.50",
+            "version": "1.0.53",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "dab4e7624efa543a943be978008f439c333f2249"
+                "reference": "08e12b7628f035600634a5e76d95b5eb66cea674"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/dab4e7624efa543a943be978008f439c333f2249",
-                "reference": "dab4e7624efa543a943be978008f439c333f2249",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/08e12b7628f035600634a5e76d95b5eb66cea674",
+                "reference": "08e12b7628f035600634a5e76d95b5eb66cea674",
                 "shasum": ""
             },
             "require": {
@@ -462,7 +510,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2019-02-01T08:50:36+00:00"
+            "time": "2019-06-18T20:09:29+00:00"
         },
         {
             "name": "league/flysystem-ziparchive",
@@ -664,7 +712,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "kwebservices/kws": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

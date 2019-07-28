@@ -16,6 +16,7 @@
     "require":
     {
         "composer/installers": "^1.6",
+        "kwebservices/kws": "dev-master",
         "league/flysystem-ziparchive": "^1.0",
         "league/csv": "^9.1",
         "guzzlehttp/guzzle": "^6.3.3",
@@ -23,7 +24,14 @@
     },
 
     "autoload": {
-        "psr-4": {"TCorp\\": "src/"}      
-    }
+        "psr-4": {"TCorp\\": "src/"}
+    },
+
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/kwebservices/kws"
+        }
+    ]
 
 }
