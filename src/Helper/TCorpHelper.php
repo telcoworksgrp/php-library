@@ -13,6 +13,7 @@
 namespace TCorp\Helper;
 
 use \KWS\Google\GoogleHelper;
+use \KWS\Helper\ArrayHelper;
 
 
 /**
@@ -33,6 +34,23 @@ class TCorpHelper
         return GoogleHelper::getAnalyticsTrackingCode($tackingId);
     }
 
-    
+
+    /**
+     * Convert an associtive array into a CSS rule. Keys are treated as CSS
+     * property names and values are treated as values for the corrasponding
+     * property.
+     * ------------------------------------------------------------------------
+     * @param  string  $selector       A CSS selector for the CSS rule
+     * @param  array   $properties     A list of CSS property => value pairs
+     *
+     * @return string  A CSS rule
+     */
+     public static function arrayToCSSRule(string $selector, array $properties) : string
+     {
+        // Return the result
+        return ArrayHelper::toCSSRule($selector, $properties);
+   }
+
+
 
 }
