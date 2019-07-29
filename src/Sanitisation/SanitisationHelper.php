@@ -16,6 +16,6 @@ namespace TCorp\Sanitisation;
 /**
  * Helper class for sanitisating various types of values
  */
-class SanitisationHelper extends \KWS\Sanitisation\SanitisationHelper;
+class SanitisationHelper extends \KWS\Sanitisation\SanitisationHelper
 {
 }
