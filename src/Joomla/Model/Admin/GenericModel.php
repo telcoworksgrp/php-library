@@ -12,9 +12,7 @@
 
 namespace TCorp\Joomla\Model\Admin;
 
-use \Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
-
-class GenericModel extends BaseDatabaseModel
+class GenericModel extends \KWS\Joomla\Model\Administrator\GenericModel
 {
 }

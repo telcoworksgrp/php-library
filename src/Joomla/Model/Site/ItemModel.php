@@ -12,29 +12,7 @@
 
 namespace TCorp\Joomla\Model\Site;
 
-use \Joomla\CMS\MVC\Model\ItemModel AS JoomlaItemModel;
-use \Joomla\CMS\Factory;
 
-
-class ItemModel extends JoomlaItemModel
+class ItemModel extends \KWS\Joomla\Model\Site\ItemModel
 {
-
-    /**
-     * Auto-populate the model state.
-     * -------------------------------------------------------------------------
-     * @return  void
-     */
-    protected function populateState()
-    {
-        // Initialize some local variables
-        $application = Factory::getApplication();
-        $input       = $application->input;
-
-        // Set the item id in the model state
-		$this->setState('id', $input->getInt('id', 0));
-
-        // Call the parent method
-        parent::populateState();
-    }
-
 }
