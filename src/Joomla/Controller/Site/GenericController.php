@@ -12,9 +12,7 @@
 
 namespace TCorp\Joomla\Controller\Site;
 
-use \Joomla\CMS\MVC\Controller\BaseController;
 
-
-class GenericController extends BaseController
+class GenericController extends \KWS\Joomla\Controller\Site\GenericController
 {
 }

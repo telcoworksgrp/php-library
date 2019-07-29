@@ -12,9 +12,7 @@
 
 namespace TCorp\Joomla\Controller\Site;
 
-use \TCorp\Joomla\Controller\Site\GenericController;
 
-
-class ItemController extends Generic
+class ItemController extends \KWS\Joomla\Controller\Site\ItemController
 {
 }

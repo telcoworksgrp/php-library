@@ -12,9 +12,7 @@
 
 namespace TCorp\Joomla\Controller\Admin;
 
-use \Joomla\CMS\MVC\Controller\FormController;
 
-
-class ItemController extends FormController
+class ItemController extends \KWS\Joomla\Controller\Administrator\ItemController
 {
 }

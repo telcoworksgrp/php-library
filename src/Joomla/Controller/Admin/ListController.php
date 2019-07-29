@@ -12,9 +12,7 @@
 
 namespace TCorp\Joomla\Controller\Admin;
 
-use \Joomla\CMS\MVC\Controller\AdminController;
 
-
-class ListController extends AdminController
+class ListController extends \KWS\Joomla\Controller\Administrator\ListController
 {
 }
