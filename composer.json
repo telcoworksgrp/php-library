@@ -25,13 +25,6 @@
 
     "autoload": {
         "psr-4": {"TCorp\\": "src/"}
-    },
-
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/kwebservices/kws"
-        }
-    ]
+    }
 
 }
