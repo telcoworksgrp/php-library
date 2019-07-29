@@ -16,13 +16,15 @@
     "require":
     {
         "composer/installers": "^1.6",
-        "kwebservices/kws": "^1.0.0",
+        "kwebservices/kws": "dev-master",
         "guzzlehttp/guzzle": "^6.3.3",
         "scssphp/scssphp": "^1.0"
     },
 
     "autoload": {
         "psr-4": {"TCorp\\": "src/"}
-    }
+    },
+
+    "minimum-stability": "dev"
 
 }
