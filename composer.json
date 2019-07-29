@@ -17,8 +17,7 @@
     {
         "composer/installers": "^1.6",
         "kwebservices/kws": "^1.0",
-        "guzzlehttp/guzzle": "^6.3.3",
-        "scssphp/scssphp": "^1.0"
+        "guzzlehttp/guzzle": "^6.3.3"       
     },
 
     "autoload": {
