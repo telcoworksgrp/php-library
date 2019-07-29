@@ -12,7 +12,7 @@
 
 namespace TCorp\Legacy;
 
-use \TCorp\Security\SecurityHelper;
+use \KWS\Security\SecurityHelper;
 
 
 /**
