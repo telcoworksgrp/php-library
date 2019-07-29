@@ -16,7 +16,7 @@
     "require":
     {
         "composer/installers": "^1.6",
-        "kwebservices/kws": "^1.0.0",
+        "kwebservices/kws": "dev-master",
         "guzzlehttp/guzzle": "^6.3.3"
     },
 
