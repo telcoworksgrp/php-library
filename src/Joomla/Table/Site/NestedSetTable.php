@@ -12,10 +12,6 @@
 
 namespace TCorp\Joomla\Table\Site;
 
-use \Joomla\CMS\Table\Nested;
-use \Joomla\CMS\Application\ApplicationHelper;
-use \Joomla\CMS\Factory;
-
 
 class NestedSetTable extends extends \KWS\Joomla\Table\NestedSetTable
 {
