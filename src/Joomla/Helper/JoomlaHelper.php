@@ -12,11 +12,13 @@
 
 namespace TCorp\Joomla\Helper;
 
-use \Joomla\CMS\Component\ComponentHelper;
+use \TCorp\Joomla\Menu\MenuHelper;
+use \TCorp\Joomla\Component\ComponentHelper;
+use \TCorp\Joomla\User\UserHelper;
+use \TCorp\Joomla\Toolbar\ToolbarHelper;
 use \Joomla\CMS\HTML\HTMLHelper;
 use \Joomla\CMS\Router\Route;
 use \Joomla\CMS\Factory;
-use \Joomla\CMS\Toolbar\ToolbarHelper;
 use \Joomla\CMS\Language\Text;
 
 
@@ -63,12 +65,7 @@ class JoomlaHelper
     public static function getComponentConfig(string $name = '')
     {
         trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
-
-        if (empty($name)) {
-            $name = Factory::getApplication()->input->get('option');
-        }
-
-        return ComponentHelper::getParams($name)->toObject();
+        return ComponentHelper::getConfig($name);
     }
 
 
@@ -140,64 +137,13 @@ class JoomlaHelper
      * @param  string   $menuType   Name of the menu to get the items from
      *
      * @return array    An array of menu item objects
+     *
+     * @deprecated  Use \TCorp\Joomla\Menu\MenuHelper::getMenuItems() instead
      */
     public static function getMenuItems(string $menuType)
     {
-        // Initialise some local variables
-        $application = Factory::getApplication();
-        $menu        = $application->getMenu();
-        $default     = $menu->getDefault();
-        $active      = $menu->getActive();
-        $active      = (empty($active)) ? $default : $active;
-        $result      = array();
-
-
-        // Get the list of menu items
-        $items = $menu->getItems('menutype', $menuType);
-
-
-        // Process and add additional information to each item.
-        foreach ($items as $k => $item) {
-
-            // Process the item based on it's type
-            switch($item->type) {
-
-                case 'alias':
-                    $item->link = 'index.php?Itemid=' . $item->params->get('aliasoptions');
-                    $item->route = Route::_($item->link);
-                    break;
-
-                case 'url' :
-                    break;
-
-                case 'header' :
-                    $item->route ='#';
-                    break;
-
-                case 'separator' :
-                    $item->route ='#';
-                    break;
-            }
-
-            // Check if the current item is the active item, or an alias of
-            // the active item. If so add this information to the item
-            // (for convience)
-            $item->active = ($item->id == $active->id) ||
-                ($item->params->get('aliasoptions') == $active->id);
-
-
-            // Check if the current item is the default item. If so add this
-            // information to the item (for convienance) and replace the route
-            if ($item->default = $item->id == $default->id) {
-                $item->route = '/';
-            }
-
-            // Add the item to the list of results
-            $result[$item->id] = $item;
-        }
-
-        // Return the result;
-        return $result;
+        trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
+        return MenuHelper::getMenuItems($menuType);
     }
 
 
@@ -208,43 +154,13 @@ class JoomlaHelper
      * @param  array    $items  A flat list of menu items
      *
      * @return  array   The same list of menu items arranged into a hierarchy
+     *
+     * @deprecated  Use \TCorp\Joomla\Menu\MenuHelper::createMenuItemHierarchy() instead
      */
     public static function createMenuItemHierarchy(array $items)
     {
-        // Initialise some local variables
-        $result = array();
-
-        // Define a recusrsive ananonomous function for adding child items
-        // to a menu item.
-        $addChildren = function ($node, $items) use ( &$addChildren )
-        {
-            $result = $node;
-            $result->children = array();
-
-            foreach ($items as $item) {
-                if ($item->parent_id == $result->id) {
-                    $result->children[] = $item;
-                }
-            }
-
-            if (!empty($result->children)) {
-                foreach ($result->children as &$child) {
-                    $child = $addChildren($child, $items);
-                }
-            }
-
-            return $result;
-        };
-
-        // Recursively add all top level menu items
-        foreach ($items as $item) {
-            if (empty($item->parent_id) OR $item->parent_id == 1) {
-                $result[] = $addChildren($item, $items);
-            }
-        }
-
-        // Return the result;
-        return $result;
+        trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
+        return MenuHelper::createMenuItemHierarchy($menuType);
     }
 
 
@@ -252,10 +168,13 @@ class JoomlaHelper
      *  Get the currently active menu item
      * -------------------------------------------------------------------------
      * @return  object  The currently active menu item
+     *
+     * @deprecated  Use \TCorp\Joomla\Menu\MenuHelper::getActiveMenuItem() instead
      */
     public static function getActiveMenuItem()
     {
-        return Factory::getApplication()->getMenu()->getActive();
+        trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
+        return MenuHelper::getActiveMenuItem();
     }
 
 
@@ -273,10 +192,7 @@ class JoomlaHelper
     public static function isAuthorised(string $action, string $asset, $userId = null)
     {
         trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
-
-        // Check if the user is authorised to perform the action on
-        // the given asset and return the result
-        return Factory::getUser($userId)->authorise($action, $asset);
+        return UserHelper::isAuthorised($action, $asset, $userId);
     }
 
 
@@ -293,9 +209,7 @@ class JoomlaHelper
     public static function getFullName($userId = 0, string $default = '-')
     {
         trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
-
-        // Get and return the user's name
-        return (empty($userId)) ? $default : Factory::getUser($userId)->name;
+        return UserHelper::getFullName($userId, $default);
     }
 
 
@@ -310,8 +224,7 @@ class JoomlaHelper
     public static function setToolbarTitle(string $title)
     {
         trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
-
-        ToolBarHelper::title(Text::_($title));
+        ToolBarHelper::setTitle($title);
     }
 
 
@@ -328,19 +241,7 @@ class JoomlaHelper
         string $controller)
     {
         trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
-
-        // Add apply, save and save2new buttons
-       if (self::isAuthorised('core.edit', $component)) {
-           ToolbarHelper::apply($controller . '.apply');
-           ToolbarHelper::save($controller . '.save');
-
-           if (self::isAuthorised('core.create',  $component)) {
-               ToolbarHelper::save2new($controller . '.save2new');
-           }
-       }
-
-       // Add a cancel button
-       ToolBarHelper::cancel($controller . '.cancel');
+        ToolBarHelper::addStandardItemToolbarBtns($component, $controller);
     }
 
 
@@ -357,33 +258,8 @@ class JoomlaHelper
     public static function addStandardListToolbarBtns(string $component,
         string $itemController, string $listController)
     {
-
         trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
-
-        // Add an new button
-       if (self::isAuthorised('core.create', $component)) {
-           ToolBarHelper::addNew($itemController . '.add');
-       }
-
-       // Add an Edit" button
-       if (self::isAuthorised('core.edit', $component)) {
-           ToolBarHelper::editList($itemController . '.edit');
-       }
-
-       // Add an publish and unpublish button
-       if (self::isAuthorised('core.edit.state', $component)) {
-
-           ToolBarHelper::publish($listController . '.publish',
-           'JTOOLBAR_PUBLISH', true);
-           ToolBarHelper::unpublish($listController . '.unpublish',
-           'JTOOLBAR_UNPUBLISH', true);
-       }
-
-       // Add a delete button
-       if (self::isAuthorised('core.delete', $component)) {
-           ToolBarHelper::deleteList('', $listController . '.delete');
-       }
-
+        ToolBarHelper::addStandardListToolbarBtns($component, $itemController, $listController);
     }
 
 
@@ -398,12 +274,8 @@ class JoomlaHelper
     public static function addToolbarOptionsBtn(string $component)
     {
         trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
-
-        if (self::isAuthorised('core.admin', $component)) {
-          ToolBarHelper::preferences($component);
-      }
+        ToolBarHelper::addOptionsBtn($component);
     }
-
 
 
 }
