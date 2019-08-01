@@ -14,6 +14,7 @@ namespace TCorp\Joomla\View\Admin;
 
 use \TCorp\Joomla\Helper\JoomlaHelper;
 use \TCorp\Joomla\Component\ComponentHelper;
+use \TCorp\Joomla\Menu\MenuHelper;
 use \Joomla\CMS\MVC\View\HtmlView;
 use \Joomla\CMS\HTML\HTMLHelper;
 use \Joomla\CMS\Factory;
@@ -36,7 +37,7 @@ class ItemView extends HtmlView
         $this->form     = $this->get('Form');
         $this->state    = $this->get('State');
         $this->config   = ComponentHelper::getConfig();
-        $this->menuitem = JoomlaHelper::getActiveMenuItem();
+        $this->menuitem = MenuHelper::getActiveMenuItem();
 
         // Add component toolbar items
         $this->addAdministratonToolbar();

@@ -14,6 +14,7 @@ namespace TCorp\Joomla\View\Site;
 
 use \TCorp\Joomla\Helper\JoomlaHelper;
 use \TCorp\Joomla\Component\ComponentHelper;
+use \TCorp\Joomla\Menu\MenuHelper;
 use \Joomla\CMS\MVC\View\HtmlView;
 use \Joomla\CMS\Factory;
 
@@ -33,7 +34,7 @@ class ItemView extends HtmlView
         $this->item     = $this->get('Item');
         $this->state    = $this->get('State');
         $this->config   = ComponentHelper::getConfig();
-        $this->menuitem = JoomlaHelper::getActiveMenuItem();
+        $this->menuitem = MenuHelper::getActiveMenuItem();
 
         // If the item has a title then use it for the document title
         if (!empty($this->item)) {
