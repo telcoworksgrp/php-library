@@ -16,4 +16,21 @@ namespace TCorp\WebApi\Server\Model;
 
 class BaseModel extends \Orm\Model
 {
+
+
+    public function hydrateFromInput()
+    {
+        $properties = array_keys($this->properties());
+
+        foreach ($properties as $name) {
+
+            $value = \Input::param($name, null);
+
+            if (!is_null($value)) {
+                $this->set($name, $value);
+            }
+        }
+
+    }
+
 }
