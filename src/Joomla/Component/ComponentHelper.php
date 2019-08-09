@@ -16,6 +16,6 @@ namespace TCorp\Joomla\Component;
 /**
  * Helper class for working with joomla components
  */
-class ComponentHelper extends \KWS\Joomla\Component\ComponentHelper
+class ComponentHelper extends \KWS\Joomla\Helper\ComponentHelper
 {
 }

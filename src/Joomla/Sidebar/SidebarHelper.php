@@ -12,13 +12,10 @@
 
 namespace TCorp\Joomla\Sidebar;
 
-use \Joomla\CMS\Factory;
-use \Joomla\CMS\Language\Text;
-
 
 /**
  * Helper class for working with Joomla's admin sidebar
  */
-class SidebarHelper extends \KWS\Joomla\Sidebar\SidebarHelper
+class SidebarHelper extends \KWS\Joomla\Helper\SidebarHelper
 {
 }

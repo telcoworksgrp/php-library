@@ -16,6 +16,6 @@ namespace TCorp\Joomla\User;
 /**
  * Helper class for working with Joomla users
  */
-class UserHelper extends \KWS\Joomla\User\UserHelper
+class UserHelper extends \KWS\Joomla\Helper\UserHelper
 {
 }

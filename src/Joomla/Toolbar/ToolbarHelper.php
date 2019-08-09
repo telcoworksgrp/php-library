@@ -16,7 +16,7 @@ namespace TCorp\Joomla\Toolbar;
 /**
  * Helper class for working with Joomla's admin toolbar
  */
-class ToolbarHelper extends \KWS\Joomla\Toolbar\ToolbarHelper
+class ToolbarHelper extends \KWS\Joomla\Helper\ToolbarHelper
 {
 
 

@@ -16,6 +16,6 @@ namespace TCorp\Joomla\Menu;
 /**
  * Helper class for working with Joomla's menu system
  */
-class MenuHelper extends \KWS\Joomla\Menu\MenuHelper
+class MenuHelper extends \KWS\Joomla\Helper\MenuHelper
 {
 }
