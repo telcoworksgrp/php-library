@@ -12,7 +12,7 @@
 
 namespace TCorp\Legacy;
 
-use \KWS\Security\SecurityHelper;
+use \KWS\Helper\SecurityHelper;
 
 
 /**
@@ -202,7 +202,7 @@ class LegacyHelper
      * @param   bool    $renderInputs   Render hidden input field for each
      *                                  post var (bad practice but sometimes
      *                                  needed to avoid breaking some of telecom
-     *                                  corp's legacy websites) 
+     *                                  corp's legacy websites)
      * @return  string  An email message
      */
     public static function composeMessageFromPostParams(bool $renderInputs
