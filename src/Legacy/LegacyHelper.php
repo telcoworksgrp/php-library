@@ -141,16 +141,18 @@ class LegacyHelper
     /**
      * Send an email
      * -------------------------------------------------------------------------
-     * @param  string $to           Receiver, or receivers of the mail.
-     * @param  string $from         A From address
-     * @param  string $subject      Subject of the email to be sent.
-     * @param  string $message      Message to be sent.
-     * @param  mixed  $headers      String/array of additional headers to add
+     * @param  string   $to           Receiver, or receivers of the mail.
+     * @param  string   $from         A From address
+     * @param  string   $subject      Subject of the email to be sent.
+     * @param  string   $message      Message to be sent.
+     * @param  string   $cc           A CC address
+     * @param  string   $bcc          A BCC address
+     * @param  mixed    $headers      String/array of additional headers to add
      *
      * @return bool                 TRUE if successfully sent, FALSE otherwise
      */
     public static function sendEmail(string $to, string $from, string $subject,
-        string $message, $headers = array())
+        string $message, string $cc = '', string $bcc = '', $headers = array())
     {
         // Add some mime headers if the message contains HTML
         if ($message != strip_tags($message)) {
@@ -161,6 +163,16 @@ class LegacyHelper
         // Add a From header
         if (!empty($from)) {
             $headers['From'] = $from;
+        }
+
+        // Add a CC header
+        if (!empty($from)) {
+            $headers['Cc'] = $from;
+        }
+
+        // Add a BCC header
+        if (!empty($bcc)) {
+            $headers['Bcc'] = $bcc;
         }
 
         // Add some additional metadata to headers
