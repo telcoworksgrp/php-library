@@ -180,8 +180,8 @@ class LegacyHelper
         $headers['X-WebForm-ServerName'] = $_SERVER['SERVER_NAME'];
         $headers['X-WebForm-Host']       = $_SERVER['HTTP_HOST'];
         $headers['X-WebForm-Referrer']   = $_SERVER['HTTP_REFERER'];
-        $headers['X-WebForm-UserAgent']  = $_SERVER['HTTP_USER_AGENT'];
-        $headers['X-WebForm-RemoteIP']   = $_SERVER['REMOTE_ADDR'];
+        $headers['X-WebForm-UserAgent']  = static::getRemoteUserAgent();
+        $headers['X-WebForm-RemoteIP']   = static::getRemoteIPAddress();
         $headers['X-WebForm-RemoteName'] = $_SERVER['REMOTE_HOST'];
         $headers['X-WebForm-URI']        = $_SERVER['REQUEST_URI'];
         $headers['X-WebForm-Script']     = $_SERVER['SCRIPT_NAME'];
@@ -517,5 +517,25 @@ class LegacyHelper
     }
 
 
+    /**
+     * Get the user's/remote IP address
+     * -------------------------------------------------------------------------
+     * @return  string  An IP address
+     */
+    public static function getRemoteIPAddress()
+    {
+        return $_SERVER['REMOTE_ADDR'];
+    }
+
+
+    /**
+     * Get the user's/remote User Agent
+     * -------------------------------------------------------------------------
+     * @return  string  An IP address
+     */
+    public static function getRemoteUserAgent()
+    {
+        return $_SERVER['HTTP_USER_AGENT'];
+    }
 
 }
