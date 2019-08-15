@@ -19,7 +19,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 /**
  * Class for sending emails
  */
-class LegacyEmail
+class LegacyEmail extends PHPMailer
 {
 
     /**
