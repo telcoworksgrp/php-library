@@ -16,6 +16,6 @@ namespace TCorp\Acma;
 /**
  * Helper class for working with ACMA
  */
-class AcmaHelper extends \KWS\Helper\AcmaHelper
+class AcmaHelper extends \KWS\Acma\AcmaHelper
 {
 }
