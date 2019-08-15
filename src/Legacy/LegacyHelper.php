@@ -560,4 +560,15 @@ class LegacyHelper
         return $_SERVER['HTTP_HOST'];
     }
 
+
+    /**
+     * Create a new Legacy email instance
+     * -------------------------------------------------------------------------
+     * @return LegacyEmail
+     */
+    public static function createEmail()
+    {
+        return new LegacyEmail(true);
+    }
+
 }
