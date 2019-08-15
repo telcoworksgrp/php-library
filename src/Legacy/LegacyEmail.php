@@ -32,6 +32,7 @@ class LegacyEmail extends PHPMailer
     public function setSubject(string $value) : PHPMailer
     {
         $this->Subject = $value;
+        return $this;
     }
 
 
