@@ -429,12 +429,12 @@ class LegacyHelper
      * -------------------------------------------------------------------------
      * @return  bool    TRUE = An id was found, FALSE = no id was found
      */
-    public function detectAffilateId()
+    public static function detectAffilateId()
     {
         if (isset($_REQUEST['affilate']) && !empty($_REQUEST['affilate'])) {
 
             $affilateId = trim($_REQUEST['affilate']);
-            self::startSession();
+            static::startSession();
             $_SESSION['affilate'] = $affilateId;
             return true;
         } else {
