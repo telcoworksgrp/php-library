@@ -182,7 +182,7 @@ class LegacyHelper
         $headers['X-WebForm-Referrer']   = $_SERVER['HTTP_REFERER'];
         $headers['X-WebForm-UserAgent']  = static::getRemoteUserAgent();
         $headers['X-WebForm-RemoteIP']   = static::getRemoteIPAddress();
-        $headers['X-WebForm-RemoteName'] = $_SERVER['REMOTE_HOST'];
+        $headers['X-WebForm-RemoteName'] = $_SERVER['REMOTE_HOST'] ?? '';
         $headers['X-WebForm-URI']        = $_SERVER['REQUEST_URI'];
         $headers['X-WebForm-Script']     = $_SERVER['SCRIPT_NAME'];
 
