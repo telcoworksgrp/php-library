@@ -570,4 +570,24 @@ class LegacyHelper
         return new LegacyEmail(true);
     }
 
+
+    public function renderPostParamsAsHiddenFields()
+    {
+        // Initialise some local variables
+        $result = '';
+
+        // Render a hidden input field for each POST variable
+        foreach ($_POST as $key => $value) {
+            $key     = htmlentities($key);
+        	$value   = htmlentities($value);
+            $result .= "<input type=hidden name=$key value=\"$value\">\n";
+        }
+
+        // Return the result
+        return $result;        
+    }
+
+
+
+
 }
