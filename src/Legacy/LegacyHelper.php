@@ -571,7 +571,7 @@ class LegacyHelper
     }
 
 
-    public function renderPostParamsAsHiddenFields()
+    public static function renderPostParamsAsHiddenFields()
     {
         // Initialise some local variables
         $result = '';
@@ -584,7 +584,7 @@ class LegacyHelper
         }
 
         // Return the result
-        return $result;        
+        return $result;
     }
 
 
