@@ -198,14 +198,9 @@ class LegacyHelper
      * of the remote user. This is a quick and dirty way some of the older
      * sites display form data in email notifications
      * -------------------------------------------------------------------------
-     * @param   bool    $renderInputs   Render hidden input field for each
-     *                                  post var (bad practice but sometimes
-     *                                  needed to avoid breaking some of telecom
-     *                                  corp's legacy websites)
      * @return  string  An email message
      */
-    public static function composeMessageFromPostParams(bool $renderInputs
-        = true) : string
+    public static function composeMessageFromPostParams() : string
     {
         // Initialise some local variables
         $params       = $_POST;
@@ -213,16 +208,10 @@ class LegacyHelper
         $result       = '';
 
         // Add a list of key-value pairs
-        foreach ($params as $key => $value){
-
+        foreach ($params as $key => $value) {
             $k = htmlentities($key);
         	$v = htmlentities($value);
             $result .= "$k - $v\n";
-
-            if ($renderInputs) {
-                echo "<input type=hidden name=$k value=\"$v\">\n";
-            }
-
         }
 
         // Return the result
