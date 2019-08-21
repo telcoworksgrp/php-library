@@ -440,9 +440,14 @@ class LegacyHelper
      * is found,then store the id in the user's session.
      * -------------------------------------------------------------------------
      * @return  bool    TRUE = An id was found, FALSE = no id was found
+     *
+     * @deprecated  Use \TCorp\Legacy\LegacyHelper::getAffiliateReferralId() instead
      */
     public static function detectAffilateId()
     {
+
+        trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
+
         if (isset($_REQUEST['affilate']) && !empty($_REQUEST['affilate'])) {
 
             $affilateId = trim($_REQUEST['affilate']);
@@ -452,6 +457,20 @@ class LegacyHelper
         } else {
             return false;
         }
+    }
+
+
+    /**
+     * Get the one-time affilate referral id that is set when an affiliate
+     * reffers a cutsomer to this website to make an application. This referral
+     * id should not be confused with an "affiliate id" which identifies the
+     * affilate not the referral.
+     * -------------------------------------------------------------------------
+     * @return  string  The one-time affilate refferal id.
+     */
+    public static function getAffiliateReferralId()
+    {
+        $result = $_REQUEST['affilate'] ?? '';
     }
 
 
