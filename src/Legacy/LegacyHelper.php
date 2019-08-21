@@ -220,6 +220,30 @@ class LegacyHelper
 
 
     /**
+     * Render a hidden input field for each POST variable. Not a good
+     * practice but needed to avoid breaking some of Telecom Corp's
+     * legacy websites
+     * -------------------------------------------------------------------------
+     * @return string   Rendered HTML
+     */
+    public static function renderPostParamsAsHiddenFields()
+    {
+        // Initialise some local variables
+        $result = '';
+
+        // Render a hidden input field for each POST variable
+        foreach ($_POST as $key => $value) {
+            $key     = htmlentities($key);
+            $value   = htmlentities($value);
+            $result .= "<input type=hidden name=$key value=\"$value\">\n";
+        }
+
+        // Return the result
+        return $result;
+    }
+
+
+    /**
      * Redirect the user's browser to another URL, preserving the current
      * URL parameters.
      * -------------------------------------------------------------------------
@@ -560,28 +584,7 @@ class LegacyHelper
     }
 
 
-    /**
-     * Render a hidden input field for each POST variable. Not a good
-     * practice but needed to avoid breaking some of Telecom Corp's
-     * legacy websites
-     *
-     * @return string   Rendered HTML
-     */
-    public static function renderPostParamsAsHiddenFields()
-    {
-        // Initialise some local variables
-        $result = '';
 
-        // Render a hidden input field for each POST variable
-        foreach ($_POST as $key => $value) {
-            $key     = htmlentities($key);
-        	$value   = htmlentities($value);
-            $result .= "<input type=hidden name=$key value=\"$value\">\n";
-        }
-
-        // Return the result
-        return $result;
-    }
 
 
 }
