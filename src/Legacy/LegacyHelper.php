@@ -593,17 +593,6 @@ class LegacyHelper
 
 
     /**
-     * Create a new Legacy email instance
-     * -------------------------------------------------------------------------
-     * @return LegacyEmail
-     */
-    public static function createEmail()
-    {
-        return new LegacyEmail(true);
-    }
-
-
-    /**
      * Get the sanitised value of the given POST variable
      * -------------------------------------------------------------------------
      * @param  string  $name       Name of the post variable
