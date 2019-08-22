@@ -470,7 +470,7 @@ class LegacyHelper
      */
     public static function getAffiliateReferralId()
     {
-        return $_REQUEST['affilate'] ?? '';
+        return $_REQUEST['affiliate'] ?? '';
     }
 
 
