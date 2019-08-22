@@ -611,7 +611,7 @@ class LegacyHelper
      *
      * @return mixed    Value of the given POST variable, or the default value
      */
-    public static function getPostValue(string $name, $defualt = '')
+    public static function getPostValue(string $name, $default = '')
     {
         return (isset($_POST[$name])) ?
             htmlspecialchars($_POST[$name]) : $default;
