@@ -603,7 +603,19 @@ class LegacyHelper
     }
 
 
-
+    /**
+     * Get the sanitised value of the given POST variable
+     * -------------------------------------------------------------------------
+     * @param  string  $name       Name of the post variable
+     * @param  mixed   $default    Default value if no value is found
+     *
+     * @return mixed    Value of the given POST variable, or the default value
+     */
+    public static function getPostValue(string $name, $defualt = '')
+    {
+        return (isset($_POST[$name])) ?
+            htmlspecialchars($_POST[$name]) : $default;
+    }
 
 
 }
