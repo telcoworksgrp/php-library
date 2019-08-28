@@ -13,7 +13,7 @@
 namespace TCorp\Legacy;
 
 
-class LegacySession
+class Session
 {
 
 
