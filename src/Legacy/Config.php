@@ -30,6 +30,8 @@ class Config
      * -------------------------------------------------------------------------
      * @param string    $key    Key to identify the configuration
      * @param mixed     $value  Value to set the configuration to
+     *
+     * @return void
      */
     public static function setValue(string $key, $value) : void
     {
