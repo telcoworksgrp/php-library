@@ -22,7 +22,7 @@ class Config
      *
      * @var mixed[]
      */
-    protected $config = [];
+    protected static $config = [];
 
 
     /**
