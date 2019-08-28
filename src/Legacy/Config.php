@@ -35,7 +35,7 @@ class Config
      */
     public static function setValue(string $key, $value) : void
     {
-        static::$config[$name] = $value;
+        static::$config[$key] = $value;
     }
 
 
