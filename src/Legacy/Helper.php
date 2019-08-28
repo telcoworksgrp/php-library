@@ -18,7 +18,7 @@ use \KWS\Security\SecurityHelper;
 /**
  * Helper class for working with Telecom Corp's Legacy sites/projects
  */
-class LegacyHelper
+class Helper
 {
 
     /**
@@ -434,32 +434,6 @@ class LegacyHelper
         }
     }
 
-
-    /**
-     * Try to detect any affilate id's passed via the https request. If one
-     * is found,then store the id in the user's session.
-     * -------------------------------------------------------------------------
-     * @return  bool    TRUE = An id was found, FALSE = no id was found
-     *
-     * @deprecated  Use \TCorp\Legacy\LegacyHelper::getAffiliateReferralId() instead
-     */
-    public static function detectAffilateId()
-    {
-
-        trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
-
-        if (isset($_REQUEST['affilate']) && !empty($_REQUEST['affilate'])) {
-
-            $affilateId = trim($_REQUEST['affilate']);
-            static::startSession();
-            $_SESSION['affilate'] = $affilateId;
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
     /**
      * Get the one-time affilate referral id that is set when an affiliate
      * reffers a cutsomer to this website to make an application. This referral
@@ -470,64 +444,8 @@ class LegacyHelper
      */
     public static function getAffiliateReferralId()
     {
-        return $_REQUEST['affiliate'] ?? '';
+        return Input::getValue('affiliate', '');
     }
-
-
-    /**
-     * Start the user's session if not already started
-     * -------------------------------------------------------------------------
-     * @return void
-     */
-    public static function startSession()
-    {
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-    }
-
-    /**
-     * Set a value in the user's session
-     * -------------------------------------------------------------------------
-     * @param string    $key    A key name for referancing the stored value
-     * @param mixed     $value  The value to store
-     */
-    public static function setSessionVar(string $key, $value)
-    {
-        // Set a session variable with the given value
-        $_SESSION[$key] = $value;
-    }
-
-
-    /**
-     * Get a value previously stored in the user's session. If a value with
-     * the given key can not be found then a default can be returned
-     * -------------------------------------------------------------------------
-     * @param  string $key      A key name for referancing the stored value
-     * @param  mixed  $default  A default value if the key doesn't exist
-     *
-     * @return mixed    A value for the given key, or the default value
-     */
-    public static function getSessionVar(string $key, $default = null)
-    {
-        return $_SESSION[$key] ?? $default;
-    }
-
-
-    /**
-     * Unsets/removes an existing session variable
-     * -------------------------------------------------------------------------
-     * @param string    $key    A key name for referancing the stored value
-     *
-     * @return  mixed   The former value of the session var
-     */
-    public static function unsetSessionVar(string $key)
-    {
-        $result = self::getSessionVar($key);
-        unset($_SESSION[$key]);
-        return $result;
-    }
-
 
     /**
      * Store the value of a request variable in a session var. If the request
@@ -547,15 +465,15 @@ class LegacyHelper
         $default = '', string $filter = 'STRING')
     {
         if (isset($_REQUEST[$var])) {
-            self::setSessionVar($key, $_REQUEST[$var]);
+            Session::setValue($key, $_REQUEST[$var]);
         } else {
             if (!isset($_SESSION[$key])) {
-                self::setSessionVar($key, $default);
+                Session::setValue($key, $default);
             }
         }
 
         // Return the result
-        return self::getSessionVar($key);
+        return Session::getValue($key);
     }
 
 
@@ -593,18 +511,21 @@ class LegacyHelper
 
 
     /**
-     * Get the sanitised value of the given POST variable
+     * [getFormFieldState description]
      * -------------------------------------------------------------------------
-     * @param  string  $name       Name of the post variable
-     * @param  mixed   $default    Default value if no value is found
+     * @param  string   $key        Session variable  name
+     * @param  string   $name       Input variable name
+     * @param  mixed    $default    Defualt value if no value can be found
+     * @param  string   $filter     Filter type for sanitization
      *
-     * @return mixed    Value of the given POST variable, or the default value
+     * @return mixed    The current value f the form field, as per the
+     *                  request and session
      */
-    public static function getPostValue(string $name, $default = '')
+    public function getFormFieldState(string $key, string $name,
+        $default = null, string $filter = 'STRING')
     {
-        return (isset($_POST[$name])) ?
-            htmlspecialchars($_POST[$name]) : $default;
-    }
 
+
+    }
 
 }
