@@ -29,38 +29,6 @@ class Helper
 
 
     /**
-     * An API key issued by IP Geolocation
-     *
-     * @var string
-     */
-    public static $ipGeolocationApiKey = '';
-
-
-    /**
-     * A ReCaptcha v2 site key issued by Google
-     *
-     * @var string
-     */
-    public static $recaptchaSiteKey = '';
-
-
-    /**
-     * A ReCaptcha v2 secret issued by Google
-     *
-     * @var string
-     */
-    public static $recaptchaSecret = '';
-
-    /**
-     * GUID used for looking up ABN Details
-     *
-     * @var string
-     */
-    public static $abnLookupGuid = '';
-
-
-
-    /**
      * Send a very basic HTTP request and return the response body
      * -------------------------------------------------------------------------
      * @param  string   $url        The URL to send the quest to
@@ -300,10 +268,12 @@ class Helper
         $url = "https://abr.business.gov.au/abrxmlsearch/" .
             "AbrXmlSearch.asmx/ABRSearchByABN";
 
+        $guid = Config::getValue('abnlookup.guid', '');
+
         $data = self::sendRequest($url, 'GET', array(
             'searchString'             => $abn,
             'includeHistoricalDetails' => 'Y',
-            'authenticationGuid'       => self::$abnLookupGuid
+            'authenticationGuid'       => $guid
         ));
 
         // Parse the data returned by the API
@@ -352,8 +322,11 @@ class Helper
      */
     public static function blockBannedCountries() : void
     {
+        $apiKey = Config::getValue('ipgeolocation.apikey', '');
+
         if (SecurityHelper::checkIpLocation(SecurityHelper::
-            WORST_SPAM_COUNTRIES, self::$ipGeolocationApiKey)) {
+            WORST_SPAM_COUNTRIES, $apiKey)) {
+
 
             SecurityHelper::blockAccess();
         }
@@ -417,7 +390,8 @@ class Helper
      */
     public static function getReCaptchaHtml()
     {
-        return SecurityHelper::getReCaptchaHtml(self::$recaptchaSiteKey);
+        $siteKey = Config::getValue('recaptcha.sitekey', '');
+        return SecurityHelper::getReCaptchaHtml($siteKey);
     }
 
 
@@ -429,7 +403,8 @@ class Helper
      */
     public static function redirectIfInvalidReCaptcha(string $redirectUrl) : void
     {
-        if (!SecurityHelper::checkReCaptcha(self::$recaptchaSecret)) {
+        $secret = Config::getValue('recaptcha.secret', '');
+        if (!SecurityHelper::checkReCaptcha($secret)) {
             self::redirect($redirectUrl, false, 303);
         }
     }
