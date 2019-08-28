@@ -30,8 +30,8 @@ class Input
     public static function getValue(string $name, $default = null,
         string $filter = 'STRING')
     {
-        if (isset($_REQUEST[$key])) {
-            SanitisationHelper::sanitise($_REQUEST[$key], $filter);
+        if (isset($_REQUEST[$name])) {
+            SanitisationHelper::sanitise($_REQUEST[$name], $filter);
         } else {
             return $default;
         }
