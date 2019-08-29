@@ -499,7 +499,7 @@ class Helper
      * @return mixed    The current value f the form field, as per the
      *                  request and session
      */
-    public function getFormFieldState(string $key, string $name,
+    public static function getFormFieldState(string $key, string $name,
         $default = null, string $filter = 'STRING')
     {
         // Try to get the form field's value from the request.
