@@ -322,4 +322,15 @@ class SignupForm
     }
 
 
+    /**
+     * Proxy method for getting HTML/Javascript for displaying a reCAPTCHA 3
+     * -------------------------------------------------------------------------
+     * @return string   HTML/Javascript needed to render reCAPTCHA 3
+     */
+    public function getReCaptchaHtml()
+    {
+        return Helper::getReCaptchaHtml();
+    }
+
+
 }
