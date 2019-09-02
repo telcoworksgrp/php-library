@@ -29,7 +29,7 @@ class Input
         string $filter = 'STRING')
     {
         if (isset($_REQUEST[$name])) {
-            SanitisationHelper::sanitise($_REQUEST[$name], $filter);
+            return SanitisationHelper::sanitise($_REQUEST[$name], $filter);
         } else {
             return $default;
         }
