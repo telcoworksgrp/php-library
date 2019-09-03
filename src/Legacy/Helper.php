@@ -527,43 +527,4 @@ class Helper
     }
 
 
-    /**
-     * Get the current state of a given form field's value. Values in the
-     * request replace values in the current session. If a value can't be
-     * found in the request or the current session a default value can
-     * be returned.
-     * -------------------------------------------------------------------------
-     * @param  string   $key        Session variable  name
-     * @param  string   $name       Input variable name
-     * @param  mixed    $default    Default value if no value can be found
-     * @param  string   $filter     Filter type for sanitization
-     *
-     * @return mixed    The current value f the form field, as per the
-     *                  request and session
-     */
-    public static function getFormFieldState(string $key, string $name,
-        $default = null, string $filter = 'STRING')
-    {
-        // Try to get the form field's value from the request.
-        $result = Input::getValue($name, false, $filter);
-
-        // If a value from the request has been found, set/update
-        // the corrsponding session variable
-        if ($result !== false) {
-            Session:setValue($key, $result);
-        }
-
-        // Get the new/existing value from the session.
-        $result = Session::getValue($key, false);
-
-        // If we still don't have a value return the default value.
-        if ($result === false) {
-            $result = $default;
-        }
-
-        // Return the result
-        return $result;
-    }
-
-
 }
