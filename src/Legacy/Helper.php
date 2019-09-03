@@ -26,6 +26,51 @@ class Helper
         'July','August','September','October','November','December');
 
 
+
+        /**
+         * API key to use when calling the IpGeolocation API
+         *
+         * @var string
+         *
+         * @see https://ipgeolocation.io/
+         */
+    public $ipGeolocationApiKey = '';
+
+
+
+    /**
+     * A Google ReCaptcha site key
+     *
+     * @var string
+     *
+     * @see https://www.google.com/recaptcha/intro/v3.html
+     */
+    public $recaptchaSiteKey = '';
+
+
+
+    /**
+     * A Google ReCaptcha secret key to compliment the site key
+     *
+     * @var string
+     *
+     * @see https://www.google.com/recaptcha/intro/v3.html
+     */
+    public $recaptchaSecret = '';
+
+
+
+    /**
+     * API key to use when calling the ABN lookup API
+     *
+     * @var string
+     *
+     * @see https://abr.business.gov.au/Tools/WebServices
+     */
+    public $abnLookupGuid = '';
+
+
+
     /**
      * Send a very basic HTTP request and return the response body
      * -------------------------------------------------------------------------
@@ -49,6 +94,7 @@ class Helper
         // Return the result body
         return $result->getBody();
     }
+
 
 
     /**
@@ -159,6 +205,7 @@ class Helper
     }
 
 
+
     /**
      * Composes an email message from all POST params - plus the IP address
      * of the remote user. This is a quick and dirty way some of the older
@@ -185,6 +232,7 @@ class Helper
     }
 
 
+
     /**
      * Render a hidden input field for each POST variable. Not a good
      * practice but needed to avoid breaking some of Telecom Corp's
@@ -207,6 +255,7 @@ class Helper
         // Return the result
         return $result;
     }
+
 
 
     /**
@@ -234,6 +283,8 @@ class Helper
         header('Location: ' . $url, true, $statusCode);
         exit();
     }
+
+
 
     /**
      * Disable browser caching of this request
@@ -266,12 +317,10 @@ class Helper
         $url = "https://abr.business.gov.au/abrxmlsearch/" .
             "AbrXmlSearch.asmx/ABRSearchByABN";
 
-        $guid = Config::getValue('abnlookup.guid', '');
-
         $data = self::sendRequest($url, 'GET', array(
             'searchString'             => $abn,
             'includeHistoricalDetails' => 'Y',
-            'authenticationGuid'       => $guid
+            'authenticationGuid'       => static::$abnLookupGuid
         ));
 
         // Parse the data returned by the API
@@ -320,15 +369,13 @@ class Helper
      */
     public static function blockBannedCountries() : void
     {
-        $apiKey = Config::getValue('ipgeolocation.apikey', '');
-
         if (SecurityHelper::checkIpLocation(SecurityHelper::
-            WORST_SPAM_COUNTRIES, $apiKey)) {
-
+            WORST_SPAM_COUNTRIES, static::$ipGeolocationApiKey)) {
 
             SecurityHelper::blockAccess();
         }
     }
+
 
 
     /**
@@ -340,6 +387,7 @@ class Helper
     {
         return SecurityHelper::getHoneypotHtml();
     }
+
 
 
     /**
@@ -356,6 +404,7 @@ class Helper
     }
 
 
+
     /**
      * Proxy for the SecurityHelper::getCSRFTokenHtml() method
      * -------------------------------------------------------------------------
@@ -365,6 +414,7 @@ class Helper
     {
         return SecurityHelper::getCSRFTokenHtml();
     }
+
 
 
     /**
@@ -381,6 +431,7 @@ class Helper
     }
 
 
+
     /**
      * Proxy for the SecurityHelper::getReCaptchaHtml() method
      * -------------------------------------------------------------------------
@@ -388,9 +439,9 @@ class Helper
      */
     public static function getReCaptchaHtml()
     {
-        $siteKey = Config::getValue('recaptcha.sitekey', '');
-        return SecurityHelper::getReCaptchaHtml($siteKey);
+        return SecurityHelper::getReCaptchaHtml(static::$recaptchaSiteKey);
     }
+
 
 
     /**
@@ -401,11 +452,12 @@ class Helper
      */
     public static function redirectIfInvalidReCaptcha(string $redirectUrl) : void
     {
-        $secret = Config::getValue('recaptcha.secret', '');
-        if (!SecurityHelper::checkReCaptcha($secret)) {
+        if (!SecurityHelper::checkReCaptcha(static::$recaptchaSecret)) {
             self::redirect($redirectUrl, false, 303);
         }
     }
+
+
 
     /**
      * Get the one-time affilate referral id that is set when an affiliate
@@ -520,5 +572,6 @@ class Helper
         // Return the result
         return $result;
     }
+
 
 }
