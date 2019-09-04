@@ -32,7 +32,7 @@ class Controller
 
         // Check if we have a method to handle the action
         if (!is_callable([$this, $action])) {
-            throw new \Exception("Invalid Controller Action ""$action""", 500);
+            throw new \Exception("Invalid Controller Action \"$action\"", 500);
         }
 
         // Call the action handler method
