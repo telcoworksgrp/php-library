@@ -19,6 +19,7 @@ class TransferForm extends SignupForm
     public $plan      = '';
     public $number    = '';
     public $provider  = '';
+    public $accoutnno = '';
     public $company   = '';
     public $abn       = '';
     public $address1  = '';
@@ -49,6 +50,7 @@ class TransferForm extends SignupForm
         $this->plan      = Session::getValue('port.plan', '');
         $this->number    = Session::getValue('port.number', '');
         $this->provider  = Session::getValue('port.provider', '');
+        $this->accountno = Session::getValue('port.accountno', '');
         $this->company   = Session::getValue('port.company', '');
         $this->abn       = Session::getValue('port.abn', '');
         $this->address1  = Session::getValue('port.address1', '');
@@ -81,6 +83,7 @@ class TransferForm extends SignupForm
         $this->plan      = $this->getFieldState('port.plan', 'plan', '');
         $this->number    = $this->getFieldState('port.number', 'number', '', 'INT');
         $this->provider  = $this->getFieldState('port.provider', 'provider', '');
+        $this->accountno = $this->getFieldState('port.accountno', 'accountno', '');
         $this->company   = $this->getFieldState('port.company', 'company', '');
         $this->abn       = $this->getFieldState('port.abn', 'abn', '', 'INT');
         $this->address1  = $this->getFieldState('port.address1', 'address1', '');
