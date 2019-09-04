@@ -28,6 +28,47 @@ class Helper
 
 
     /**
+     * API key to use when calling the IpGeolocation API
+     *
+     * @var string
+     *
+     * @see https://ipgeolocation.io/
+     */
+    public static $ipGeolocationApiKey = '';
+
+
+    /**
+     * A Google ReCaptcha site key
+     *
+     * @var string
+     *
+     * @see https://www.google.com/recaptcha/intro/v3.html
+     */
+    public static $recaptchaSiteKey = '';
+
+
+    /**
+     * A Google ReCaptcha secret key to compliment the site key
+     *
+     * @var string
+     *
+     * @see https://www.google.com/recaptcha/intro/v3.html
+     */
+    public static $recaptchaSecret = '';
+
+
+    /**
+     * API key to use when calling the ABN lookup API
+     *
+     * @var string
+     *
+     * @see https://abr.business.gov.au/Tools/WebServices
+     */
+    public static $abnLookupGuid = '';
+
+
+
+    /**
      * Send a very basic HTTP request and return the response body
      * -------------------------------------------------------------------------
      * @param  string   $url        The URL to send the quest to
@@ -263,7 +304,7 @@ class Helper
         $data = self::sendRequest($url, 'GET', array(
             'searchString'             => $abn,
             'includeHistoricalDetails' => 'Y',
-            'authenticationGuid'       => Config::$abnLookupGuid
+            'authenticationGuid'       => static::$abnLookupGuid
         ));
 
         // Parse the data returned by the API
@@ -319,7 +360,7 @@ class Helper
         }
 
         if (SecurityHelper::checkIpLocation(SecurityHelper::
-            WORST_SPAM_COUNTRIES, Config::$ipGeolocationApiKey)) {
+            WORST_SPAM_COUNTRIES, static::$ipGeolocationApiKey)) {
             SecurityHelper::blockAccess();
         }
     }
@@ -387,7 +428,7 @@ class Helper
      */
     public static function getReCaptchaHtml()
     {
-        return SecurityHelper::getReCaptchaHtml(Config::$recaptchaSiteKey);
+        return SecurityHelper::getReCaptchaHtml(static::$recaptchaSiteKey);
     }
 
 
@@ -400,7 +441,7 @@ class Helper
      */
     public static function redirectIfInvalidReCaptcha(string $redirectUrl) : void
     {
-        if (!SecurityHelper::checkReCaptcha(Config::$recaptchaSecret)) {
+        if (!SecurityHelper::checkReCaptcha(static::$recaptchaSecret)) {
             self::redirect($redirectUrl, false, 303);
         }
     }
@@ -438,15 +479,15 @@ class Helper
         $default = '', string $filter = 'STRING')
     {
         if (isset($_REQUEST[$var])) {
-            Session::setValue($key, $_REQUEST[$var]);
+            Helper::setSessionValue($key, $_REQUEST[$var]);
         } else {
             if (!isset($_SESSION[$key])) {
-                Session::setValue($key, $default);
+                Helper::setSessionValue($key, $default);
             }
         }
 
         // Return the result
-        return Session::getValue($key);
+        return Helper::getSessionValue($key);
     }
 
 
@@ -492,6 +533,47 @@ class Helper
     {
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
+    }
+
+
+    /**
+     * Start a new session if none has already been started
+     * -------------------------------------------------------------------------
+     * @return void
+     */
+    public static function startSession() : void
+    {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+    }
+
+
+    /**
+     * Sets a session variable to a given value
+     * -------------------------------------------------------------------------
+     * @param string    $key    Name of the session variable
+     * @param mixed     $value  New value for the session variable
+     *
+     * @return void
+     */
+    public static function setSessionValue(string $key, $value) : void
+    {
+        $_SESSION[$key] = $value;
+    }
+
+
+    /**
+     * Get a the value of a given session variable
+     * -------------------------------------------------------------------------
+     * @param  string   $key        Name of the session variable
+     * @param  mixed    $default    A default value in case none exists.
+     *
+     * @return mixed    The value of the session variable, or the default value
+     */
+    public static function getSessionValue(string $key, $default = null)
+    {
+        return $_SESSION[$key] ?? $default;
     }
 
 

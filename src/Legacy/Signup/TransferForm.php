@@ -47,23 +47,23 @@ class TransferForm extends SignupForm
         parent::loadState();
 
         // Load form field values
-        $this->plan      = Session::getValue('port.plan', '');
-        $this->number    = Session::getValue('port.number', '');
-        $this->provider  = Session::getValue('port.provider', '');
-        $this->accountno = Session::getValue('port.accountno', '');
-        $this->company   = Session::getValue('port.company', '');
-        $this->abn       = Session::getValue('port.abn', '');
-        $this->address1  = Session::getValue('port.address1', '');
-        $this->address2  = Session::getValue('port.address2', '');
-        $this->suburb    = Session::getValue('port.suburb', '');
-        $this->state     = Session::getValue('port.state', '');
-        $this->postcode  = Session::getValue('port.postcode', '');
-        $this->firstname = Session::getValue('port.firstname', '');
-        $this->lastname  = Session::getValue('port.lastname', '');
-        $this->mobile    = Session::getValue('port.mobile', '');
-        $this->email     = Session::getValue('port.email', '');
-        $this->phone     = Session::getValue('port.phone', '');
-        $this->iagree    = Session::getValue('port.iagree', '');
+        $this->plan      = Helper::getSessionValue('port.plan', '');
+        $this->number    = Helper::getSessionValue('port.number', '');
+        $this->provider  = Helper::getSessionValue('port.provider', '');
+        $this->accountno = Helper::getSessionValue('port.accountno', '');
+        $this->company   = Helper::getSessionValue('port.company', '');
+        $this->abn       = Helper::getSessionValue('port.abn', '');
+        $this->address1  = Helper::getSessionValue('port.address1', '');
+        $this->address2  = Helper::getSessionValue('port.address2', '');
+        $this->suburb    = Helper::getSessionValue('port.suburb', '');
+        $this->state     = Helper::getSessionValue('port.state', '');
+        $this->postcode  = Helper::getSessionValue('port.postcode', '');
+        $this->firstname = Helper::getSessionValue('port.firstname', '');
+        $this->lastname  = Helper::getSessionValue('port.lastname', '');
+        $this->mobile    = Helper::getSessionValue('port.mobile', '');
+        $this->email     = Helper::getSessionValue('port.email', '');
+        $this->phone     = Helper::getSessionValue('port.phone', '');
+        $this->iagree    = Helper::getSessionValue('port.iagree', '');
     }
 
 
