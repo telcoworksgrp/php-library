@@ -108,7 +108,7 @@ class SignupForm
      * -------------------------------------------------------------------------
      * @param string    $url    URL to redirect the user to
      */
-    public function updateStateAndRedirect(string $url) : void
+    public function updateStateAndRedirect(string $url = '') : void
     {
         // Update the current state of the signup form
         $this->updateState();
