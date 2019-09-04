@@ -527,4 +527,16 @@ class Helper
     }
 
 
+    /**
+     * Enable PHP error reporting
+     * -------------------------------------------------------------------------
+     * @return void
+     */
+    public static function enableErrorReporting() : void
+    {
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+    }
+
+
 }
