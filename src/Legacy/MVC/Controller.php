@@ -36,7 +36,7 @@ class Controller
         }
 
         // Call the action handler method
-        $result = $this->$action;
+        $result = $this->$action();
 
         // Return the final result
         return $result;
