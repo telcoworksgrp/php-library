@@ -154,4 +154,70 @@ class SignupForm
         return $result;
     }
 
+
+    /**
+     * Proxy for \TCorp\Legacy\Helper::getHoneypotHtml();
+     * -------------------------------------------------------------------------
+     * @return  string  HTML for rendering a hidden honeypot text field
+     */
+    public function getHoneypotHtml()
+    {
+        return Helper::getHoneypotHtml();
+    }
+
+
+    /**
+     * Proxy for \TCorp\Legacy\Helper::blockIfInvalidHoneypot();
+     * -------------------------------------------------------------------------
+     * @return  void
+     */
+    public function blockIfInvalidHoneypot() : void
+    {
+        Helper::blockIfInvalidHoneypot();
+    }
+
+
+    /**
+     * Proxy for \TCorp\Legacy\Helper::getCSRFTokenHtml();
+     * -------------------------------------------------------------------------
+     * @return  string  HTML for rendering a CSRF token inside a web form
+     */
+    public function getCSRFTokenHtml()
+    {
+        return Helper::getCSRFTokenHtml();
+    }
+
+
+    /**
+     * Proxy for \TCorp\Legacy\Helper::blockIfInvalidCSRFToken();
+     * -------------------------------------------------------------------------
+     * @return  void
+     */
+    public function blockIfInvalidCSRFToken() : void
+    {
+        Helper::blockIfInvalidCSRFToken();
+    }
+
+
+    /**
+     * Proxy for \TCorp\Legacy\Helper::getReCaptchaHtml();
+     * -------------------------------------------------------------------------
+     * @return  string  HTML for rendering a CSRF token inside a web form
+     */
+    public function getReCaptchaHtml()
+    {
+        return Helper::getReCaptchaHtml();
+    }
+
+
+    /**
+     * Proxy for \TCorp\Legacy\Helper::redirectIfInvalidReCaptcha()
+     * -------------------------------------------------------------------------
+     * @return void
+     */
+    public function redirectIfInvalidReCaptcha(string $redirectUrl) : void
+    {
+        Helper::redirectIfInvalidReCaptcha($redirectUrl);
+    }
+
 }
