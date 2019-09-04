@@ -141,7 +141,7 @@ class SignupForm
         // If a value from the request has been found, set/update
         // the corrsponding session variable
         if ($result !== false) {
-            Session:setValue($key, $result);
+            Session::setValue($key, $result);
         }
 
         // Get the new/existing value from the session.
