@@ -23,7 +23,7 @@ class Request
      * -------------------------------------------------------------------------
      * @return string [description]
      */
-    public function getMethod() : string
+    public static function getMethod() : string
     {
         return $_SERVER['REQUEST_METHOD'];
     }
@@ -35,7 +35,7 @@ class Request
      * -------------------------------------------------------------------------
      * @return string [description]
      */
-    public function getServerIp() : string
+    public static function getServerIp() : string
     {
         return $_SERVER['SERVER_ADDR'];
     }
@@ -46,7 +46,7 @@ class Request
      * -------------------------------------------------------------------------
      * @return int [description]
      */
-    public function getServerPort() : int
+    public static function getServerPort() : int
     {
         return $_SERVER['SERVER_PORT'];
     }
@@ -57,7 +57,7 @@ class Request
      * -------------------------------------------------------------------------
      * @return string [description]
      */
-    public function getRemoteIp() : string
+    public static function getRemoteIp() : string
     {
         return $_SERVER['REMOTE_ADDR'];
     }
@@ -68,7 +68,7 @@ class Request
      * -------------------------------------------------------------------------
      * @return int [description]
      */
-    public function getRemotePort() : int
+    public static function getRemotePort() : int
     {
         return $_SERVER['REMOTE_PORT'];
     }
@@ -79,7 +79,7 @@ class Request
      * -------------------------------------------------------------------------
      * @return string [description]
      */
-    public function getUserAgent() : string
+    public static function getUserAgent() : string
     {
         return $_SERVER['HTTP_USER_AGENT'];
     }
@@ -91,7 +91,7 @@ class Request
      * -------------------------------------------------------------------------
      * @return string [description]
      */
-    public function getRefererUrl() : string
+    public static function getRefererUrl() : string
     {
         return $_SERVER['HTTP_REFERER'];
     }
@@ -102,7 +102,7 @@ class Request
      * -------------------------------------------------------------------------
      * @return bool [description]
      */
-    public function isHttps() : bool
+    public static function isHttps() : bool
     {
         return !empty($_SERVER['HTTPS']);
     }
@@ -114,7 +114,7 @@ class Request
      * -------------------------------------------------------------------------
      * @return string [description]
      */
-    public function getUri() : string
+    public static function getUri() : string
     {
         return $_SERVER['REQUEST_URI'];
     }
@@ -125,7 +125,7 @@ class Request
      * -------------------------------------------------------------------------
      * @return string [description]
      */
-    public function getQueryStr() : string
+    public static function getQueryStr() : string
     {
         return $_SERVER['QUERY_STRING'];
     }
