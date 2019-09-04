@@ -35,26 +35,53 @@ class SignupForm
      */
     public function __construct()
     {
-        // Update the current state
-        $this->updateState();
-    }
-
-
-    /**
-     * Update class properies to represent the current state of the form. This
-     * takes into consideration form field values stored in the current session
-     * and form field values passed in the http request. Values in the http
-     * request override and replace values stored in the current session.
-     * -------------------------------------------------------------------------
-     * @return void
-     */
-    public function updateState()
-    {
+        // Initialise some class properties
         $this->ipaddress  = Helper::getRemoteIPAddress();
         $this->useragent  = Helper::getRemoteUserAgent();
         $this->submitted  = date('r');
         $this->refferalId = Helper::getAffiliateReferralId();
         $this->domain     = Helper::getCurrentDomainName();
+
+        // Loads the current state of the signup form
+        $this->loadState();
+    }
+
+
+    /**
+     * Loads the current state of the signup form from the current session
+     * -------------------------------------------------------------------------
+     * @return void
+     */
+    public function loadState() : void
+    {
+    }
+
+
+    /**
+     * Update the current state of the signup form to include any new data
+     * submitted with the current request. This will also update values in
+     * current session
+     * -------------------------------------------------------------------------
+     * @return void
+     */
+    public function updateState() : void
+    {
+    }
+
+
+    /**
+     * Update the current state of the signup form to include any new
+     * data and then redirect to another url
+     * -------------------------------------------------------------------------
+     * @param string    $url    URL to redirect the user to
+     */
+    public function updateStateAndRedirect(string $url) : void
+    {
+        // Update the current state of the signup form
+        $this->updateState();
+
+        // Redirect to a new URL
+        Helper::redirect($url);
     }
 
 
@@ -72,7 +99,7 @@ class SignupForm
      * @return mixed    The current value f the form field, as per the
      *                  request and session
      */
-    public static function getFormFieldState(string $key, string $name,
+    public function getFieldState(string $key, string $name,
         $default = null, string $filter = 'STRING')
     {
         // Try to get the form field's value from the request.
@@ -88,16 +115,10 @@ class SignupForm
         $result = Session::getValue($key, false);
 
         // If we still don't have a value return the default value.
-        if ($result === false) {
-            $result = $default;
-        }
+        $result = ($result === false) ? $default : $result;
 
         // Return the result
         return $result;
     }
-
-
-
-
 
 }

@@ -10,7 +10,7 @@
 
 namespace TCorp\Legacy\Signup;
 
-
+use \TCorp\Legacy\Session;
 
 
 class TransferForm extends SignupForm
@@ -34,34 +34,67 @@ class TransferForm extends SignupForm
     public $iagree    = false;
 
 
+
     /**
-     * Update class properies to represent the current state of the form. This
-     * takes into consideration form field values stored in the current session
-     * and form field values passed in the http request. Values in the http
-     * request override and replace values stored in the current session.
+     * Loads the current state of the signup form from the current session
      * -------------------------------------------------------------------------
      * @return void
      */
-    public function updateState()
+    public function loadState() : void
     {
-        $this->plan      = $this->getFormFieldState('port.plan', 'plan', '');
-        $this->number    = $this->getFormFieldState('port.number', 'number', '', 'INT');
-        $this->provider  = $this->getFormFieldState('port.provider', 'provider', '');
-        $this->company   = $this->getFormFieldState('port.company', 'company', '');
-        $this->abn       = $this->getFormFieldState('port.abn', 'abn', '', 'INT');
-        $this->address1  = $this->getFormFieldState('port.address1', 'address1', '');
-        $this->address2  = $this->getFormFieldState('port.address2', 'address2', '');
-        $this->suburb    = $this->getFormFieldState('port.suburb', 'suburb', '');
-        $this->state     = $this->getFormFieldState('port.state', 'state', '');
-        $this->postcode  = $this->getFormFieldState('port.postcode', 'postcode', '', 'INT');
-        $this->firstname = $this->getFormFieldState('port.firstname', 'firstname', '');
-        $this->lastname  = $this->getFormFieldState('port.lastname', 'lastname', '');
-        $this->mobile    = $this->getFormFieldState('port.mobile', 'mobile', '', 'INT');
-        $this->email     = $this->getFormFieldState('port.email', 'email', '', 'EMAIL');
-        $this->phone     = $this->getFormFieldState('port.phone', 'phone', '');
-        $this->iagree    = $this->getFormFieldState('port.iagree', 'iagree', '', 'BOOL');
+        // Call the parent method
+        parent::loadState();
 
-        parent::updateState();
+        // Load form field values
+        $this->plan      = Session::getValue('port.plan', '');
+        $this->number    = Session::getValue('port.number', '');
+        $this->provider  = Session::getValue('port.provider', '');
+        $this->company   = Session::getValue('port.company', '');
+        $this->abn       = Session::getValue('port.abn', '');
+        $this->address1  = Session::getValue('port.address1', '');
+        $this->address2  = Session::getValue('port.address2', '');
+        $this->suburb    = Session::getValue('port.suburb', '');
+        $this->state     = Session::getValue('port.state', '');
+        $this->postcode  = Session::getValue('port.postcode', '');
+        $this->firstname = Session::getValue('port.firstname', '');
+        $this->lastname  = Session::getValue('port.lastname', '');
+        $this->mobile    = Session::getValue('port.mobile', '');
+        $this->email     = Session::getValue('port.email', '');
+        $this->phone     = Session::getValue('port.phone', '');
+        $this->iagree    = Session::getValue('port.iagree', '');
     }
+
+
+    /**
+     * Update the current state of the signup form to include any new data
+     * submitted with the current request. This will also update values in
+     * current session
+     * -------------------------------------------------------------------------
+     * @return void
+     */
+    public function updateState() : void
+    {
+        // Call the parent method
+        parent::updateState();
+
+        // Load form field values
+        $this->plan      = $this->getFieldState('port.plan', 'plan', '');
+        $this->number    = $this->getFieldState('port.number', 'number', '', 'INT');
+        $this->provider  = $this->getFieldState('port.provider', 'provider', '');
+        $this->company   = $this->getFieldState('port.company', 'company', '');
+        $this->abn       = $this->getFieldState('port.abn', 'abn', '', 'INT');
+        $this->address1  = $this->getFieldState('port.address1', 'address1', '');
+        $this->address2  = $this->getFieldState('port.address2', 'address2', '');
+        $this->suburb    = $this->getFieldState('port.suburb', 'suburb', '');
+        $this->state     = $this->getFieldState('port.state', 'state', '');
+        $this->postcode  = $this->getFieldState('port.postcode', 'postcode', '', 'INT');
+        $this->firstname = $this->getFieldState('port.firstname', 'firstname', '');
+        $this->lastname  = $this->getFieldState('port.lastname', 'lastname', '');
+        $this->mobile    = $this->getFieldState('port.mobile', 'mobile', '', 'INT');
+        $this->email     = $this->getFieldState('port.email', 'email', '', 'EMAIL');
+        $this->phone     = $this->getFieldState('port.phone', 'phone', '');
+        $this->iagree    = $this->getFieldState('port.iagree', 'iagree', '', 'BOOL');
+    }
+
 
 }
