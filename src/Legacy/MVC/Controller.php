@@ -11,6 +11,8 @@
 
 namespace TCorp\Legacy\MVC;
 
+use \TCorp\Legacy\Input;
+
 
 /**
  * Minimalist base class for creating MVC controllers
