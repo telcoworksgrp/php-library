@@ -21,10 +21,43 @@ use \TCorp\Legacy\Helper;
 class SignupForm
 {
 
+    /**
+     * IP address of the remote user
+     *
+     * @var string
+     */
     public $ipaddress = '';
+
+
+    /**
+     * User agent of the remote user
+     *
+     * @var string
+     */
     public $useragent = '';
+
+    /**
+     * Date and time data was last submitted
+     *
+     * @var string
+     */
     public $submitted = '';
+
+
+    /**
+     * A T3 affiliate refferal id (if the user was
+     * redircted from an affilate site)
+     *
+     * @var string
+     */
     public $refferalId = '';
+
+
+    /**
+     * Domain name of this website
+     *
+     * @var string
+     */
     public $domain = '';
 
 
