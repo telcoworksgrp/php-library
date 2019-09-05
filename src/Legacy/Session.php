@@ -29,6 +29,9 @@ class Session
     {
         if (!isset($_SESSION)) {
             session_start();
+        }
+
+        if (!isset($_SESSION['registry'])) {
             $_SESSION['registry'] = new Registry();
         }
     }
