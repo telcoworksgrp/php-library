@@ -479,15 +479,15 @@ class Helper
         $default = '', string $filter = 'STRING')
     {
         if (isset($_REQUEST[$var])) {
-            Helper::setSessionValue($key, $_REQUEST[$var]);
+            Session::set($key, $_REQUEST[$var]);
         } else {
             if (!isset($_SESSION[$key])) {
-                Helper::setSessionValue($key, $default);
+                Session::set($key, $default);
             }
         }
 
         // Return the result
-        return Helper::getSessionValue($key);
+        return Session::get($key);
     }
 
 
