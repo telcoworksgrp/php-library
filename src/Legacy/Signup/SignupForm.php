@@ -141,11 +141,11 @@ class SignupForm
         // If a value from the request has been found, set/update
         // the corrsponding session variable
         if ($result !== false) {
-            Helper::setSessionValue($key, $result);
+            Session::set($key, $result);
         }
 
         // Get the new/existing value from the session.
-        $result = Helper::getSessionValue($key, false);
+        $result = Session::get($key, false);
 
         // If we still don't have a value return the default value.
         $result = ($result === false) ? $default : $result;
