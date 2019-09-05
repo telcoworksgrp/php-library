@@ -47,7 +47,7 @@ class Session
      */
     public static function get(string $key, $default = null)
     {
-        $_SESSION['registry']->get($key, $default);
+        return $_SESSION['registry']->get($key, $default);
     }
 
 
