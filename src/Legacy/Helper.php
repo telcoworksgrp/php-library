@@ -536,45 +536,4 @@ class Helper
     }
 
 
-    /**
-     * Start a new session if none has already been started
-     * -------------------------------------------------------------------------
-     * @return void
-     */
-    public static function startSession() : void
-    {
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-    }
-
-
-    /**
-     * Sets a session variable to a given value
-     * -------------------------------------------------------------------------
-     * @param string    $key    Name of the session variable
-     * @param mixed     $value  New value for the session variable
-     *
-     * @return void
-     */
-    public static function setSessionValue(string $key, $value) : void
-    {
-        $_SESSION[$key] = $value;
-    }
-
-
-    /**
-     * Get a the value of a given session variable
-     * -------------------------------------------------------------------------
-     * @param  string   $key        Name of the session variable
-     * @param  mixed    $default    A default value in case none exists.
-     *
-     * @return mixed    The value of the session variable, or the default value
-     */
-    public static function getSessionValue(string $key, $default = null)
-    {
-        return $_SESSION[$key] ?? $default;
-    }
-
-
 }
