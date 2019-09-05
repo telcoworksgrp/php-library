@@ -85,7 +85,7 @@ class Session
      */
     public static function clear()
     {
-        $_SESSION['registry']->clear();
+        $_SESSION['registry']->reset();
     }
 
 
