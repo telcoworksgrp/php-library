@@ -53,8 +53,8 @@ class Input
      */
     public function get(string $name, $default = null, string $filter = '')
     {
-        $result = $this->sanitise($this->registry->get($name, $default));
-    }    
+        return $this->sanitise($this->registry->get($name, $default));
+    }
 
 
 
