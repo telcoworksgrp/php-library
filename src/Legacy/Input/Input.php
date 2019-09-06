@@ -83,14 +83,6 @@ class Input
     protected function sanitise($value, string $type = '')
     {
 
-        // If the value is an array then sanitise each
-        // element of the array with the given data type
-        if (is_array($value)) {
-            foreach($value AS &$element) {
-                $element = $this->sanitise($element, $type);
-            }
-        }
-
         // Apply the appropiate sanitisation to the value
         switch (strtolower($type)) {
 
