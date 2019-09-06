@@ -8,7 +8,7 @@
  * =============================================================================
  */
 
-namespace \TCorp\Legacy;
+namespace TCorp\Legacy;
 
 
 use \TCorp\Legacy\Config\Config;
