@@ -12,6 +12,7 @@ namespace \TCorp\Legacy;
 
 
 use \TCorp\Legacy\Config\Config;
+use \TCorp\Legacy\Input\Input;
 
 
 
@@ -31,12 +32,36 @@ class Factory
 
 
 
+    /**
+     * Global input object
+     *
+     * @var \TCorp\Legacy\Input\Input
+     */
+    protected static $input = null;
+
+
+
 
     /**
      * Get the global configuration object, creating it if it doesn't
      * already exist
      * -------------------------------------------------------------------------
-     * @return \TCorp\Legacy\Config
+     * @return \TCorp\Legacy\Config\Config
+     */
+    public static function getConfig()
+    {
+        if (!static::$config) {
+            static::$config = new Input();
+        }
+
+        return static::$config;
+    }
+
+
+    /**
+     * Get the global input object, creating it if it doesn't already exist
+     * -------------------------------------------------------------------------
+     * @return \TCorp\Legacy\Input\Input
      */
     public static function getConfig()
     {
