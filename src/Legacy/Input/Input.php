@@ -59,6 +59,20 @@ class Input
 
 
     /**
+     * Check if a value for a given input exists
+     * -------------------------------------------------------------------------
+     * @param  string   $name   Name of the parameter
+     *
+     * @return bool
+     */
+    public function exists(string $name) : bool
+    {
+        return $this->registry->exists($name);
+    }
+
+
+
+    /**
      * Sanitise a given value based on an expected data type
      * -------------------------------------------------------------------------
      * @param  mixed    $value  The value to sanitise
