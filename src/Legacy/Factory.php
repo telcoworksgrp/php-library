@@ -63,13 +63,13 @@ class Factory
      * -------------------------------------------------------------------------
      * @return \TCorp\Legacy\Input\Input
      */
-    public static function getConfig()
+    public static function getInput()
     {
-        if (!static::$config) {
-            static::$config = new Config();
+        if (!static::$input) {
+            static::$input = new Input();
         }
 
-        return static::$config;
+        return static::$input;
     }
 
 
