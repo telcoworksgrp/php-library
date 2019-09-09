@@ -25,7 +25,7 @@ class Firewall
      *
      * @var string[]
      */
-    public static $bannedCountries = [];
+    public $bannedCountries = [];
 
 
 
@@ -34,7 +34,7 @@ class Firewall
      * -------------------------------------------------------------------------
      * @return void
      */
-    public static function allow() : void
+    public function allow() : void
     {
     }
 
@@ -44,7 +44,7 @@ class Firewall
      * -------------------------------------------------------------------------
      * @return void
      */
-    public static function block()
+    public function block()
     {
         SecurityHelper::blockAccess();
     }
@@ -55,16 +55,19 @@ class Firewall
      * -------------------------------------------------------------------------
      * @return bool
      */
-    public static function check() : bool
+    public function check() : bool
     {
+        // Initialise some local variables
+        $config = Helper::getConfig();
+        $apikey = $config->get("ipgeo.apikey");
+
         // Check if the user has a private ip address
         if (Utils::isPrivateIPAddress()) {
             return true;
         }
 
         // Check if the user's ip is from a banned country
-        if (SecurityHelper::checkIpLocation(static::$bannedCountries,
-            Config::$ipGeolocationApiKey)) {
+        if (SecurityHelper::checkIpLocation($this->bannedCountries, $apikey)){
             return false;
         }
 
@@ -79,12 +82,12 @@ class Firewall
      * -------------------------------------------------------------------------
      * @return void
      */
-    public static function run()
+    public function run()
     {
-        if (static::check()) {
-            static::allow();
+        if ($this->check()) {
+            $this->allow();
         } else {
-            static::block();
+            $this->block();
         }
     }
 
@@ -94,9 +97,9 @@ class Firewall
      * -------------------------------------------------------------------------
      * @param string    $country   A two charictar country code
      */
-    public static function banCountry(string $country)
+    public function banCountry(string $country)
     {
-        static::$bannedCountries[] = $country;
+        $this->bannedCountries[] = $country;
     }
 
 

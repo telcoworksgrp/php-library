@@ -24,7 +24,7 @@ class Debugger
      *
      * @return void
      */
-    public static function enableErrorReporting(bool $enable = true) : void
+    public function enableErrorReporting(bool $enable = true) : void
     {
         if ($enable) {
             error_reporting(E_ALL);
