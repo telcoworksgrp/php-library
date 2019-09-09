@@ -98,6 +98,15 @@ class Helper
 
 
 
+    /**
+     * Holds a global debugger object
+     *
+     * @var \TCorp\Legacy\Debugger
+     */
+    protected static $debugger   = null;
+
+
+
 
     /**
      * Get the global configuration object
@@ -242,6 +251,24 @@ class Helper
 
         return static::$webapi;
     }
+
+
+
+    /**
+     * Get the global debugger object
+     * -------------------------------------------------------------------------
+     * @return Debugger
+     */
+    public static function getDebugger() : Debugger
+    {
+        if (!static::$debugger) {
+            static::$debugger = new Debugger();
+        }
+
+        return static::$debugger;
+    }
+
+
 
 
     /**
