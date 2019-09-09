@@ -54,6 +54,15 @@ class Helper
 
 
     /**
+     * Holds the global session object
+     *
+     * @var \TCorp\Legacy\Session
+     */
+    protected static $session = null;
+
+
+
+    /**
      * Send a very basic HTTP request and return the response body
      * -------------------------------------------------------------------------
      * @param  string   $url        The URL to send the quest to
@@ -477,113 +486,6 @@ class Helper
 
 
     /**
-     * Store the value of a request variable in a session var. If the request
-     * var doesn't exist then preserve the existing session var. If a session
-     * var with the given key doesn't exist then set a session var with the
-     * given key to a given default value.
-     * -------------------------------------------------------------------------
-     * @param string    $key        A key name for referancing the stored value
-     * @param string    $var        A GET/POST variable name
-     * @param string    $default    Default value if both request and session
-     *                              var doesn't exist
-     * @param string    $filter     Filter Type (for sanitisation)
-     *
-     * @return  mixed   The final value of session var
-     */
-    public static function setSessionVarFromRequest(string $key, string $var,
-        $default = '', string $filter = 'STRING')
-    {
-        if (isset($_REQUEST[$var])) {
-            Session::set($key, $_REQUEST[$var]);
-        } else {
-            if (!isset($_SESSION[$key])) {
-                Session::set($key, $default);
-            }
-        }
-
-        // Return the result
-        return Session::get($key);
-    }
-
-
-    /**
-     * Start a new session or resume and existing one
-     * -------------------------------------------------------------------------
-     * @return mixed
-     */
-    public static function startSession()
-    {
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-
-        if (!isset($_SESSION['registry'])) {
-            $_SESSION['registry'] = new Registry();
-        }
-
-    }
-
-
-
-    /**
-     * Get a session value
-     * -------------------------------------------------------------------------
-     * @param  string   $key      Key/name of the session value to get
-     * @param  mixed    $default  Value to return if no value is found
-     *
-     * @return mixed
-     */
-    public static function getSessionValue(string $key, $default = null)
-    {
-        return $_SESSION['registry']->get($key, $default);
-    }
-
-
-    /**
-     * Set a session value
-     * -------------------------------------------------------------------------
-     * @param string    $key       Key/name of the session value to set
-     * @param mixed     $value     Value to set the session value to
-     *
-     * @return void
-     */
-    public static function setSessionValue(string $key, $value)
-    {
-        $_SESSION['registry']->set($key, $value);
-    }
-
-
-
-    /**
-     * Store the value of a request variable in a session var. If the request
-     * var doesn't exist then preserve the existing session var. If a session
-     * var with the given key doesn't exist then set a session var with the
-     * given key to a given default value.
-     * -------------------------------------------------------------------------
-     * @param string    $key        A key name for referancing the stored value
-     * @param string    $var        A GET/POST variable name
-     * @param string    $default    Default value if none can be found
-     *
-     * @return  mixed   The final value of session var
-     */
-    public static function setSessionValueFromRequest(string $key,
-        string $var, $default = '')
-    {
-        if (isset($_REQUEST[$var])) {
-            static::setSessionValue($key, $_REQUEST[$var]);
-        } else {
-            if (!isset($_SESSION[$key])) {
-                static::setSessionValue($key, $default);
-            }
-        }
-
-        // Return the result
-        return static::getSessionValue($key);
-    }
-
-
-
-    /**
      * Get the global configuration object
      * -------------------------------------------------------------------------
      * @return \TCorp\Legacy\Config
@@ -629,5 +531,20 @@ class Helper
         return static::$debugger;
     }
 
+
+
+    /**
+     * Get the global session object
+     * -------------------------------------------------------------------------
+     * @return \TCorp\Legacy\Session
+     */
+    public static function getSession()
+    {
+        if (!static::$session) {
+            static::$session = new Session();
+        }
+
+        return static::$session;
+    }
 
 }
