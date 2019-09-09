@@ -11,11 +11,9 @@
 namespace TCorp\Legacy;
 
 use \KWS\Security\SecurityHelper;
+use \KWS\Utils;
 
 
-/**
- * Helper class for working with Telecom Corp's Legacy sites/projects
- */
 class Helper
 {
 
@@ -26,6 +24,79 @@ class Helper
         'July','August','September','October','November','December');
 
 
+    /**
+     * A company name for the website
+     *
+     * @var string
+     */
+    public static $companyName = '';
+
+
+    /**
+     * The company's number and street name
+     *
+     * @var string
+     */
+    public static $companyAddress = '';
+
+
+    /**
+     * The suburb in which the company is located
+     *
+     * @var string
+     */
+    public static $companySuburb = '';
+
+
+    /**
+     * The state in which the company is located
+     *
+     * @var string
+     */
+    public static $companyState = '';
+
+
+    /**
+     * The postcode on which the company is located
+     *
+     * @var string
+     */
+    public static $companyPostcode = '';
+
+
+    /**
+     * THe country in which the company is located
+     *
+     * @var string
+     */
+    public static $companyCountry = '';
+
+
+    /**
+     * The company's contact phone number
+     *
+     * @var string
+     */
+    public static $companyPhone = '';
+
+
+    /**
+     * An main email address to which email notifications
+     * and other corraspondance will be sent
+     *
+     * @var string
+     */
+    public static $primaryEmail = '';
+
+
+    /**
+     * An additional email address to which email notifications
+     * and other corraspondance will be sent
+     *
+     * @var string
+     */
+    public static $secondaryEmail = '';
+
 
     /**
      * API key to use when calling the IpGeolocation API
@@ -34,7 +105,7 @@ class Helper
      *
      * @see https://ipgeolocation.io/
      */
-    public static $ipGeolocationApiKey = '';
+    public static $ipGeoApiKey = '';
 
 
     /**
@@ -69,6 +140,28 @@ class Helper
 
 
     /**
+     * API key to use when calling the IpGeolocation API
+     *
+     * @var string
+     *
+     * @see https://ipgeolocation.io/
+     */
+    public static $ipGeolocationApiKey = '';
+
+
+    /**
+     * A Google ReCaptcha site key
+     *
+     * @var string
+     *
+     * @see https://www.google.com/recaptcha/intro/v3.html
+     */
+    public static $recaptchaSiteKey = '';
+
+
+
+
+    /**
      * Send a very basic HTTP request and return the response body
      * -------------------------------------------------------------------------
      * @param  string   $url        The URL to send the quest to
@@ -91,7 +184,6 @@ class Helper
         // Return the result body
         return $result->getBody();
     }
-
 
 
     /**
@@ -137,13 +229,120 @@ class Helper
         // Add additional meta data
         foreach($result as $number) {
             $number->format1 = preg_replace('|^(\d{4})(\d{6})$|i', '$1 $2', $number->number);
-	        $number->format2 = preg_replace('|^(\d{4})(\d{3})(\d{3})$|i', '$1 $2 $3', $number->number);
+            $number->format2 = preg_replace('|^(\d{4})(\d{3})(\d{3})$|i', '$1 $2 $3', $number->number);
             $number->format3 = preg_replace('|^(\d{4})(\d{2})(\d{2})(\d{2})$|i', '$1 $2 $3 $4', $number->number);
             $number->format4 = (!empty($number->word) ? $number->word : $number->format3);
         }
 
         // Return the result
         return $result;
+    }
+
+
+
+    /**
+     * Proxy for the SecurityHelper::getReCaptchaHtml() method
+     * -------------------------------------------------------------------------
+     * @return  string  HTML for rendering a CSRF token inside a web form
+     */
+    public static function getReCaptchaHtml()
+    {
+        return SecurityHelper::getReCaptchaHtml(static::$recaptchaSiteKey);
+    }
+
+
+    /**
+     * Proxy for the SecurityHelper::getHoneypotHtml() method
+     * -------------------------------------------------------------------------
+     * @return  string  HTML for rendering a hidden honeypot text field
+     */
+    public static function getHoneypotHtml()
+    {
+        return SecurityHelper::getHoneypotHtml();
+    }
+
+
+    /**
+     * Proxy for the SecurityHelper::getCSRFTokenHtml() method
+     * -------------------------------------------------------------------------
+     * @return  string  HTML for rendering a CSRF token inside a web form
+     */
+    public static function getCSRFTokenHtml()
+    {
+        return SecurityHelper::getCSRFTokenHtml();
+    }
+
+
+    /**
+     * Check the hidden honeypot form field. If it is missing or invalid then
+     * the user will be blocked
+     * -------------------------------------------------------------------------
+     * @return  void
+     */
+    public static function blockIfInvalidHoneypot() : void
+    {
+        if (!SecurityHelper::checkHoneypot()) {
+            SecurityHelper::blockAccess();
+        }
+    }
+
+
+    /**
+     * Check the CSRF token. If it is missing or doesn't match the one stored
+     * in the user's session then the user will be blocked
+     * -------------------------------------------------------------------------
+     * @return  void
+     */
+    public static function blockIfInvalidCSRFToken() : void
+    {
+        if (!SecurityHelper::checkCSRFToken()) {
+            SecurityHelper::blockAccess();
+        }
+    }
+
+
+    /**
+     * Check if the form ReCaptcha was successfully completed. If not, then
+     * the user will be redirected
+     * -------------------------------------------------------------------------
+     * @return void
+     */
+    public static function redirectIfInvalidReCaptcha(string $redirectUrl) : void
+    {
+        if (!SecurityHelper::checkReCaptcha(static::$recaptchaSecret)) {
+            static::redirect($redirectUrl, false, 303);
+        }
+    }
+
+
+    /**
+     * Redirect the user's browser to another URL, preserving the current
+     * URL parameters.
+     * -------------------------------------------------------------------------
+     * @param  string   $url             URL to redirect the user to
+     * @param  bool     $preserveParams  Pass existing URL params to the redirect
+     * @param  int      $statusCode      HTTP status code (usually 301 or 303)
+     *
+     * @return  void
+     */
+    public static function redirect(string $url, bool $preserveParams = TRUE,
+        int $statusCode = 301) : void
+    {
+        Utils::redirect($url, $preserveParams, $statusCode);
+    }
+
+
+    /**
+     * Get the value of a submitted form field
+     * -------------------------------------------------------------------------
+     * @param  string   $name     Name of the form field
+     * @param  mixed    $default  Default value if no value is found
+     *
+     * @return mixed
+     */
+    public static function getFormField(string $name, $default = null)
+    {
+        return htmlspecialchars($_POST[$name] ?? $default);
     }
 
 
@@ -187,7 +386,7 @@ class Helper
         // Add some additional metadata to headers
         $headers['X-WebForm-ServerIP']   = $_SERVER['SERVER_ADDR'];
         $headers['X-WebForm-ServerName'] = $_SERVER['SERVER_NAME'];
-        $headers['X-WebForm-Host']       = static::getCurrentDomainName();
+        $headers['X-WebForm-Host']       = static::getDomainName();
         $headers['X-WebForm-Referrer']   = $_SERVER['HTTP_REFERER'];
         $headers['X-WebForm-UserAgent']  = static::getRemoteUserAgent();
         $headers['X-WebForm-RemoteIP']   = static::getRemoteIPAddress();
@@ -201,6 +400,63 @@ class Helper
         return $result;
     }
 
+
+    /**
+     * Get the IP address from which the user is viewing the current page.
+     * -------------------------------------------------------------------------
+     * @return string
+     */
+    public static function getRemoteIpAddress() : string
+    {
+        return $_SERVER['REMOTE_ADDR'];
+    }
+
+
+    /**
+     * Get the contents of the User-Agent: header from the current request
+     * -------------------------------------------------------------------------
+     * @return string
+     */
+    public static function getRemoteUserAgent() : string
+    {
+        return $_SERVER['HTTP_USER_AGENT'];
+    }
+
+
+    /**
+     * Get the current date and time in RFC 2822 format
+     * -------------------------------------------------------------------------
+     * @return string
+     */
+    public static function getDateTime() : string
+    {
+        return date('r');
+    }
+
+
+    /**
+     * Get the one-time affilate referral id that is set when an affiliate
+     * reffers a cutsomer to this website to make an application. This referral
+     * id should not be confused with an "affiliate id" which identifies the
+     * affilate not the referral.
+     * -------------------------------------------------------------------------
+     * @return  string  The one-time affilate refferal id.
+     */
+    public static function getAffiliateReferralId()
+    {
+        return $_COOKIE['affiliate'] ?? '';
+    }
+
+
+    /**
+     * Get the current domain name
+     * -------------------------------------------------------------------------
+     * @return  string  A domain name
+     */
+    public static function getDomainName()
+    {
+        return $_SERVER['HTTP_HOST'];
+    }
 
 
     /**
@@ -229,7 +485,6 @@ class Helper
     }
 
 
-
     /**
      * Render a hidden input field for each POST variable. Not a good
      * practice but needed to avoid breaking some of Telecom Corp's
@@ -252,25 +507,6 @@ class Helper
         // Return the result
         return $result;
     }
-
-
-
-    /**
-     * Redirect the user's browser to another URL, preserving the current
-     * URL parameters.
-     * -------------------------------------------------------------------------
-     * @param  string   $url             URL to redirect the user to
-     * @param  bool     $preserveParams  Pass existing URL params to the redirect
-     * @param  int      $statusCode      HTTP status code (usually 301 or 303)
-     *
-     * @return  void
-     */
-    public static function redirect(string $url, bool $preserveParams = TRUE,
-        int $statusCode = 301) : void
-    {
-        \KWS\Utils::redirect($url, $preserveParams, $statusCode);
-    }
-
 
 
     /**
@@ -342,7 +578,6 @@ class Helper
     }
 
 
-
     /**
      *  Block the user if thier IP belongs to a banned country. SecurityHelper::
      *  WORST_SPAM_COUNTRIES is a predefined list of the worst spam/bot
@@ -366,100 +601,6 @@ class Helper
     }
 
 
-
-    /**
-     * Proxy for the SecurityHelper::getHoneypotHtml() method
-     * -------------------------------------------------------------------------
-     * @return  string  HTML for rendering a hidden honeypot text field
-     */
-    public static function getHoneypotHtml()
-    {
-        return SecurityHelper::getHoneypotHtml();
-    }
-
-
-
-    /**
-     * Check the hidden honeypot form field. If it is missing or invalid then
-     * the user will be blocked
-     * -------------------------------------------------------------------------
-     * @return  void
-     */
-    public static function blockIfInvalidHoneypot() : void
-    {
-        if (!SecurityHelper::checkHoneypot()) {
-            SecurityHelper::blockAccess();
-        }
-    }
-
-
-
-    /**
-     * Proxy for the SecurityHelper::getCSRFTokenHtml() method
-     * -------------------------------------------------------------------------
-     * @return  string  HTML for rendering a CSRF token inside a web form
-     */
-    public static function getCSRFTokenHtml()
-    {
-        return SecurityHelper::getCSRFTokenHtml();
-    }
-
-
-
-    /**
-     * Check the CSRF token. If it is missing or doesn't match the one stored
-     * in the user's session then the user will be blocked
-     * -------------------------------------------------------------------------
-     * @return  void
-     */
-    public static function blockIfInvalidCSRFToken() : void
-    {
-        if (!SecurityHelper::checkCSRFToken()) {
-            SecurityHelper::blockAccess();
-        }
-    }
-
-
-
-    /**
-     * Proxy for the SecurityHelper::getReCaptchaHtml() method
-     * -------------------------------------------------------------------------
-     * @return  string  HTML for rendering a CSRF token inside a web form
-     */
-    public static function getReCaptchaHtml()
-    {
-        return SecurityHelper::getReCaptchaHtml(static::$recaptchaSiteKey);
-    }
-
-
-
-    /**
-     * Check if the form ReCaptcha was successfully completed. If not, then
-     * the user will be redirected
-     * -------------------------------------------------------------------------
-     * @return void
-     */
-    public static function redirectIfInvalidReCaptcha(string $redirectUrl) : void
-    {
-        if (!SecurityHelper::checkReCaptcha(static::$recaptchaSecret)) {
-            self::redirect($redirectUrl, false, 303);
-        }
-    }
-
-
-
-    /**
-     * Get the one-time affilate referral id that is set when an affiliate
-     * reffers a cutsomer to this website to make an application. This referral
-     * id should not be confused with an "affiliate id" which identifies the
-     * affilate not the referral.
-     * -------------------------------------------------------------------------
-     * @return  string  The one-time affilate refferal id.
-     */
-    public static function getAffiliateReferralId()
-    {
-        return Input::getValue('affiliate', '');
-    }
 
     /**
      * Store the value of a request variable in a session var. If the request
@@ -491,38 +632,6 @@ class Helper
     }
 
 
-    /**
-     * Get the user's/remote IP address
-     * -------------------------------------------------------------------------
-     * @return  string  An IP address
-     */
-    public static function getRemoteIPAddress()
-    {
-        return $_SERVER['REMOTE_ADDR'];
-    }
-
-
-    /**
-     * Get the user's/remote User Agent
-     * -------------------------------------------------------------------------
-     * @return  string  An IP address
-     */
-    public static function getRemoteUserAgent()
-    {
-        return $_SERVER['HTTP_USER_AGENT'];
-    }
-
-
-    /**
-     * Get the current domain name
-     * -------------------------------------------------------------------------
-     * @return  string  A domain name
-     */
-    public static function getCurrentDomainName()
-    {
-        return $_SERVER['HTTP_HOST'];
-    }
-
 
     /**
      * Enable PHP error reporting
@@ -535,5 +644,105 @@ class Helper
         ini_set('display_errors', 1);
     }
 
+
+
+    /**
+     * Start a new session or resume and existing one
+     * -------------------------------------------------------------------------
+     * @return mixed
+     */
+    public static function startSession()
+    {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['registry'])) {
+            $_SESSION['registry'] = new Registry();
+        }
+
+    }
+
+
+
+    /**
+     * Get a session value
+     * -------------------------------------------------------------------------
+     * @param  string   $key      Key/name of the session value to get
+     * @param  mixed    $default  Value to return if no value is found
+     *
+     * @return mixed
+     */
+    public static function getSessionValue(string $key, $default = null)
+    {
+        return $_SESSION['registry']->get($key, $default);
+    }
+
+
+    /**
+     * Set a session value
+     * -------------------------------------------------------------------------
+     * @param string    $key       Key/name of the session value to set
+     * @param mixed     $value     Value to set the session value to
+     *
+     * @return void
+     */
+    public static function setSessionValue(string $key, $value)
+    {
+        $_SESSION['registry']->set($key, $value);
+    }
+
+
+
+    /**
+     * Store the value of a request variable in a session var. If the request
+     * var doesn't exist then preserve the existing session var. If a session
+     * var with the given key doesn't exist then set a session var with the
+     * given key to a given default value.
+     * -------------------------------------------------------------------------
+     * @param string    $key        A key name for referancing the stored value
+     * @param string    $var        A GET/POST variable name
+     * @param string    $default    Default value if none can be found
+     *
+     * @return  mixed   The final value of session var
+     */
+    public static function setSessionValueFromRequest(string $key,
+        string $var, $default = '')
+    {
+        if (isset($_REQUEST[$var])) {
+            static::setSessionValue($key, $_REQUEST[$var]);
+        } else {
+            if (!isset($_SESSION[$key])) {
+                static::setSessionValue($key, $default);
+            }
+        }
+
+        // Return the result
+        return static::getSessionValue($key);
+    }
+
+
+    /**
+     * Render a hidden input field for each POST variable. Not a good
+     * practice but needed to avoid breaking some of Telecom Corp's
+     * legacy websites
+     * -------------------------------------------------------------------------
+     * @return string   Rendered HTML
+     */
+    public static function renderPostParamsAsHiddenFields()
+    {
+        // Initialise some local variables
+        $result = '';
+
+        // Render a hidden input field for each POST variable
+        foreach ($_POST as $key => $value) {
+            $key     = htmlentities($key);
+            $value   = htmlentities($value);
+            $result .= "<input type=hidden name=$key value=\"$value\">\n";
+        }
+
+        // Return the result
+        return $result;
+    }
 
 }
