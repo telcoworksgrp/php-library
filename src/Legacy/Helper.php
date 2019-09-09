@@ -140,28 +140,6 @@ class Helper
 
 
     /**
-     * API key to use when calling the IpGeolocation API
-     *
-     * @var string
-     *
-     * @see https://ipgeolocation.io/
-     */
-    public static $ipGeolocationApiKey = '';
-
-
-    /**
-     * A Google ReCaptcha site key
-     *
-     * @var string
-     *
-     * @see https://www.google.com/recaptcha/intro/v3.html
-     */
-    public static $recaptchaSiteKey = '';
-
-
-
-
-    /**
      * Send a very basic HTTP request and return the response body
      * -------------------------------------------------------------------------
      * @param  string   $url        The URL to send the quest to
