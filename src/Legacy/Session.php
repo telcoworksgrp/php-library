@@ -17,7 +17,7 @@ use \KWS\Registry\Registry;
 /**
  * Class to managing the current session
  */
-class Session extends Registry
+class Session
 {
 
     /**
