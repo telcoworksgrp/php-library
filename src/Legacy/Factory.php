@@ -22,8 +22,15 @@ class Factory
      *
      * @var \TCorp\Legacy\Config
      */
-    protected static $config   = null;
+    protected static $config = null;
 
+
+    /**
+     * Holds a global debugger object
+     *
+     * @var \TCorp\Legacy\Debugger
+     */
+    protected static $debugger = null;
 
 
     /**
@@ -31,8 +38,7 @@ class Factory
      *
      * @var \TCorp\Legacy\Email
      */
-    protected static $email    = null;
-
+    protected static $email = null;
 
 
     /**
@@ -43,14 +49,12 @@ class Factory
     protected static $firewall = null;
 
 
-
     /**
      * Holds alist of forms
      *
      * @var \TCorp\Legacy\Form[]
      */
-    protected static $forms    = [];
-
+    protected static $forms = [];
 
 
     /**
@@ -58,8 +62,7 @@ class Factory
      *
      * @var \TCorp\Legacy\Input
      */
-    protected static $input    = null;
-
+    protected static $input = null;
 
 
     /**
@@ -70,7 +73,6 @@ class Factory
     protected static $request  = null;
 
 
-
     /**
      * Holds a global session object
      *
@@ -79,14 +81,12 @@ class Factory
     protected static $session  = null;
 
 
-
     /**
      * Holds a gloabl T3Api object
      *
      * @var \TCorp\Legacy\T3Api
      */
-    protected static $t3api    = null;
-
+    protected static $t3api = null;
 
 
     /**
@@ -94,16 +94,10 @@ class Factory
      *
      * @var \TCorp\Legacy\WebApi
      */
-    protected static $webapi   = null;
+    protected static $webapi = null;
 
 
 
-    /**
-     * Holds a global debugger object
-     *
-     * @var \TCorp\Legacy\Debugger
-     */
-    protected static $debugger   = null;
 
 
 
@@ -125,6 +119,21 @@ class Factory
 
 
     /**
+     * Get the global debugger object
+     * -------------------------------------------------------------------------
+     * @return Debugger
+     */
+    public static function getDebugger() : Debugger
+    {
+        if (!static::$debugger) {
+            static::$debugger = new Debugger();
+        }
+
+        return static::$debugger;
+    }
+
+
+    /**
      * Get the global email object
      * -------------------------------------------------------------------------
      * @return Email
@@ -137,7 +146,6 @@ class Factory
 
         return static::$email;
     }
-
 
 
     /**
@@ -153,7 +161,6 @@ class Factory
 
         return static::$firewall;
     }
-
 
 
     /**
@@ -173,7 +180,6 @@ class Factory
     }
 
 
-
     /**
      * Get the gloabl input object
      * -------------------------------------------------------------------------
@@ -187,7 +193,6 @@ class Factory
 
         return static::$input;
     }
-
 
 
     /**
@@ -205,7 +210,6 @@ class Factory
     }
 
 
-
     /**
      * Get the global session object
      * -------------------------------------------------------------------------
@@ -219,7 +223,6 @@ class Factory
 
         return static::$session;
     }
-
 
 
     /**
@@ -237,7 +240,6 @@ class Factory
     }
 
 
-
     /**
      * Get the global Web Api object
      * -------------------------------------------------------------------------
@@ -250,76 +252,6 @@ class Factory
         }
 
         return static::$webapi;
-    }
-
-
-
-    /**
-     * Get the global debugger object
-     * -------------------------------------------------------------------------
-     * @return Debugger
-     */
-    public static function getDebugger() : Debugger
-    {
-        if (!static::$debugger) {
-            static::$debugger = new Debugger();
-        }
-
-        return static::$debugger;
-    }
-
-
-
-
-    /**
-     * Redirect the user's browser to another URL, preserving the current
-     * URL parameters.
-     * -------------------------------------------------------------------------
-     * @param  string   $url             URL to redirect the user to
-     * @param  bool     $preserveParams  Pass existing URL params to the redirect
-     * @param  int      $statusCode      HTTP status code (usually 301 or 303)
-     *
-     * @return  void
-     */
-    public static function redirect(string $url, bool $preserveParams = TRUE,
-        int $statusCode = 301) : void
-    {
-        \KWS\Utils::redirect($url, $preserveParams, $statusCode);
-    }
-
-
-    /**
-     * Disable browser caching of this request
-     * -------------------------------------------------------------------------
-     * @return  void
-     */
-    public static function disableCache() : void
-    {
-        \KWS\Utils::disableCache();
-    }
-
-
-    /**
-     * Render a hidden input field for each POST variable. Not a good
-     * practice but needed to avoid breaking some of Telecom Corp's
-     * legacy websites
-     * -------------------------------------------------------------------------
-     * @return string   Rendered HTML
-     */
-    public static function renderPostParamsAsHiddenFields()
-    {
-        // Initialise some local variables
-        $result = '';
-
-        // Render a hidden input field for each POST variable
-        foreach ($_POST as $key => $value) {
-            $key     = htmlentities($key);
-            $value   = htmlentities($value);
-            $result .= "<input type=hidden name=$key value=\"$value\">\n";
-        }
-
-        // Return the result
-        return $result;
     }
 
 }

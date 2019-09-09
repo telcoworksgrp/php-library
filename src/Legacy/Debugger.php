@@ -22,7 +22,7 @@ class Debugger
      * -------------------------------------------------------------------------
      * @return void
      */
-    public static function enableErrorReporting() : void
+    public static function enableReporting() : void
     {
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
