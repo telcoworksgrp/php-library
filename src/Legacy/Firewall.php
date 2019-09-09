@@ -64,7 +64,7 @@ class Firewall
 
         // Check if the user's ip is from a banned country
         if (SecurityHelper::checkIpLocation(static::$bannedCountries,
-            Helper::$ipGeolocationApiKey)) {
+            Config::$ipGeolocationApiKey)) {
             return false;
         }
 
