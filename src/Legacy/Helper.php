@@ -558,30 +558,6 @@ class Helper
 
 
     /**
-     *  Block the user if thier IP belongs to a banned country. SecurityHelper::
-     *  WORST_SPAM_COUNTRIES is a predefined list of the worst spam/bot
-     *  countries according to Spamhaus. To avoid blocking Googlebot, the US is
-     *  exluded from this predefined list.
-     *  ------------------------------------------------------------------------
-     *  @return void
-     */
-    public static function blockBannedCountries() : void
-    {
-        // If the user's ip address is a private ip adddress
-        // then do not block
-        if (\KWS\Utils::isPrivateIPAddress()) {
-            return;
-        }
-
-        if (SecurityHelper::checkIpLocation(SecurityHelper::
-            WORST_SPAM_COUNTRIES, static::$ipGeolocationApiKey)) {
-            SecurityHelper::blockAccess();
-        }
-    }
-
-
-
-    /**
      * Store the value of a request variable in a session var. If the request
      * var doesn't exist then preserve the existing session var. If a session
      * var with the given key doesn't exist then set a session var with the
