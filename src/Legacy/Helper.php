@@ -26,6 +26,32 @@ class Helper
 
 
 
+    /**
+     * Holds the global configuration object
+     *
+     * @var \TCorp\Legacy\Config
+     */
+    protected $config = null;
+
+
+
+    /**
+     * Holds the global firewall object
+     *
+     * @var \TCorp\Legacy\Firewall
+     */
+    protected $firewall = null;
+
+
+
+    /**
+     * Holds the global debugger object
+     *
+     * @var \TCorp\Legacy\Debugger
+     */
+    protected $debugger = null;
+
+
 
     /**
      * Send a very basic HTTP request and return the response body
@@ -113,7 +139,9 @@ class Helper
      */
     public static function getReCaptchaHtml()
     {
-        return SecurityHelper::getReCaptchaHtml(Config::$recaptchaSiteKey);
+        $config = static::getConfig();
+        $sitekey = $config->get('recaptcha.sitekey');
+        return SecurityHelper::getReCaptchaHtml($sitekey);
     }
 
 
@@ -175,7 +203,10 @@ class Helper
      */
     public static function redirectIfInvalidReCaptcha(string $redirectUrl) : void
     {
-        if (!SecurityHelper::checkReCaptcha(Config::$recaptchaSecret)) {
+        $config = static::getConfig();
+        $secret = $config->get('recaptcha.secret');
+
+        if (!SecurityHelper::checkReCaptcha($secret)) {
             static::redirect($redirectUrl, false, 303);
         }
     }
@@ -398,6 +429,7 @@ class Helper
     {
         // Initialise some local variables
         $result = new \stdClass();
+        $config = static::getConfig();
 
         // Look up the ABN details using ABR's API
         $url = "https://abr.business.gov.au/abrxmlsearch/" .
@@ -406,7 +438,7 @@ class Helper
         $data = self::sendRequest($url, 'GET', array(
             'searchString'             => $abn,
             'includeHistoricalDetails' => 'Y',
-            'authenticationGuid'       => Config::$abnLookupGuid
+            'authenticationGuid'       => $config->get('abnlookup.guid');
         ));
 
         // Parse the data returned by the API
@@ -550,4 +582,52 @@ class Helper
     }
 
 
+
+    /**
+     * Get the global configuration object
+     * -------------------------------------------------------------------------
+     * @return \TCorp\Legacy\Config
+     */
+    public static function getConfig()
+    {
+        if (!static::$config) {
+            static::$config = new Config();
+        }
+
+        return static::$config;
+    }
+
+
+
+    /**
+     * Get the global firewall object
+     * -------------------------------------------------------------------------
+     * @return \TCorp\Legacy\Firewall
+     */
+    public static function getFirewall()
+    {
+        if (!static::$firewall) {
+            static::$firewall = new Firewall();
+        }
+
+        return static::$firewall;
+    }
+
+
+
+    /**
+     * Get the global debugger object
+     * -------------------------------------------------------------------------
+     * @return \TCorp\Legacy\Debugger
+     */
+    public static function getDebugger()
+    {
+        if (!static::$debugger) {
+            static::$debugger = new Debugger();
+        }
+
+        return static::$debugger;
+    }
+
+    
 }
