@@ -31,7 +31,7 @@ class Helper
      *
      * @var \TCorp\Legacy\Config
      */
-    protected $config = null;
+    protected static $config = null;
 
 
 
@@ -40,7 +40,7 @@ class Helper
      *
      * @var \TCorp\Legacy\Firewall
      */
-    protected $firewall = null;
+    protected static $firewall = null;
 
 
 
@@ -49,7 +49,7 @@ class Helper
      *
      * @var \TCorp\Legacy\Debugger
      */
-    protected $debugger = null;
+    protected static $debugger = null;
 
 
 
