@@ -11,6 +11,9 @@
 namespace TCorp\Legacy;
 
 
+use \KWS\Security\SecurityHelper;
+
+
 /**
  * Class for allowing/blocking traffic
  */
