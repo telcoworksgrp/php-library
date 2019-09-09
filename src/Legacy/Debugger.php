@@ -20,12 +20,19 @@ class Debugger
     /**
      * Enable PHP error reporting
      * -------------------------------------------------------------------------
+     * @param   bool    $enable True for full error reporting, False for none
+     *
      * @return void
      */
-    public static function enableErrorReporting() : void
+    public static function enableErrorReporting(bool $enable = true) : void
     {
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
+        if ($enable) {
+            error_reporting(E_ALL);
+            ini_set('display_errors', 1);
+        } else {
+            error_reporting(E_NONE);
+            ini_set('display_errors', 0);
+        }
     }
 
 
