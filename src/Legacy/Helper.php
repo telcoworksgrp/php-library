@@ -438,7 +438,7 @@ class Helper
         $data = self::sendRequest($url, 'GET', array(
             'searchString'             => $abn,
             'includeHistoricalDetails' => 'Y',
-            'authenticationGuid'       => $config->get('abnlookup.guid');
+            'authenticationGuid'       => $config->get('abnlookup.guid')
         ));
 
         // Parse the data returned by the API
@@ -629,5 +629,5 @@ class Helper
         return static::$debugger;
     }
 
-    
+
 }
