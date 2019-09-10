@@ -61,6 +61,14 @@ class Helper
     protected static $session = null;
 
 
+    /**
+     * Holds the global form objects
+     *
+     * @var \TCorp\Legacy\Form
+     */
+    protected static $forms = [];
+
+
 
     /**
      * Send a very basic HTTP request and return the response body
@@ -545,6 +553,23 @@ class Helper
         }
 
         return static::$session;
+    }
+
+
+
+    /**
+     * Get a global form object
+     * -------------------------------------------------------------------------
+     * @return \TCorp\Legacy\Form
+     */
+    public static function getForm(string $name)
+    {
+        if (!isset(static::$forms[$name])) {
+            $class = '\\TCorp\\Legacy\\Form\\' . ucfirst($name) . 'Form'
+            static::$forms[$name] = new $class();
+        }
+
+        return static::$form[$name];
     }
 
 }
