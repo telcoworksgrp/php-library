@@ -493,6 +493,47 @@ class Helper
     }
 
 
+
+
+    /**
+     * Get the current state of a given form field from the request/session.
+     * -------------------------------------------------------------------------
+     * @param  string   $key        Session key where the value is stored
+     * @param  string   $name       The form field's name
+     * @param  string   $default    Value to return if no value is found
+     * @param  string   $filter     Filter to sanitise the value with
+     *
+     * @return mixed
+     */
+    public static function getFormFieldState(string $key, string $name,
+        $default = '', string $filter = '')
+    {
+
+    }
+
+
+    /**
+     * Get the HTTP method used to request the page
+     * -------------------------------------------------------------------------
+     * @return string
+     */
+    public function getRequestMethod()
+    {
+        return $_SERVER['REQUEST_METHOD'];
+    }
+
+
+    /**
+     * Check if the current request is a form submission
+     * -------------------------------------------------------------------------
+     * @return bool
+     */
+    public static function isFormSubmission()
+    {
+        return static::getRequestMethod() == 'POST';
+    }
+
+
     /**
      * Get the global configuration object
      * -------------------------------------------------------------------------
