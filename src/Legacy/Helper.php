@@ -488,7 +488,7 @@ class Helper
      * -------------------------------------------------------------------------
      * @return string
      */
-    public function getRequestMethod()
+    public static function getRequestMethod()
     {
         return $_SERVER['REQUEST_METHOD'];
     }
