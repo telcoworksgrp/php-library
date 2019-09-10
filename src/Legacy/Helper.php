@@ -10,7 +10,6 @@
 
 namespace TCorp\Legacy;
 
-use \KWS\Registry\Registry;
 use \KWS\Security\SecurityHelper;
 use \KWS\Utils;
 
