@@ -58,7 +58,7 @@ class Firewall
     public function check() : bool
     {
         // Initialise some local variables
-        $config = Helper::getConfig();
+        $config = Factory::getConfig();
         $apikey = $config->get("ipgeo.apikey");
 
         // Check if the user has a private ip address
