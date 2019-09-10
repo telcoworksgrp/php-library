@@ -493,8 +493,6 @@ class Helper
     }
 
 
-
-
     /**
      * Get the current state of a given form field from the request/session.
      * -------------------------------------------------------------------------
@@ -508,7 +506,24 @@ class Helper
     public static function getFormFieldState(string $key, string $name,
         $default = '', string $filter = '')
     {
+        // Initialise some local variables
+        $session = static::getSession();
 
+        // Try to get a value from the request
+        $result = $_REQUEST[$name] ?? false;
+
+        // If we found a value in the request sanitise
+        // the value, update the current session. Otherwise
+        // try to get a value from the session.
+        if ($result !== false) {
+            $result = htmlentities($result);
+            $session->set($key, $result);
+        } else {
+            $result = $session->get($key, $default);
+        }
+
+        // Return the result
+        return $result
     }
 
 
