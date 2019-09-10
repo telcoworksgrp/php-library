@@ -195,8 +195,8 @@ class Helper
      *
      * @return  void
      */
-    public static function redirect(string $url, bool $preserveParams = TRUE,
-        int $statusCode = 301) : void
+    public static function redirect(string $url = '', bool $preserveParams
+        = TRUE, int $statusCode = 301) : void
     {
         Utils::redirect($url, $preserveParams, $statusCode);
     }
