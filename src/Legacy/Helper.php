@@ -505,7 +505,20 @@ class Helper
     }
 
 
-
+    /**
+     * Convert HTML to PDF document
+     * -------------------------------------------------------------------------
+     * @param  string   $html           The HTML to convert
+     * @param  string   $size           Paper size (eg: A4,A3,A5,etc)
+     * @param  string   $orientation    Page orientation (portrait/landscape)
+     *
+     * @return mixed    A raw PDF file
+     */
+    public static function convertHtmlToPDF(string $html, string $size = 'A4',
+        $orientation = 'portrait')
+    {
+        return Utils::convertHtmlToPDF($html, $size, $orientation);
+    }
 
 
 }
