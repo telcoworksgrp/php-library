@@ -542,7 +542,7 @@ class Helper
      * -------------------------------------------------------------------------
      * @return void
      */
-    public static function clearAllSessionData();
+    public static function clearAllSessionData()
     {
         $_SESSION = [];
     }
