@@ -521,4 +521,20 @@ class Helper
     }
 
 
+    /**
+     * Render a template with the given data and return the output as a string
+     * -------------------------------------------------------------------------
+     * @param  string   $filename   Filename of of script to render
+     * @param  mixed    $data       Data passed to the template
+     *
+     * @return string
+     */
+    public static function renderTemplate(string $filename, $data)
+    {
+        ob_start();
+        require($filename);
+        return ob_get_clean();
+    }
+
+
 }
