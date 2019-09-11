@@ -537,4 +537,13 @@ class Helper
     }
 
 
+    /**
+     * Clear all data from the current session
+     * -------------------------------------------------------------------------
+     * @return void
+     */
+    public static function clearAllSessionData();
+    {
+        $_SESSION = [];
+    }
 }
