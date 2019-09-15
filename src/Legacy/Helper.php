@@ -42,7 +42,7 @@ class Helper
      *
      * @see https://ipgeolocation.io/
      */
-    public $ipGeolocationApiKey = '';
+    public static $ipGeolocationApiKey = '';
 
 
 
@@ -53,7 +53,7 @@ class Helper
     *
     * @see https://www.google.com/recaptcha/intro/v3.html
     */
-    public $recaptchaSiteKey = '';
+    public static $recaptchaSiteKey = '';
 
 
 
@@ -64,7 +64,7 @@ class Helper
     *
     * @see https://www.google.com/recaptcha/intro/v3.html
     */
-    public $recaptchaSecret = '';
+    public static $recaptchaSecret = '';
 
 
 
@@ -75,7 +75,7 @@ class Helper
     *
     * @see https://abr.business.gov.au/Tools/WebServices
     */
-    public $abnLookupGuid = '';
+    public static $abnLookupGuid = '';
 
 
 
