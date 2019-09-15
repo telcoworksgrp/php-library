@@ -25,6 +25,58 @@ class Helper
 
 
 
+    /**
+     * Name of the this web site
+     *
+     * @var string
+     */
+    public static $siteName = '';
+
+
+    /**
+     * API key to use when calling the IpGeolocation API
+     *
+     * @var string
+     *
+     * @see https://ipgeolocation.io/
+     */
+    public $ipGeolocationApiKey = '';
+
+
+
+    /**
+    * A Google ReCaptcha site key
+    *
+    * @var string
+    *
+    * @see https://www.google.com/recaptcha/intro/v3.html
+    */
+    public $recaptchaSiteKey = '';
+
+
+
+    /**
+    * A Google ReCaptcha secret key to compliment the site key
+    *
+    * @var string
+    *
+    * @see https://www.google.com/recaptcha/intro/v3.html
+    */
+    public $recaptchaSecret = '';
+
+
+
+    /**
+    * API key to use when calling the ABN lookup API
+    *
+    * @var string
+    *
+    * @see https://abr.business.gov.au/Tools/WebServices
+    */
+    public $abnLookupGuid = '';
+
+
+
 
     /**
      * Send a very basic HTTP request and return the response body
@@ -112,9 +164,7 @@ class Helper
      */
     public static function getReCaptchaHtml()
     {
-        $config = Factory::getConfig();
-        $sitekey = $config->get('recaptcha.sitekey');
-        return SecurityHelper::getReCaptchaHtml($sitekey);
+        return SecurityHelper::getReCaptchaHtml(static::$recaptchaSiteKey);
     }
 
 
@@ -176,10 +226,7 @@ class Helper
      */
     public static function redirectIfInvalidReCaptcha(string $redirectUrl) : void
     {
-        $config = Factory::getConfig();
-        $secret = $config->get('recaptcha.secret');
-
-        if (!SecurityHelper::checkReCaptcha($secret)) {
+        if (!SecurityHelper::checkReCaptcha(static::$recaptchaSecret)) {
             static::redirect($redirectUrl, false, 303);
         }
     }
@@ -411,7 +458,7 @@ class Helper
         $data = self::sendRequest($url, 'GET', array(
             'searchString'             => $abn,
             'includeHistoricalDetails' => 'Y',
-            'authenticationGuid'       => $config->get('abnlookup.guid')
+            'authenticationGuid'       => static::$abnLookupGuid;
         ));
 
         // Parse the data returned by the API
