@@ -432,7 +432,7 @@ class Helper
         $data = self::sendRequest($url, 'GET', array(
             'searchString'             => $abn,
             'includeHistoricalDetails' => 'Y',
-            'authenticationGuid'       => static::$abnLookupGuid;
+            'authenticationGuid'       => static::$abnLookupGuid
         ));
 
         // Parse the data returned by the API
