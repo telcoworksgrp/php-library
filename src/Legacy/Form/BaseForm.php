@@ -166,14 +166,9 @@ class BaseForm
             // Redirect back to the last step if the capcha is invalid
             Helper::redirectIfInvalidReCaptcha(Helper::getReferrerUrl());
 
-            // Send a notification
-            $this->sendNotification();
-
-            // Send a confirmation
-            $this->sendConfirmation();
-
             // Reload the page without the form submission
             Helper::redirect();
+
         }
     }
 
