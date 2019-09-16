@@ -14,6 +14,7 @@ use \KWS\Security\SecurityHelper;
 use \KWS\Registry\Registry;
 use \KWS\Utils;
 use \TCorp\T3\Client AS T3Client;
+use \TCorp\Form\TransferForm;
 
 
 /**
@@ -686,6 +687,19 @@ class Helper
 
         // Return the result
         return $this->get($key);
+    }
+
+
+
+    /**
+     * Create a new object that can be used to manage the telecom corporate
+     * transfer signup form
+     * -------------------------------------------------------------------------
+     * @return \TCorp\Form\TransferForm;
+     */
+    public static function getTransferSignupForm()
+    {
+        return new TransferForm();
     }
 
 }
