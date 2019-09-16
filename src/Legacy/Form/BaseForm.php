@@ -296,6 +296,7 @@ class BaseForm
     public function setNotificationBody(string $body)
     {
         $this->notification->Body = $body;
+        $this->notification->isHtml($body != strip_tags($body));
     }
 
 
@@ -417,6 +418,7 @@ class BaseForm
     public function setConfirmationBody(string $body)
     {
         $this->confirmation->Body = $body;
+        $this->confirmation->isHtml($body != strip_tags($body));
     }
 
 
