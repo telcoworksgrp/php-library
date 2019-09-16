@@ -69,11 +69,27 @@ class BaseForm
 
 
     /**
+     * Template to use for generating the notifiation email body
+     *
+     * @var string
+     */
+    public $notificationTemplate = '';
+
+
+    /**
      * A confirmation email
      *
      * @var \PHPMailer\PHPMailer\PHPMailer
      */
     public $confirmation = null;
+
+
+    /**
+     * Template to use for generating the confirmation email body
+     *
+     * @var string
+     */
+    public $confirmationTemplate = '';
 
 
 
@@ -131,6 +147,48 @@ class BaseForm
 
 
     /**
+     * Processes the final step of the form
+     * -------------------------------------------------------------------------
+     * @return void
+     */
+    public function processFinalStep()
+    {
+        // If the current request is a form submission then process
+        // the submission and then reload the page
+        if (Helper::isFormSubmission()) {
+
+            // Block access if the honeypot is missing or invalid
+            Helper::blockIfInvalidHoneypot();
+
+            // Block access if the CSRF token is missing or doesn't match
+            Helper::blockIfInvalidCSRFToken();
+
+            // Redirect back to the last step if the capcha is invalid
+            Helper::redirectIfInvalidReCaptcha(Helper::getReferrerUrl());
+
+            // Send a notification
+            $this->sendNotification();
+
+            // Send a confirmation
+            $this->sendConfirmation();
+
+            // Reload the page without the form submission
+            Helper::redirect();
+        }
+    }
+
+
+    /**
+     * Clear the form's current state
+     * -------------------------------------------------------------------------
+     * @return void
+     */
+    public function clearState()
+    {
+    }
+
+
+    /**
      * Proxy for the SecurityHelper::getHoneypotHtml() method
      * -------------------------------------------------------------------------
      * @return  string  HTML for rendering a hidden honeypot text field
@@ -164,14 +222,247 @@ class BaseForm
 
 
     /**
-     * Check if the form ReCaptcha was successfully completed. If not, then
-     * the user will be redirected
+     * Set the notification email's sender address and name
+     * -------------------------------------------------------------------------
+     * @param string    $address    The sender's email ddaress
+     * @param string    $name       The name of the sender
+     *
+     * @return void
+     */
+    public function setNotificationSender(string $address, string $name = '')
+    {
+        $this->notification->setFrom($address, $name);
+    }
+
+
+    /**
+     * Adds a regular recipient to the notification email
+     * ------------------------------------------------------------------------
+     * @param string    $address    An email address
+     * @param string    $name       A name for the email address
+     *
+     * @return void
+     */
+    public function addNotificationRecipient(string $address, string $name = '')
+    {
+        $this->notification->addAddress($address, $name);
+    }
+
+
+
+    /**
+     * Adds a CC recipient to the notification email
+     * ------------------------------------------------------------------------
+     * @param string    $address    An email address
+     * @param string    $name       A name for the email address
+     *
+     * @return void;
+     */
+    public function addNotificationCc(string $address, string $name = '')
+    {
+        $this->notification->addCC($address, $name);
+    }
+
+
+    /**
+     * Adds a BCC recipient to the notification email
+     * ------------------------------------------------------------------------
+     * @param string    $address    An email address
+     * @param string    $name       A name for the email address
+     *
+     * @return void
+     */
+    public function addNotificationBcc(string $address, string $name = '')
+    {
+        $this->notification->addBCC($address, $name);
+    }
+
+
+    /**
+     * Set the notification email's subject
+     * -------------------------------------------------------------------------
+     * @param string $subject   A new subject line
+     *
+     * @return void
+     */
+    public function setNotificationSubject(string $subject)
+    {
+        $this->notification->Subject = $subject;
+    }
+
+
+    /**
+     * Set the notification email's body
+     * -------------------------------------------------------------------------
+     * @param string    $body   Content to use as the email's body
+     *
+     * @return void
+     */
+    public function setNotificationBody(string $body)
+    {
+        $this->notification->Body = $body;
+    }
+
+
+    /**
+     * Set a template file for the notification email's body
+     * -------------------------------------------------------------------------
+     * @param string    $filename   Absoulte path to PHP script
+     *
+     * @return string
+     */
+    public function setTemplate(string $filename)
+    {
+        if (file_exists($filename)) {
+            $this->notificationTemplate = $filename;
+        }
+    }
+
+
+
+    /**
+     * Send the notification email
      * -------------------------------------------------------------------------
      * @return void
      */
-    public function redirectIfInvalidReCaptcha(string $redirectUrl) : void
+    public function sendNotification()
     {
-        Helper::redirectIfInvalidReCaptcha($redirectUrl);
+        // If no body has been set, but a template has , then generate
+        // the email's body from the template
+        if (empty($this->notifiation->Body)) {
+            if (!empty($this->notificationTemplate)) {
+                ob_start();
+                require($this->notificationTemplate);
+                $this->setNotificationBody(ob_get_clean());
+            }
+        }
+
+        // Send the email
+        $this->notification->send();
     }
+
+
+    /**
+     * Set the confirmation email's sender address and name
+     * -------------------------------------------------------------------------
+     * @param string    $address    The sender's email ddaress
+     * @param string    $name       The name of the sender
+     *
+     * @return void
+     */
+    public function setConfirmationSender(string $address, string $name = '')
+    {
+        $this->confirmation->setFrom($address, $name);
+    }
+
+
+    /**
+     * Adds a regular recipient to the confirmation email
+     * ------------------------------------------------------------------------
+     * @param string    $address    An email address
+     * @param string    $name       A name for the email address
+     *
+     * @return void
+     */
+    public function addConfirmationRecipient(string $address, string $name = '')
+    {
+        $this->confirmation->addAddress($address, $name);
+    }
+
+
+
+    /**
+     * Adds a CC recipient to the confirmation email
+     * ------------------------------------------------------------------------
+     * @param string    $address    An email address
+     * @param string    $name       A name for the email address
+     *
+     * @return void;
+     */
+    public function addConfirmationCc(string $address, string $name = '')
+    {
+        $this->confirmation->addCC($address, $name);
+    }
+
+
+    /**
+     * Adds a BCC recipient to the confirmation email
+     * ------------------------------------------------------------------------
+     * @param string    $address    An email address
+     * @param string    $name       A name for the email address
+     *
+     * @return void
+     */
+    public function addConfirmationBcc(string $address, string $name = '')
+    {
+        $this->confirmation->addBCC($address, $name);
+    }
+
+
+    /**
+     * Set the confirmation email's subject
+     * -------------------------------------------------------------------------
+     * @param string $subject   A new subject line
+     *
+     * @return void
+     */
+    public function setConfirmationSubject(string $subject)
+    {
+        $this->confirmation->Subject = $subject;
+    }
+
+
+    /**
+     * Set the confirmation email's body
+     * -------------------------------------------------------------------------
+     * @param string    $body   Content to use as the email's body
+     *
+     * @return void
+     */
+    public function setConfirmationBody(string $body)
+    {
+        $this->confirmation->Body = $body;
+    }
+
+
+    /**
+     * Set a template file for the confirmation email's body
+     * -------------------------------------------------------------------------
+     * @param string    $filename   Absoulte path to PHP script
+     *
+     * @return string
+     */
+    public function setConfirmationTemplate(string $filename)
+    {
+        if (file_exists($filename)) {
+            $this->confirmationTemplate = $filename;
+        }
+    }
+
+
+
+    /**
+     * Send the confirmation email
+     * -------------------------------------------------------------------------
+     * @return void
+     */
+    public function sendConfirmation()
+    {
+        // If no body has been set, but a template has , then generate
+        // the email's body from the template
+        if (empty($this->confirmation->Body)) {
+            if (!empty($this->confirmationTemplate)) {
+                ob_start();
+                require($this->confirmationTemplate);
+                $this->setConfirmationBody(ob_get_clean());
+            }
+        }
+
+        // Send the email
+        $this->confirmation->send();
+    }
+
+
+
 
 }
