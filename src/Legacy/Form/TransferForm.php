@@ -46,23 +46,23 @@ class TransferForm extends BaseForm
      */
     public function loadState()
     {
-        $this->plan       = Helper::getFormFieldState('transfer.plan', 'plan');
-        $this->number     = Helper::getFormFieldState('transfer.number', 'number');
-        $this->provider   = Helper::getFormFieldState('transfer.provider', 'provider');
-        $this->accountno  = Helper::getFormFieldState('transfer.accountno', 'accountno');
-        $this->company    = Helper::getFormFieldState('transfer.company', 'company');
-        $this->abn        = Helper::getFormFieldState('transfer.abn', 'abn');
-        $this->address1   = Helper::getFormFieldState('transfer.address1', 'address1');
-        $this->address2   = Helper::getFormFieldState('transfer.address2', 'address2');
-        $this->suburb     = Helper::getFormFieldState('transfer.suburb', 'suburb');
-        $this->state      = Helper::getFormFieldState('transfer.state', 'state');
-        $this->postcode   = Helper::getFormFieldState('transfer.postcode', 'postcode');
-        $this->firstname  = Helper::getFormFieldState('transfer.firstname', 'firstname');
-        $this->lastname   = Helper::getFormFieldState('transfer.lastname', 'lastname');
-        $this->mobile     = Helper::getFormFieldState('transfer.mobile', 'mobile');
-        $this->email      = Helper::getFormFieldState('transfer.email', 'email');
-        $this->phone      = Helper::getFormFieldState('transfer.phone', 'phone');
-        $this->iagree     = Helper::getFormFieldState('transfer.iagree', 'iagree');
+        $this->plan       = $this->getFieldState('transfer.plan', 'plan');
+        $this->number     = $this->getFieldState('transfer.number', 'number');
+        $this->provider   = $this->getFieldState('transfer.provider', 'provider');
+        $this->accountno  = $this->getFieldState('transfer.accountno', 'accountno');
+        $this->company    = $this->getFieldState('transfer.company', 'company');
+        $this->abn        = $this->getFieldState('transfer.abn', 'abn');
+        $this->address1   = $this->getFieldState('transfer.address1', 'address1');
+        $this->address2   = $this->getFieldState('transfer.address2', 'address2');
+        $this->suburb     = $this->getFieldState('transfer.suburb', 'suburb');
+        $this->state      = $this->getFieldState('transfer.state', 'state');
+        $this->postcode   = $this->getFieldState('transfer.postcode', 'postcode');
+        $this->firstname  = $this->getFieldState('transfer.firstname', 'firstname');
+        $this->lastname   = $this->getFieldState('transfer.lastname', 'lastname');
+        $this->mobile     = $this->getFieldState('transfer.mobile', 'mobile');
+        $this->email      = $this->getFieldState('transfer.email', 'email');
+        $this->phone      = $this->getFieldState('transfer.phone', 'phone');
+        $this->iagree     = $this->getFieldState('transfer.iagree', 'iagree');
 
         // Call the parent method
         parent::loadState();

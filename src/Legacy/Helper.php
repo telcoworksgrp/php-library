@@ -475,35 +475,7 @@ class Helper
     }
 
 
-    /**
-     * Get the current state of a given form field from the request/session.
-     * -------------------------------------------------------------------------
-     * @param  string   $key        Session key where the value is stored
-     * @param  string   $name       The form field's name
-     * @param  string   $default    Value to return if no value is found
-     * @param  string   $filter     Filter to sanitise the value with
-     *
-     * @return mixed
-     */
-    public static function getFormFieldState(string $key, string $name,
-        $default = '', string $filter = '')
-    {
-        // Try to get a value from the request
-        $result = $_REQUEST[$name] ?? false;
 
-        // If we found a value in the request sanitise
-        // the value, update the current session. Otherwise
-        // try to get a value from the session.
-        if ($result !== false) {
-            $result = htmlentities($result);
-            static::setSessionValue($key, $result);
-        } else {
-            $result = static::getSessionValue($key, $default);
-        }
-
-        // Return the result
-        return $result;
-    }
 
 
     /**

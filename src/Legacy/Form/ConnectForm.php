@@ -23,7 +23,7 @@ class ConnectForm extends BaseForm
     public $firstname = '';
     public $lastname  = '';
     public $mobile    = '';
-    public $email     = '';    
+    public $email     = '';
     public $phone     = '';
     public $dob       = '';
     public $abn       = '';
@@ -47,24 +47,24 @@ class ConnectForm extends BaseForm
     public function loadState()
     {
 
-        $this->plan      = Helper::getFormFieldState('connect.plan', 'plan');
-        $this->firstname = Helper::getFormFieldState('connect.firstname', 'firstname');
-        $this->lastname  = Helper::getFormFieldState('connect.lastname', 'lastname');
-        $this->mobile    = Helper::getFormFieldState('connect.mobile', 'mobile');
-        $this->email     = Helper::getFormFieldState('connect.email', 'email');
-        $this->phone     = Helper::getFormFieldState('connect.phone', 'phone');
-        $this->dob       = Helper::getFormFieldState('connect.dob', 'dob');
-        $this->abn       = Helper::getFormFieldState('connect.abn', 'abn');
-        $this->number    = Helper::getFormFieldState('connect.number', 'number');
-        $this->owner     = Helper::getFormFieldState('connect.owner', 'owner');
-        $this->ownerabn  = Helper::getFormFieldState('connect.ownerabn', 'ownerabn');
-        $this->company   = Helper::getFormFieldState('connect.company', 'company');
-        $this->address1  = Helper::getFormFieldState('connect.address1', 'address1');
-        $this->address2  = Helper::getFormFieldState('connect.address2', 'address2');
-        $this->suburb    = Helper::getFormFieldState('connect.suburb', 'suburb');
-        $this->postcode  = Helper::getFormFieldState('connect.postcode', 'postcode');
-        $this->state     = Helper::getFormFieldState('connect.state', 'state');
-        $this->iagree    = Helper::getFormFieldState('connect.iagree', 'iagree');
+        $this->plan      = $this->getFieldState('connect.plan', 'plan');
+        $this->firstname = $this->getFieldState('connect.firstname', 'firstname');
+        $this->lastname  = $this->getFieldState('connect.lastname', 'lastname');
+        $this->mobile    = $this->getFieldState('connect.mobile', 'mobile');
+        $this->email     = $this->getFieldState('connect.email', 'email');
+        $this->phone     = $this->getFieldState('connect.phone', 'phone');
+        $this->dob       = $this->getFieldState('connect.dob', 'dob');
+        $this->abn       = $this->getFieldState('connect.abn', 'abn');
+        $this->number    = $this->getFieldState('connect.number', 'number');
+        $this->owner     = $this->getFieldState('connect.owner', 'owner');
+        $this->ownerabn  = $this->getFieldState('connect.ownerabn', 'ownerabn');
+        $this->company   = $this->getFieldState('connect.company', 'company');
+        $this->address1  = $this->getFieldState('connect.address1', 'address1');
+        $this->address2  = $this->getFieldState('connect.address2', 'address2');
+        $this->suburb    = $this->getFieldState('connect.suburb', 'suburb');
+        $this->postcode  = $this->getFieldState('connect.postcode', 'postcode');
+        $this->state     = $this->getFieldState('connect.state', 'state');
+        $this->iagree    = $this->getFieldState('connect.iagree', 'iagree');
 
         // Call the parent method
         parent::loadState();

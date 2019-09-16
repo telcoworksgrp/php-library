@@ -124,6 +124,35 @@ class BaseForm
 
 
     /**
+     * Get the current state of a given form field from the request/session.
+     * -------------------------------------------------------------------------
+     * @param  string   $key        Session key where the value is stored
+     * @param  string   $name       The form field's name
+     * @param  string   $default    Value to return if no value is found
+     *
+     * @return mixed
+     */
+    public function getFormFieldState(string $key, string $name, $default = '')
+    {
+        // Try to get a value from the request
+        $result = $_REQUEST[$name] ?? false;
+
+        // If we found a value in the request sanitise
+        // the value, update the current session. Otherwise
+        // try to get a value from the session.
+        if ($result !== false) {
+            $result = htmlentities($result);
+            Helper::setSessionValue($key, $result);
+        } else {
+            $result = Helper::getSessionValue($key, $default);
+        }
+
+        // Return the result
+        return $result;
+    }
+
+
+    /**
      * Processes the submission of a single form step
      * -------------------------------------------------------------------------
      * @return void
