@@ -183,7 +183,7 @@ class TransferForm extends BaseForm
         $this->iagree     = Helper::getFormFieldState('trasnfer.iagree', 'iagree');
 
         // Call the parent method
-        parent::laodState();
+        parent::loadState();
     }
 
 }
