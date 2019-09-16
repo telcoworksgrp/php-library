@@ -487,9 +487,6 @@ class Helper
     public static function getFormFieldState(string $key, string $name,
         $default = '', string $filter = '')
     {
-        // Initialise some local variables
-        $session = Factory::getSession();
-
         // Try to get a value from the request
         $result = $_REQUEST[$name] ?? false;
 
@@ -498,9 +495,9 @@ class Helper
         // try to get a value from the session.
         if ($result !== false) {
             $result = htmlentities($result);
-            $session->set($key, $result);
+            static::setSessionValue($key, $result);
         } else {
-            $result = $session->get($key, $default);
+            $result = static::getSessionValue($key, $default);
         }
 
         // Return the result
