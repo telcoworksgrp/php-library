@@ -31,7 +31,7 @@ class Client
      *
      * @return  object[]    A list of numbers with meta data
      */
-    public function static getNumbers($prefix = '1300', $type = 'FLASH',
+    public function getNumbers($prefix = '1300', $type = 'FLASH',
         $minPrice = 0, $maxPrice = 1000, $pageNo = 1, $pageSize = 500,
         $sortBy = 'PRICE', $direction = 'ASCENDING')
     {
