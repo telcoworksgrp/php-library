@@ -15,6 +15,7 @@ use \KWS\Registry\Registry;
 use \KWS\Utils;
 use \TCorp\T3\Client AS T3Client;
 use \TCorp\Legacy\Form\TransferForm;
+use \TCorp\Legacy\Form\ConnectForm;
 
 
 /**
@@ -672,6 +673,19 @@ class Helper
     public static function getTransferSignupForm()
     {
         return new TransferForm();
+    }
+
+
+
+    /**
+     * Create a new object that can be used to manage the telecom corporate
+     * connect signup form
+     * -------------------------------------------------------------------------
+     * @return \TCorp\Form\ConnectForm;
+     */
+    public static function getConnectSignupForm()
+    {
+        return new ConnectForm();
     }
 
 
