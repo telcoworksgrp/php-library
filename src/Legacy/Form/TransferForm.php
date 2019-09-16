@@ -165,26 +165,38 @@ class TransferForm extends BaseForm
      */
     public function loadState()
     {
-        $this->plan       = Helper::getFormFieldState('trasnfer.plan', 'plan');
-        $this->number     = Helper::getFormFieldState('trasnfer.number', 'number');
-        $this->provider   = Helper::getFormFieldState('trasnfer.provider', 'provider');
-        $this->accountno  = Helper::getFormFieldState('trasnfer.accountno', 'accountno');
-        $this->company    = Helper::getFormFieldState('trasnfer.company', 'company');
-        $this->abn        = Helper::getFormFieldState('trasnfer.abn', 'abn');
-        $this->address1   = Helper::getFormFieldState('trasnfer.address1', 'address1');
-        $this->address2   = Helper::getFormFieldState('trasnfer.address2', 'address2');
-        $this->suburb     = Helper::getFormFieldState('trasnfer.suburb', 'suburb');
-        $this->state      = Helper::getFormFieldState('trasnfer.state', 'state');
-        $this->postcode   = Helper::getFormFieldState('trasnfer.postcode', 'postcode');
-        $this->firstname  = Helper::getFormFieldState('trasnfer.firstname', 'firstname');
-        $this->lastname   = Helper::getFormFieldState('trasnfer.lastname', 'lastname');
-        $this->mobile     = Helper::getFormFieldState('trasnfer.mobile', 'mobile');
-        $this->email      = Helper::getFormFieldState('trasnfer.email', 'email');
-        $this->phone      = Helper::getFormFieldState('trasnfer.phone', 'phone');
-        $this->iagree     = Helper::getFormFieldState('trasnfer.iagree', 'iagree');
+        $this->plan       = Helper::getFormFieldState('transfer.plan', 'plan');
+        $this->number     = Helper::getFormFieldState('transfer.number', 'number');
+        $this->provider   = Helper::getFormFieldState('transfer.provider', 'provider');
+        $this->accountno  = Helper::getFormFieldState('transfer.accountno', 'accountno');
+        $this->company    = Helper::getFormFieldState('transfer.company', 'company');
+        $this->abn        = Helper::getFormFieldState('transfer.abn', 'abn');
+        $this->address1   = Helper::getFormFieldState('transfer.address1', 'address1');
+        $this->address2   = Helper::getFormFieldState('transfer.address2', 'address2');
+        $this->suburb     = Helper::getFormFieldState('transfer.suburb', 'suburb');
+        $this->state      = Helper::getFormFieldState('transfer.state', 'state');
+        $this->postcode   = Helper::getFormFieldState('transfer.postcode', 'postcode');
+        $this->firstname  = Helper::getFormFieldState('transfer.firstname', 'firstname');
+        $this->lastname   = Helper::getFormFieldState('transfer.lastname', 'lastname');
+        $this->mobile     = Helper::getFormFieldState('transfer.mobile', 'mobile');
+        $this->email      = Helper::getFormFieldState('transfer.email', 'email');
+        $this->phone      = Helper::getFormFieldState('transfer.phone', 'phone');
+        $this->iagree     = Helper::getFormFieldState('transfer.iagree', 'iagree');
 
         // Call the parent method
         parent::loadState();
+    }
+
+
+
+    /**
+     * Clear the form's current state
+     * -------------------------------------------------------------------------
+     * @return void
+     */
+    public function clearState()
+    {
+        Helper::setSessionValue('transfer', []);
     }
 
 }
