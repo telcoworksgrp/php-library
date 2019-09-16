@@ -598,6 +598,12 @@ class Helper
      */
     public static function blockBannedCountries() : void
     {
+        // If the user's ip address is a private ip adddress
+        // then do not block
+        if (Utils::isPrivateIPAddress()) {
+            return;
+        }
+
         if (SecurityHelper::checkIpLocation(SecurityHelper::
             WORST_SPAM_COUNTRIES, static::$ipGeolocationApiKey)) {
 
