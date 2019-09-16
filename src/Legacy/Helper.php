@@ -283,7 +283,7 @@ class Helper
         $headers['X-WebForm-ServerIP']   = $_SERVER['SERVER_ADDR'];
         $headers['X-WebForm-ServerName'] = $_SERVER['SERVER_NAME'];
         $headers['X-WebForm-Host']       = static::getDomainName();
-        $headers['X-WebForm-Referrer']   = $_SERVER['HTTP_REFERER'];
+        $headers['X-WebForm-Referrer']   = static::getReferrerUrl();
         $headers['X-WebForm-UserAgent']  = static::getRemoteUserAgent();
         $headers['X-WebForm-RemoteIP']   = static::getRemoteIPAddress();
         $headers['X-WebForm-URI']        = $_SERVER['REQUEST_URI'];
@@ -700,6 +700,17 @@ class Helper
     public static function getTransferSignupForm()
     {
         return new TransferForm();
+    }
+
+
+    /**
+     * Get the referrer url if present
+     * -------------------------------------------------------------------------
+     * @return string
+     */
+    public static function getReferrerUrl()
+    {
+        return $_SERVER['HTTP_REFERER'];
     }
 
 }
