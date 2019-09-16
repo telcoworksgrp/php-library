@@ -259,4 +259,54 @@ class TransferForm
         $this->domain     = Helper::getDomainName();
     }
 
+
+    /**
+     * Proxy for the SecurityHelper::getHoneypotHtml() method
+     * -------------------------------------------------------------------------
+     * @return  string  HTML for rendering a hidden honeypot text field
+     */
+    public function getHoneypotHtml()
+    {
+        return SecurityHelper::getHoneypotHtml();
+    }
+
+
+    /**
+     * Proxy for the SecurityHelper::getCSRFTokenHtml() method
+     * -------------------------------------------------------------------------
+     * @return  string  HTML for rendering a CSRF token inside a web form
+     */
+    public function getCSRFTokenHtml()
+    {
+        return SecurityHelper::getCSRFTokenHtml();
+    }
+
+
+    /**
+     * Check the hidden honeypot form field. If it is missing or invalid then
+     * the user will be blocked
+     * -------------------------------------------------------------------------
+     * @return  void
+     */
+    public function blockIfInvalidHoneypot() : void
+    {
+        if (!SecurityHelper::checkHoneypot()) {
+            SecurityHelper::blockAccess();
+        }
+    }
+
+
+    /**
+     * Check the CSRF token. If it is missing or doesn't match the one stored
+     * in the user's session then the user will be blocked
+     * -------------------------------------------------------------------------
+     * @return  void
+     */
+    public function blockIfInvalidCSRFToken() : void
+    {
+        if (!SecurityHelper::checkCSRFToken()) {
+            SecurityHelper::blockAccess();
+        }
+    }
+
 }
