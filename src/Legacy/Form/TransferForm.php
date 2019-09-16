@@ -333,4 +333,27 @@ class TransferForm
         }
     }
 
+
+    /**
+     * Proxy for the SecurityHelper::getReCaptchaHtml() method
+     * -------------------------------------------------------------------------
+     * @return  string  HTML for rendering a CSRF token inside a web form
+     */
+    public function getReCaptchaHtml()
+    {
+        return Helper::getReCaptchaHtml();
+    }
+
+
+    /**
+     * Check if the form ReCaptcha was successfully completed. If not, then
+     * the user will be redirected
+     * -------------------------------------------------------------------------
+     * @return void
+     */
+    public function redirectIfInvalidReCaptcha(string $redirectUrl) : void
+    {
+        Helper::redirectIfInvalidReCaptcha($redirectUrl);
+    }
+
 }
