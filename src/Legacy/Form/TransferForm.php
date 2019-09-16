@@ -273,10 +273,10 @@ class TransferForm
         if (Helper::isFormSubmission()) {
 
             // Block access if the honeypot is missing or invalid
-            $this->blockIfInvalidHoneypot();
+            Helper::blockIfInvalidHoneypot();
 
             // Block access if the CSRF token is missing or doesn't match
-            $this->blockIfInvalidCSRFToken();
+            Helper::blockIfInvalidCSRFToken();
 
             // Reload the page without the form submission
             Helper::redirect();
@@ -303,30 +303,6 @@ class TransferForm
     public function getCSRFTokenHtml()
     {
         return Helper::getCSRFTokenHtml();
-    }
-
-
-    /**
-     * Check the hidden honeypot form field. If it is missing or invalid then
-     * the user will be blocked
-     * -------------------------------------------------------------------------
-     * @return  void
-     */
-    public function blockIfInvalidHoneypot() : void
-    {
-        Helper::checkHoneypot();
-    }
-
-
-    /**
-     * Check the CSRF token. If it is missing or doesn't match the one stored
-     * in the user's session then the user will be blocked
-     * -------------------------------------------------------------------------
-     * @return  void
-     */
-    public function blockIfInvalidCSRFToken() : void
-    {
-        Helper::blockIfInvalidCSRFToken();
     }
 
 
