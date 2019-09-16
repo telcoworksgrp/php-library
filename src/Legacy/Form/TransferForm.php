@@ -291,7 +291,7 @@ class TransferForm
      */
     public function getHoneypotHtml()
     {
-        return SecurityHelper::getHoneypotHtml();
+        return Helper::getHoneypotHtml();
     }
 
 
@@ -302,7 +302,7 @@ class TransferForm
      */
     public function getCSRFTokenHtml()
     {
-        return SecurityHelper::getCSRFTokenHtml();
+        return Helper::getCSRFTokenHtml();
     }
 
 
@@ -314,9 +314,7 @@ class TransferForm
      */
     public function blockIfInvalidHoneypot() : void
     {
-        if (!SecurityHelper::checkHoneypot()) {
-            SecurityHelper::blockAccess();
-        }
+        Helper::checkHoneypot();
     }
 
 
@@ -328,9 +326,7 @@ class TransferForm
      */
     public function blockIfInvalidCSRFToken() : void
     {
-        if (!SecurityHelper::checkCSRFToken()) {
-            SecurityHelper::blockAccess();
-        }
+        Helper::blockIfInvalidCSRFToken();
     }
 
 
