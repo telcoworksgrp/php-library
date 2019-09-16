@@ -261,6 +261,29 @@ class TransferForm
 
 
     /**
+     * Processes the submission of a single form step
+     * -------------------------------------------------------------------------
+     * @return void
+     */
+    public function process()
+    {
+        // If the current request is a form submission then process
+        // the submission and then reload the page
+        if (Helper::isFormSubmission()) {
+
+            // Block access if the honeypot is missing or invalid
+            $this->blockIfInvalidHoneypot();
+
+            // Block access if the CSRF token is missing or doesn't match
+            $this->blockIfInvalidCSRFToken();
+
+            // Reload the page without the form submission
+            Helper::redirect();
+        }
+    }
+
+
+    /**
      * Proxy for the SecurityHelper::getHoneypotHtml() method
      * -------------------------------------------------------------------------
      * @return  string  HTML for rendering a hidden honeypot text field
