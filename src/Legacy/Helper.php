@@ -16,6 +16,10 @@ use \KWS\Utils;
 use \TCorp\T3\Client AS T3Client;
 
 
+/**
+ * Helper class for working with various telcom corporate websites
+ * containing legacy code
+ */
 class Helper
 {
 
