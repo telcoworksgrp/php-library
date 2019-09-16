@@ -225,7 +225,7 @@ class TransferForm
         $this->confirmation = new PHPMailer();
 
         // Load the curretn form state
-        $this->load();
+        $this->loadState();
     }
 
 
@@ -234,7 +234,7 @@ class TransferForm
      * -------------------------------------------------------------------------
      * @return void
      */
-    public function load()
+    public function loadState()
     {
         $this->plan       = Helper::getFormFieldState('trasnfer.plan', 'plan');
         $this->number     = Helper::getFormFieldState('trasnfer.number', 'number');
@@ -265,7 +265,7 @@ class TransferForm
      * -------------------------------------------------------------------------
      * @return void
      */
-    public function process()
+    public function processStep()
     {
         // If the current request is a form submission then process
         // the submission and then reload the page
