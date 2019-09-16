@@ -169,6 +169,7 @@ class TransferForm extends BaseForm
         $this->number     = Helper::getFormFieldState('trasnfer.number', 'number');
         $this->provider   = Helper::getFormFieldState('trasnfer.provider', 'provider');
         $this->accountno  = Helper::getFormFieldState('trasnfer.accountno', 'accountno');
+        $this->company    = Helper::getFormFieldState('trasnfer.company', 'company');
         $this->abn        = Helper::getFormFieldState('trasnfer.abn', 'abn');
         $this->address1   = Helper::getFormFieldState('trasnfer.address1', 'address1');
         $this->address2   = Helper::getFormFieldState('trasnfer.address2', 'address2');
