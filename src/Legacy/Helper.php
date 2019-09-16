@@ -14,7 +14,7 @@ use \KWS\Security\SecurityHelper;
 use \KWS\Registry\Registry;
 use \KWS\Utils;
 use \TCorp\T3\Client AS T3Client;
-use \TCorp\Form\TransferForm;
+use \TCorp\Legacy\Form\TransferForm;
 
 
 /**
