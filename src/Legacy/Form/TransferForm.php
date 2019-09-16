@@ -19,142 +19,23 @@ use \TCorp\Legacy\Helper;
 class TransferForm extends BaseForm
 {
 
-    /**
-     * PLan the user is signing up to
-     *
-     * @var string
-     */
-    public $plan = '';
-
-
-    /**
-     * The 1300/1800 number to be transfered
-     *
-     * @var string
-     */
-    public $number = '';
-
-
-    /**
-     * The provider from which the number needs to be
-     * transfered from
-     *
-     * @var string
-     */
-    public $provider = '';
-
-
-    /**
-     * The customer's account number
-     *
-     * @var string
-     */
+    public $plan      = '';
+    public $number    = '';
+    public $provider  = '';
     public $accountno = '';
-
-
-    /**
-     * The customer's company/trading name
-     *
-     * @var string
-     */
-    public $company = '';
-
-
-    /**
-     * The customer's ABN
-     *
-     * @var string
-     */
-    public $abn = '';
-
-
-    /**
-     * The address in which the customer's company is lcoated
-     *
-     * @var string
-     */
-    public $address1 = '';
-
-
-    /**
-     * The address in which the customer's company is lcoated
-     *
-     * @var string
-     */
-    public $address2 = '';
-
-
-    /**
-     * The suburb in which the customer's company is lcoated
-     *
-     * @var string
-     */
-    public $suburb     = '';
-
-
-    /**
-     * The state in which the customer's company is lcoated
-     *
-     * @var string
-     */
-    public $state = '';
-
-
-    /**
-     * The postcode in which the customer's company is located
-     *
-     * @var string
-     */
-    public $postcode = '';
-
-
-    /**
-     * The customer's first name
-     *
-     * @var string
-     */
+    public $company   = '';
+    public $abn       = '';
+    public $address1  = '';
+    public $address2  = '';
+    public $suburb    = '';
+    public $state     = '';
+    public $postcode  = '';
     public $firstname = '';
-
-
-    /**
-     * The customer's last name
-     *
-     * @var string
-     */
-    public $lastname = '';
-
-
-    /**
-     * The customer's mobile number
-     *
-     * @var string
-     */
-    public $mobile = '';
-
-
-    /**
-     * The customer's email address
-     *
-     * @var string
-     */
-    public $email = '';
-
-
-    /**
-     * The customer's phone number
-     *
-     * @var string
-     */
-    public $phone = '';
-
-
-    /**
-     * The user agreed to terms and conditions ??
-     *
-     * @var bool
-     */
-    public $iagree = false;
-
+    public $lastname  = '';
+    public $mobile    = '';
+    public $email     = '';
+    public $phone     = '';
+    public $iagree    = false;
 
 
 
