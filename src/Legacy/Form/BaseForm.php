@@ -311,7 +311,7 @@ class BaseForm
      *
      * @return string
      */
-    public function setTemplate(string $filename)
+    public function setNotificationTemplate(string $filename)
     {
         if (file_exists($filename)) {
             $this->notificationTemplate = $filename;
