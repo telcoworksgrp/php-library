@@ -132,7 +132,7 @@ class BaseForm
      *
      * @return mixed
      */
-    public function getFormFieldState(string $key, string $name, $default = '')
+    public function getFieldState(string $key, string $name, $default = '')
     {
         // Try to get a value from the request
         $result = $_REQUEST[$name] ?? false;
