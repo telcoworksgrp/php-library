@@ -31,7 +31,7 @@ class Client
      *
      * @return  object[]    A list of numbers with meta data
      */
-    public function getNumbers($prefix = '1300', $type = 'FLASH',
+    public function static getNumbers($prefix = '1300', $type = 'FLASH',
         $minPrice = 0, $maxPrice = 1000, $pageNo = 1, $pageSize = 500,
         $sortBy = 'PRICE', $direction = 'ASCENDING')
     {
@@ -50,7 +50,7 @@ class Client
 
 
         // Get the data from the API
-        $result = self::sendRequest(
+        $result = $this->sendRequest(
             'https://portal.tbill.live/numbers-service-impl/api/Activations',
             'GET', $params, array('Content-type: application/json'));
 
@@ -70,5 +70,28 @@ class Client
     }
 
 
+    /**
+     * Send a very basic HTTP request and return the response body
+     * -------------------------------------------------------------------------
+     * @param  string   $url        The URL to send the quest to
+     * @param  string   $method     The HTTP verb/type of request to use
+     * @param  array    $data       Data to send with the request
+     * @param  string[] $headers    Data to send with the request
+     *
+     * @return string               The reponse body
+     */
+    protected function sendRequest(string $url, string $method = 'GET',
+        $data =array(), $headers = array())
+    {
+        // Compose a HTTP request using Guzzle HTTP
+        $request = new \GuzzleHttp\Psr7\Request($method, $url, $headers);
+
+        // Execute the http request with Guzzle HTTP
+        $client  = new \GuzzleHttp\Client();
+        $result = $client->send($request, array('query' => $data));
+
+        // Return the result body
+        return $result->getBody();
+    }
 
 }
