@@ -10,6 +10,7 @@
 
 namespace TCorp\Legacy\Form;
 
+use \KWS\Security\SecurityHelper;
 use \TCorp\Legacy\Helper;
 use \PHPMailer\PHPMailer\PHPMailer;
 
