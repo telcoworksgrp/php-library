@@ -429,7 +429,6 @@ class Helper
     {
         // Initialise some local variables
         $result = new \stdClass();
-        $config = Factory::getConfig();
 
         // Look up the ABN details using ABR's API
         $url = "https://abr.business.gov.au/abrxmlsearch/" .
