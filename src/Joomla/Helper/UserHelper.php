@@ -8,7 +8,7 @@
  * =============================================================================
  */
 
-namespace TCorp\Joomla\User;
+namespace TCorp\Joomla\Helper;
 
 
 /**

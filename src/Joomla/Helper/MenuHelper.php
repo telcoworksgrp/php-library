@@ -8,7 +8,7 @@
  * =============================================================================
  */
 
-namespace TCorp\Joomla\Menu;
+namespace TCorp\Joomla\Helper;
 
 
 /**

@@ -8,12 +8,12 @@
  * =============================================================================
  */
 
-namespace TCorp\Joomla\Component;
+namespace TCorp\Joomla\Helper;
 
 
 /**
- * Helper class for working with joomla components
+ * Helper class for working with Joomla's admin sidebar
  */
-class ComponentHelper extends \KWS\Joomla\Helper\ComponentHelper
+class SidebarHelper extends \KWS\Joomla\Helper\SidebarHelper
 {
 }
