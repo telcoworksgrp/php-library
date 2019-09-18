@@ -8,12 +8,27 @@
  * =============================================================================
  */
 
-namespace TCorp\WebApi\Orm\Model;
+namespace TCorp\WebApi\Client\Model;
 
 
-/**
- * Base class for working with lists from API
- */
-class ListModel extends BaseModel
+class DocumentCatModel extends BaseModel
 {
+
+    protected static $endpoint = 'documentcats';
+
+    protected static $properties = array(
+        'id',
+        'title',
+        'alias',
+        'intro',
+        'content',
+        'thumbnail',
+        'image',
+        'logo',
+        'video',
+        'created',
+        'updated',
+        'note'
+    );
+
 }

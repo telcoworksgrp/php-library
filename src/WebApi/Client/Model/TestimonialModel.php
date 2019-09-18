@@ -8,35 +8,25 @@
  * =============================================================================
  */
 
-namespace TCorp\WebApi\Orm\Model;
+namespace TCorp\WebApi\Client\Model;
 
 
-
-class NumberModel extends ItemModel
+class TestimonialModel extends BaseModel
 {
 
-    protected static $endpoint = 'numbers/';
+    protected static $endpoint = 'testimonials';
 
-    protected static $properties = [
+    protected static $properties = array(
         'id',
-        'number',
-        'prefix',
-        'suffix',
-        'assigned',
-        'allocated',
-        'flashnum',
-        'available',
-        'reserved',
-        'price',
-        'allocatee',
-        'alloc_date',
-        'last_holder',
-        'last_transfer_date',
-        'erou_holder',
-        'erou_assignment_date',
+        'intro',
+        'content',
+        'thumbnail',
+        'image',
+        'logo',
+        'video',
         'created',
         'updated',
         'note'
-    ];
+    );
 
 }

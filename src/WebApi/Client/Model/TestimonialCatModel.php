@@ -8,12 +8,27 @@
  * =============================================================================
  */
 
-namespace TCorp\WebApi\Client;
+namespace TCorp\WebApi\Client\Model;
 
 
-/**
- * Base class for creating API clients
- */
-class BaseClient
+class TestimonialCatModel extends BaseModel
 {
+
+    protected static $endpoint = 'testimonialcats';
+
+    protected static $properties = array(
+        'id',
+        'title',
+        'alias',
+        'intro',
+        'content',
+        'thumbnail',
+        'image',
+        'logo',
+        'video',
+        'created',
+        'updated',
+        'note'
+    );
+
 }

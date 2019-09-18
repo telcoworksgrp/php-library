@@ -8,7 +8,7 @@
  * =============================================================================
  */
 
-namespace TCorp\WebApi\Orm\Model;
+namespace TCorp\WebApi\Client\Model;
 
 use \TCorp\WebApi\Client\BaseClient;
 

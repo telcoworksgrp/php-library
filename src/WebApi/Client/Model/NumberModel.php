@@ -8,26 +8,19 @@
  * =============================================================================
  */
 
-namespace TCorp\WebApi\Orm\Model;
+namespace TCorp\WebApi\Client\Model;
 
 
-
-class MessageModel extends ItemModel
+class NumberModel extends BaseModel
 {
 
-    protected static $endpoint = 'messages/';
+    protected static $endpoint = 'numbers';
 
-    protected static $properties = [
+    protected static $properties = array(
         'id',
-       'from',
-       'replyto',
-       'to',
-       'cc',
-       'bcc',
-       'subject',
-       'body',
-       'created',
-       'note'
-    ];
+        'created',
+        'updated',
+        'note'
+    );
 
 }
