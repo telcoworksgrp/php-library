@@ -8,12 +8,11 @@
  * =============================================================================
  */
 
-namespace TCorp\Joomla\Helper;
-
+namespace TCorp\Joomla;
 
 /**
- * Helper class for working with Joomla's menu system
+ * Utility class for useful methods for working with Joomla
  */
-class MenuHelper extends \KWS\Joomla\Helper\MenuHelper
+class Utils extends \KWS\Joomla\Utils
 {
 }
