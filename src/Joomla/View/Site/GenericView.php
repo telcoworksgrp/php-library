@@ -10,31 +10,10 @@
 
 namespace TCorp\Joomla\View\Site;
 
-use \TCorp\Joomla\Helper\JoomlaHelper;
-use \TCorp\Joomla\Helper\ComponentHelper;
-use \TCorp\Joomla\Helper\MenuHelper;
-use \Joomla\CMS\MVC\View\HtmlView;
-use \Joomla\CMS\Factory;
 
-
-class GenericView extends HtmlView
-{
-
-    /**
-     * Execute and display a view layout.
-     * -------------------------------------------------------------------------
-     * @param  string   $tpl    The name of the view layout to parse
-     *
-     * @return mixed            A string if successful, Error object if not
-     */
-    public function display($tpl = null)
-    {
-        // Add data to the view
-        $this->state    = $this->get('State');
-        $this->config   = ComponentHelper::getConfig();
-        $this->menuitem = MenuHelper::getActiveMenuItem();
-
-        // Call and return the parent method
-        return parent::display($tpl);
-    }
+/**
+ * Base class for creating generic front-end views
+ */
+class GenericView extends \KWS\Joomla\View\Site\GenericView
+{    
 }

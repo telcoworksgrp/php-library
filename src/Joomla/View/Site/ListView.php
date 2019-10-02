@@ -10,38 +10,10 @@
 
 namespace TCorp\Joomla\View\Site;
 
-use \TCorp\Joomla\Helper\JoomlaHelper;
-use \TCorp\Joomla\Helper\ComponentHelper;
-use \TCorp\Joomla\Helper\MenuHelper;
-use \Joomla\CMS\MVC\View\HtmlView;
-use \Joomla\CMS\Factory;
 
-
-class ListView extends HtmlView
+/**
+ * Base class for creating list based front-end views
+ */
+class ListView extends \KWS\Joomla\View\Site\ListView
 {
-
-    /**
-     * Execute and display a view layout.
-     * -------------------------------------------------------------------------
-     * @param  string   $tpl    The name of the view layout to parse
-     * @return mixed            A string if successful, Error object if not
-     */
-    public function display($tpl = null)
-    {
-        // Add data to the view
-        $this->items         = $this->get('Items');
-        $this->pagination    = $this->get('Pagination');
-        $this->total         = $this->get('Total');
-        $this->start         = $this->get('Start');
-        $this->filterForm    = $this->get('FilterForm');
-        $this->activeFilters = $this->get('ActiveFilters');
-        $this->state         = $this->get('State');
-        $this->ordering      = $this->escape($this->state->get('list.ordering'));
-        $this->direction     = $this->escape($this->state->get('list.direction'));
-        $this->config        = ComponentHelper::getConfig();
-        $this->menuitem      = MenuHelper::getActiveMenuItem();
-
-        // Call and return the parent method
-        return parent::display($tpl);
-    }
 }

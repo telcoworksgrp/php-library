@@ -10,43 +10,10 @@
 
 namespace TCorp\Joomla\View\Admin;
 
-use \TCorp\Joomla\Helper\JoomlaHelper;
-use \TCorp\Joomla\Helper\ComponentHelper;
-use \TCorp\Joomla\Helper\MenuHelper;
-use \Joomla\CMS\MVC\View\HtmlView;
-use \Joomla\CMS\Factory;
 
-
-class GenericView extends HtmlView
+/**
+ * Base class for creating generic back-end views
+ */
+class GenericView extends \KWS\Joomla\Administrator\GenericView
 {
-
-    /**
-     * Execute and display a view layout.
-     * -------------------------------------------------------------------------
-     * @param  string   $tpl    The name of the view layout to parse
-     * @return mixed            A string if successful, Error object if not
-     */
-    public function display($tpl = null)
-    {
-        // Add data to the view
-        $this->state    = $this->get('State');
-        $this->config   = ComponentHelper::getConfig();
-        $this->menuitem = MenuHelper::getActiveMenuItem();
-
-        // Add component toolbar items
-        $this->addAdministratonToolbar();
-
-        // Call and return the parent method
-        return parent::display($tpl);
-    }
-
-
-    /**
-     * Add items to the administration toolbar for this view
-     * -------------------------------------------------------------------------
-     */
-    protected function addAdministratonToolbar()
-    {
-    }
-
 }
