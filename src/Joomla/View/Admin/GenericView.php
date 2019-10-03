@@ -14,6 +14,6 @@ namespace TCorp\Joomla\View\Admin;
 /**
  * Base class for creating generic back-end views
  */
-class GenericView extends \KWS\Joomla\Administrator\GenericView
+class GenericView extends \KWS\Joomla\View\Administrator\GenericView
 {
 }
