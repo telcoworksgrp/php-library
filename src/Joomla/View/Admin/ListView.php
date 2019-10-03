@@ -14,6 +14,6 @@ namespace TCorp\Joomla\View\Admin;
 /**
  * Base class for creating list based back-end views
  */
-class ListView extends \KWS\Joomla\View\Administrator\ListView;
+class ListView extends \KWS\Joomla\View\Administrator\ListView
 {
 }
