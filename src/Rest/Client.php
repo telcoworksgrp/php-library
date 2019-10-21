@@ -189,7 +189,7 @@ class Client
      * -------------------------------------------------------------------------
      * @return Response
      *
-     * @todo Implimeni this method
+     * @todo Implement this method
      */
     public function execute() : ?Response
     {
