@@ -22,7 +22,8 @@
     },
 
     "autoload": {
-        "psr-4": {"TCorp\\": "src/"}
+        "psr-4": {"TCorp\\": "src/"},
+        "files": ["src/classmap.php"]
     },
 
     "minimum-stability ": "stable"
