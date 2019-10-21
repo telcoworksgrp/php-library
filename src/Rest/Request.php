@@ -63,7 +63,7 @@ class Request
         $params = [], array $headers = [])
     {
         // Initialise some class properties
-        $his->setEndpoint($endpoint);
+        $this->setEndpoint($endpoint);
         $this->setMethod($method);
         $this->setParams($params);
         $this->setHeaders($headers);
