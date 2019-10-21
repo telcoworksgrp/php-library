@@ -8,12 +8,12 @@
  * =============================================================================
  */
 
-namespace TCorp\Input;
+namespace TCorp;
 
 
 /**
  * Class for working with the script's input values
  */
-class Input extends \KWS\Input\Input
+class Input extends \KWS\Input
 {
 }
