@@ -188,7 +188,7 @@ class Request
      * -------------------------------------------------------------------------
      * @return string[]
      */
-    public function getHeaders() array
+    public function getHeaders() : array
     {
         return $this->headers;
     }
