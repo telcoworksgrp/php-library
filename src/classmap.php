@@ -8,21 +8,21 @@
  * =============================================================================
  */
 
-\class_alias('TCorp\Acma\AcmaHelper',  \KWS\Acma\AcmaHelper::class);
+\class_alias(\KWS\Acma\AcmaHelper::class, 'TCorp\Acma\AcmaHelper');
 
-\class_alias('TCorp\Agent',      \KWS\Agent::class);
-\class_alias('TCorp\Arr',        \KWS\Arr::class);
-\class_alias('TCorp\Date',       \KWS\Date::class);
-\class_alias('TCorp\Debug',      \KWS\Debug::class);
-\class_alias('TCorp\File',       \KWS\File::class);
-\class_alias('TCorp\Firewall',   \KWS\Firewall::class);
-\class_alias('TCorp\Image',      \KWS\Image::class);
-\class_alias('TCorp\Input',      \KWS\Input::class);
-\class_alias('TCorp\Math',       \KWS\Math::class);
-\class_alias('TCorp\Request',    \KWS\Request::class);
-\class_alias('TCorp\Response',   \KWS\Response::class);
-\class_alias('TCorp\Session',    \KWS\Session::class);
-\class_alias('TCorp\Str',        \KWS\Str::class);
-\class_alias('TCorp\Uri',        \KWS\Uri::class);
-\class_alias('TCorp\Utils',      \KWS\Utils::class);
-\class_alias('TCorp\Validation', \KWS\Validation::class);
+\class_alias(\KWS\Agent::class,      'TCorp\Agent');
+\class_alias(\KWS\Arr::class,        'TCorp\Arr');
+\class_alias(\KWS\Date::class,       'TCorp\Date');
+\class_alias(\KWS\Debug::class,      'TCorp\Debug');
+\class_alias(\KWS\File::class,       'TCorp\File');
+\class_alias(\KWS\Firewall::class,   'TCorp\Firewall');
+\class_alias(\KWS\Image::class,      'TCorp\Image');
+\class_alias(\KWS\Input::class,      'TCorp\Input');
+\class_alias(\KWS\Math::class,       'TCorp\Math');
+\class_alias(\KWS\Request::class,    'TCorp\Request');
+\class_alias(\KWS\Response::class,   'TCorp\Response');
+\class_alias(\KWS\Session::class,    'TCorp\Session');
+\class_alias(\KWS\Str::class,        'TCorp\Str');
+\class_alias(\KWS\Uri::class,        'TCorp\Uri');
+\class_alias(\KWS\Utils::class,      'TCorp\Utils');
+\class_alias(\KWS\Validation::class, 'TCorp\Validation');
