@@ -59,6 +59,23 @@ class Client
 
 
     /**
+     * Constructor method for initialising new instances of this class
+     * -------------------------------------------------------------------------
+     * @param Request       $request       An inital request object
+     * @param Credentials   $credentials   An initial credentials object
+     * @param Config        $config        An inital config object
+     */
+    public function __construct($request = null, $credentials = null,
+        $config = null)
+    {
+        // Initialise some class properties
+        $this->setRequest($request);
+        $this->setCredentials($credentials);
+        $this->setConfig($config);
+    }
+
+
+    /**
      * Set the Base URl for all API endpoints
      * -------------------------------------------------------------------------
      * @param  string   $value  A new URL
