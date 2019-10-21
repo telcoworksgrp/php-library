@@ -59,7 +59,7 @@ class Request
      */
     public function setEndpoint(string $value) : Request
     {
-        $this->endpoint = trim($endpoint);
+        $this->endpoint = trim($value);
         $this->endpoint = trim($this->endpoint, "/");
         return $this;
     }
