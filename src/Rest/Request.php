@@ -50,26 +50,6 @@ class Request
     protected $headers = [];
 
 
-
-    /**
-     * Constructor method for initialising new instances of this class
-     * -------------------------------------------------------------------------
-     * @param string          $endpoint  Inital endpoint URL
-     * @param string          $method    Initial HTTP method to use
-     * @param array|stdClass  $params    Inital list of HTTP params
-     * @param array           $headers   Inital list of HTTP headers
-     */
-    public function __construct(string $endpoint = '', string $method = 'GET',
-        $params = [], array $headers = [])
-    {
-        // Initialise some class properties
-        $this->setEndpoint($endpoint);
-        $this->setMethod($method);
-        $this->setParams($params);
-        $this->setHeaders($headers);
-    }
-
-
     /**
      * Set the API endpoint to which the request should be sent to.
      * -------------------------------------------------------------------------
