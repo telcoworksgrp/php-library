@@ -33,6 +33,9 @@
 \class_alias(\KWS\Joomla\View\Site\ListView::class,                         'TCorp\Joomla\View\Site\ListView');
 \class_alias(\KWS\Joomla\Utils::class,                                      'TCorp\Joomla\Utils');
 
+\class_alias(\KWS\FuelPHP\Controller\RestController::class, 'TCorp\FuelPHP\Controller\RestController');
+\class_alias(\KWS\FuelPHP\Orm\Model::class, 'TCorp\FuelPHP\Orm\Model');
+
 \class_alias(\KWS\Acma::class,         'TCorp\Acma');
 \class_alias(\KWS\Agent::class,        'TCorp\Agent');
 \class_alias(\KWS\Arr::class,          'TCorp\Arr');
