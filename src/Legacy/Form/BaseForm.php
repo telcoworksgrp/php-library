@@ -10,7 +10,7 @@
 
 namespace TCorp\Legacy\Form;
 
-use \KWS\Security\SecurityHelper;
+use \TCorp\Security;
 use \TCorp\Legacy\Helper;
 use \PHPMailer\PHPMailer\PHPMailer;
 
@@ -213,7 +213,7 @@ class BaseForm
 
 
     /**
-     * Proxy for the SecurityHelper::getHoneypotHtml() method
+     * Proxy for the Security::getHoneypotHtml() method
      * -------------------------------------------------------------------------
      * @return  string  HTML for rendering a hidden honeypot text field
      */
@@ -224,7 +224,7 @@ class BaseForm
 
 
     /**
-     * Proxy for the SecurityHelper::getCSRFTokenHtml() method
+     * Proxy for the Security::getCSRFTokenHtml() method
      * -------------------------------------------------------------------------
      * @return  string  HTML for rendering a CSRF token inside a web form
      */
@@ -235,7 +235,7 @@ class BaseForm
 
 
     /**
-     * Proxy for the SecurityHelper::getReCaptchaHtml() method
+     * Proxy for the Security::getReCaptchaHtml() method
      * -------------------------------------------------------------------------
      * @return  string  HTML for rendering a CSRF token inside a web form
      */

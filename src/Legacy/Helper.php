@@ -10,8 +10,8 @@
 
 namespace TCorp\Legacy;
 
-use \KWS\Security\SecurityHelper;
-use \KWS\Registry\Registry;
+use \TCorp\Security;
+use \TCorp\Registry;
 use \TCorp\Utils;
 use \TCorp\T3\Client AS T3Client;
 use \TCorp\Legacy\Form\TransferForm;
@@ -138,35 +138,35 @@ class Helper
 
 
     /**
-     * Proxy for the SecurityHelper::getReCaptchaHtml() method
+     * Proxy for the Security::getReCaptchaHtml() method
      * -------------------------------------------------------------------------
      * @return  string  HTML for rendering a CSRF token inside a web form
      */
     public static function getReCaptchaHtml()
     {
-        return SecurityHelper::getReCaptchaHtml(static::$recaptchaSiteKey);
+        return Security::getReCaptchaHtml(static::$recaptchaSiteKey);
     }
 
 
     /**
-     * Proxy for the SecurityHelper::getHoneypotHtml() method
+     * Proxy for the Security::getHoneypotHtml() method
      * -------------------------------------------------------------------------
      * @return  string  HTML for rendering a hidden honeypot text field
      */
     public static function getHoneypotHtml()
     {
-        return SecurityHelper::getHoneypotHtml();
+        return Security::getHoneypotHtml();
     }
 
 
     /**
-     * Proxy for the SecurityHelper::getCSRFTokenHtml() method
+     * Proxy for the Security::getCSRFTokenHtml() method
      * -------------------------------------------------------------------------
      * @return  string  HTML for rendering a CSRF token inside a web form
      */
     public static function getCSRFTokenHtml()
     {
-        return SecurityHelper::getCSRFTokenHtml();
+        return Security::getCSRFTokenHtml();
     }
 
 
@@ -178,8 +178,8 @@ class Helper
      */
     public static function blockIfInvalidHoneypot() : void
     {
-        if (!SecurityHelper::checkHoneypot()) {
-            SecurityHelper::blockAccess();
+        if (!Security::checkHoneypot()) {
+            Security::blockAccess();
         }
     }
 
@@ -192,8 +192,8 @@ class Helper
      */
     public static function blockIfInvalidCSRFToken() : void
     {
-        if (!SecurityHelper::checkCSRFToken()) {
-            SecurityHelper::blockAccess();
+        if (!Security::checkCSRFToken()) {
+            Security::blockAccess();
         }
     }
 
@@ -206,7 +206,7 @@ class Helper
      */
     public static function redirectIfInvalidReCaptcha(string $redirectUrl) : void
     {
-        if (!SecurityHelper::checkReCaptcha(static::$recaptchaSecret)) {
+        if (!Security::checkReCaptcha(static::$recaptchaSecret)) {
             static::redirect($redirectUrl, false, 303);
         }
     }
@@ -563,7 +563,7 @@ class Helper
 
 
     /**
-     *  Block the user if thier IP belongs to a banned country. SecurityHelper::
+     *  Block the user if thier IP belongs to a banned country. Security::
      *  WORST_SPAM_COUNTRIES is a predefined list of the worst spam/bot
      *  countries according to Spamhaus. To avoid blocking Googlebot, the US is
      *  exluded from this predefined list.
@@ -578,10 +578,10 @@ class Helper
             return;
         }
 
-        if (SecurityHelper::checkIpLocation(SecurityHelper::
+        if (Security::checkIpLocation(Security::
             WORST_SPAM_COUNTRIES, static::$ipGeolocationApiKey)) {
 
-            SecurityHelper::blockAccess();
+            Security::blockAccess();
         }
     }
 
