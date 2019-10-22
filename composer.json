@@ -23,7 +23,7 @@
 
     "autoload": {
         "psr-4": {"TCorp\\": "src/"},
-        "files": ["src/classmap.php"]
+        "files": ["src/Aliases.php"]
     },
 
     "minimum-stability ": "stable"
