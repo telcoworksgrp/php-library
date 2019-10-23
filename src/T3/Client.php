@@ -10,6 +10,8 @@
 
 namespace TCorp\T3;
 
+use \TCorp\Utils;
+
 
 /**
  * A basic client for sending API requests to Telecom Corporates T3 system
@@ -50,7 +52,7 @@ class Client
 
 
         // Get the data from the API
-        $result = $this->sendRequest(
+        $result = Utils::sendRequest(
             'https://portal.tbill.live/numbers-service-impl/api/Activations',
             'GET', $params, array('Content-type: application/json'));
 
@@ -67,31 +69,6 @@ class Client
 
         // Return the result
         return $result;
-    }
-
-
-    /**
-     * Send a very basic HTTP request and return the response body
-     * -------------------------------------------------------------------------
-     * @param  string   $url        The URL to send the quest to
-     * @param  string   $method     The HTTP verb/type of request to use
-     * @param  array    $data       Data to send with the request
-     * @param  string[] $headers    Data to send with the request
-     *
-     * @return string               The reponse body
-     */
-    protected function sendRequest(string $url, string $method = 'GET',
-        $data =array(), $headers = array())
-    {
-        // Compose a HTTP request using Guzzle HTTP
-        $request = new \GuzzleHttp\Psr7\Request($method, $url, $headers);
-
-        // Execute the http request with Guzzle HTTP
-        $client  = new \GuzzleHttp\Client();
-        $result = $client->send($request, array('query' => $data));
-
-        // Return the result body
-        return $result->getBody();
     }
 
 }
