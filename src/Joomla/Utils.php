@@ -14,6 +14,6 @@ namespace TCorp\Joomla;
 /**
  * Utility class for useful methods for working with Joomla
  */
-class Utils
+class Utils extends \KWS\Joomla\Utils
 {
 }
