@@ -13,9 +13,8 @@ namespace TCorp\Legacy;
 use \TCorp\Security;
 use \TCorp\Registry;
 use \TCorp\Utils;
+use \TCorp\Debug;
 use \TCorp\T3\Client AS T3Client;
-use \TCorp\Legacy\Form\TransferForm;
-use \TCorp\Legacy\Form\ConnectForm;
 
 
 /**
@@ -82,33 +81,6 @@ class Helper
     * @see https://abr.business.gov.au/Tools/WebServices
     */
     public static $abnLookupGuid = '';
-
-
-
-
-    /**
-     * Send a very basic HTTP request and return the response body
-     * -------------------------------------------------------------------------
-     * @param  string   $url        The URL to send the quest to
-     * @param  string   $method     The HTTP verb/type of request to use
-     * @param  array    $data       Data to send with the request
-     * @param  string[] $headers    Data to send with the request
-     *
-     * @return string               The reponse body
-     */
-    public static function sendRequest(string $url, string $method = 'GET',
-        $data =array(), $headers = array())
-    {
-        // Compose a HTTP request using Guzzle HTTP
-        $request = new \GuzzleHttp\Psr7\Request($method, $url, $headers);
-
-        // Execute the http request with Guzzle HTTP
-        $client  = new \GuzzleHttp\Client();
-        $result = $client->send($request, array('query' => $data));
-
-        // Return the result body
-        return $result->getBody();
-    }
 
 
     /**
@@ -413,7 +385,7 @@ class Helper
      */
     public static function disableCache() : void
     {
-        \KWS\Utils::disableCache();
+        Utils::disableCache();
     }
 
 
@@ -434,7 +406,7 @@ class Helper
         $url = "https://abr.business.gov.au/abrxmlsearch/" .
             "AbrXmlSearch.asmx/ABRSearchByABN";
 
-        $data = self::sendRequest($url, 'GET', array(
+        $data = Utils::sendRequest($url, 'GET', array(
             'searchString'             => $abn,
             'includeHistoricalDetails' => 'Y',
             'authenticationGuid'       => static::$abnLookupGuid
@@ -553,11 +525,9 @@ class Helper
     public static function enableErrorReporting(bool $enable = true) : void
     {
         if ($enable) {
-            error_reporting(E_ALL);
-            ini_set('display_errors', 1);
+            Debug::enableFullErrorReporting();
         } else {
-            error_reporting(E_NONE);
-            ini_set('display_errors', 0);
+            Debug::disableAllErrorReporting();
         }
     }
 
@@ -659,32 +629,6 @@ class Helper
 
         // Return the result
         return $this->get($key);
-    }
-
-
-
-    /**
-     * Create a new object that can be used to manage the telecom corporate
-     * transfer signup form
-     * -------------------------------------------------------------------------
-     * @return \TCorp\Form\TransferForm;
-     */
-    public static function getTransferSignupForm()
-    {
-        return new TransferForm();
-    }
-
-
-
-    /**
-     * Create a new object that can be used to manage the telecom corporate
-     * connect signup form
-     * -------------------------------------------------------------------------
-     * @return \TCorp\Form\ConnectForm;
-     */
-    public static function getConnectSignupForm()
-    {
-        return new ConnectForm();
     }
 
 
