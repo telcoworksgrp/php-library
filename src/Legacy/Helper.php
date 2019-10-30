@@ -1,27 +1,24 @@
 <?php
 /**
  * =============================================================================
+ *
  * @package     Telecom Corporation PHP Library
  * @author      David Plath <webmaster@telecomcorp.com.au>
  * @copyright   Copyright (C) 2019 Telecom Corporation. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
+ *
  * =============================================================================
  */
 
 namespace TCorp\Legacy;
 
-use \TCorp\Security;
-use \TCorp\Registry;
-use \TCorp\Utils;
-use \TCorp\Debug;
-use \TCorp\T3\Client AS T3Client;
+use \KWS\Security\SecurityHelper;
 
 
 /**
- * Helper class for working with various telcom corporate websites
- * containing legacy code
+ * Helper class for working with Telecom Corp's Legacy sites/projects
  */
-class Helper
+class LegacyHelper
 {
 
     /**
@@ -31,56 +28,53 @@ class Helper
         'July','August','September','October','November','December');
 
 
-
     /**
-     * Name of the this web site
+     * An API key issued by IP Geolocation
      *
      * @var string
-     */
-    public static $siteName = '';
-
-
-    /**
-     * API key to use when calling the IpGeolocation API
-     *
-     * @var string
-     *
-     * @see https://ipgeolocation.io/
      */
     public static $ipGeolocationApiKey = '';
 
 
-
     /**
-    * A Google ReCaptcha site key
-    *
-    * @var string
-    *
-    * @see https://www.google.com/recaptcha/intro/v3.html
-    */
+     * A ReCaptcha v2 site key issued by Google
+     *
+     * @var string
+     */
     public static $recaptchaSiteKey = '';
 
 
-
     /**
-    * A Google ReCaptcha secret key to compliment the site key
-    *
-    * @var string
-    *
-    * @see https://www.google.com/recaptcha/intro/v3.html
-    */
+     * A ReCaptcha v2 secret issued by Google
+     *
+     * @var string
+     */
     public static $recaptchaSecret = '';
 
+    /**
+     * GUID used for looking up ABN Details
+     *
+     * @var string
+     */
+    public static $abnLookupGuid = '';
+
 
 
     /**
-    * API key to use when calling the ABN lookup API
-    *
-    * @var string
-    *
-    * @see https://abr.business.gov.au/Tools/WebServices
-    */
-    public static $abnLookupGuid = '';
+     * Send a very basic HTTP request and return the response body
+     * -------------------------------------------------------------------------
+     * @param  string   $url        The URL to send the quest to
+     * @param  string   $method     The HTTP verb/type of request to use
+     * @param  array    $data       Data to send with the request
+     * @param  string[] $headers    Data to send with the request
+     *
+     * @return string               The reponse body
+     */
+    public static function sendRequest(string $url, string $method = 'GET',
+        $data =array(), $headers = array())
+    {
+        return \KWS\Utils::sendRequest($url, $method, $data, $headers);
+    }
 
 
     /**
@@ -101,117 +95,38 @@ class Helper
         $minPrice = 0, $maxPrice = 1000, $pageNo = 1, $pageSize = 500,
         $sortBy = 'PRICE', $direction = 'ASCENDING')
     {
-        $client = new T3Client();
 
-        return $client->getNumbers($prefix, $type, $minPrice, $maxPrice,
-            $pageNo, $pageSize, $sortBy, $direction);
-    }
-
-
-
-    /**
-     * Proxy for the Security::getReCaptchaHtml() method
-     * -------------------------------------------------------------------------
-     * @return  string  HTML for rendering a CSRF token inside a web form
-     */
-    public static function getReCaptchaHtml()
-    {
-        return Security::getReCaptchaHtml(static::$recaptchaSiteKey);
-    }
+        // Compose an enpoint URL
+        $params                       = array();
+        $params['query']              = $prefix;
+        $params['numberTypes']        = 'SERVICE_NUMBER';
+        $params['serviceNumberTypes'] = $type;
+        $params['minPriceDollars']    = $minPrice;
+        $params['maxPriceDollars']    = $maxPrice;
+        $params['pageNum']            = $pageNo;
+        $params['pageSize']           = $pageSize;
+        $params['sortBy']             = $sortBy;
+        $params['sortDirection']      = $direction;
 
 
-    /**
-     * Proxy for the Security::getHoneypotHtml() method
-     * -------------------------------------------------------------------------
-     * @return  string  HTML for rendering a hidden honeypot text field
-     */
-    public static function getHoneypotHtml()
-    {
-        return Security::getHoneypotHtml();
-    }
+        // Get the data from the API
+        $result = self::sendRequest(
+            'https://portal.tbill.live/numbers-service-impl/api/Activations',
+            'GET', $params, array('Content-type: application/json'));
 
+        // Decode JSON response
+        $result = json_decode($result);
 
-    /**
-     * Proxy for the Security::getCSRFTokenHtml() method
-     * -------------------------------------------------------------------------
-     * @return  string  HTML for rendering a CSRF token inside a web form
-     */
-    public static function getCSRFTokenHtml()
-    {
-        return Security::getCSRFTokenHtml();
-    }
-
-
-    /**
-     * Check the hidden honeypot form field. If it is missing or invalid then
-     * the user will be blocked
-     * -------------------------------------------------------------------------
-     * @return  void
-     */
-    public static function blockIfInvalidHoneypot() : void
-    {
-        if (!Security::checkHoneypot()) {
-            Security::blockAccess();
+        // Add additional meta data
+        foreach($result as $number) {
+            $number->format1 = preg_replace('|^(\d{4})(\d{6})$|i', '$1 $2', $number->number);
+	        $number->format2 = preg_replace('|^(\d{4})(\d{3})(\d{3})$|i', '$1 $2 $3', $number->number);
+            $number->format3 = preg_replace('|^(\d{4})(\d{2})(\d{2})(\d{2})$|i', '$1 $2 $3 $4', $number->number);
+            $number->format4 = (!empty($number->word) ? $number->word : $number->format3);
         }
-    }
 
-
-    /**
-     * Check the CSRF token. If it is missing or doesn't match the one stored
-     * in the user's session then the user will be blocked
-     * -------------------------------------------------------------------------
-     * @return  void
-     */
-    public static function blockIfInvalidCSRFToken() : void
-    {
-        if (!Security::checkCSRFToken()) {
-            Security::blockAccess();
-        }
-    }
-
-
-    /**
-     * Check if the form ReCaptcha was successfully completed. If not, then
-     * the user will be redirected
-     * -------------------------------------------------------------------------
-     * @return void
-     */
-    public static function redirectIfInvalidReCaptcha(string $redirectUrl) : void
-    {
-        if (!Security::checkReCaptcha(static::$recaptchaSecret)) {
-            static::redirect($redirectUrl, false, 303);
-        }
-    }
-
-
-    /**
-     * Redirect the user's browser to another URL, preserving the current
-     * URL parameters.
-     * -------------------------------------------------------------------------
-     * @param  string   $url             URL to redirect the user to
-     * @param  bool     $preserveParams  Pass existing URL params to the redirect
-     * @param  int      $statusCode      HTTP status code (usually 301 or 303)
-     *
-     * @return  void
-     */
-    public static function redirect(string $url = '', bool $preserveParams
-        = TRUE, int $statusCode = 301) : void
-    {
-        Utils::redirect($url, $preserveParams, $statusCode);
-    }
-
-
-    /**
-     * Get the value of a submitted form field
-     * -------------------------------------------------------------------------
-     * @param  string   $name     Name of the form field
-     * @param  mixed    $default  Default value if no value is found
-     *
-     * @return mixed
-     */
-    public static function getFormField(string $name, $default = null)
-    {
-        return htmlspecialchars($_POST[$name] ?? $default);
+        // Return the result
+        return $result;
     }
 
 
@@ -255,8 +170,8 @@ class Helper
         // Add some additional metadata to headers
         $headers['X-WebForm-ServerIP']   = $_SERVER['SERVER_ADDR'];
         $headers['X-WebForm-ServerName'] = $_SERVER['SERVER_NAME'];
-        $headers['X-WebForm-Host']       = static::getDomainName();
-        $headers['X-WebForm-Referrer']   = static::getReferrerUrl();
+        $headers['X-WebForm-Host']       = static::getCurrentDomainName();
+        $headers['X-WebForm-Referrer']   = $_SERVER['HTTP_REFERER'];
         $headers['X-WebForm-UserAgent']  = static::getRemoteUserAgent();
         $headers['X-WebForm-RemoteIP']   = static::getRemoteIPAddress();
         $headers['X-WebForm-URI']        = $_SERVER['REQUEST_URI'];
@@ -267,64 +182,6 @@ class Helper
 
         // Return the result
         return $result;
-    }
-
-
-    /**
-     * Get the IP address from which the user is viewing the current page.
-     * -------------------------------------------------------------------------
-     * @return string
-     */
-    public static function getRemoteIpAddress() : string
-    {
-        return $_SERVER['REMOTE_ADDR'];
-    }
-
-
-    /**
-     * Get the contents of the User-Agent: header from the current request
-     * -------------------------------------------------------------------------
-     * @return string
-     */
-    public static function getRemoteUserAgent() : string
-    {
-        return $_SERVER['HTTP_USER_AGENT'];
-    }
-
-
-    /**
-     * Get the current date and time in RFC 2822 format
-     * -------------------------------------------------------------------------
-     * @return string
-     */
-    public static function getDateTime() : string
-    {
-        return date('r');
-    }
-
-
-    /**
-     * Get the one-time affilate referral id that is set when an affiliate
-     * reffers a cutsomer to this website to make an application. This referral
-     * id should not be confused with an "affiliate id" which identifies the
-     * affilate not the referral.
-     * -------------------------------------------------------------------------
-     * @return  string  The one-time affilate refferal id.
-     */
-    public static function getAffiliateReferralId()
-    {
-        return $_COOKIE['affiliate'] ?? '';
-    }
-
-
-    /**
-     * Get the current domain name
-     * -------------------------------------------------------------------------
-     * @return  string  A domain name
-     */
-    public static function getDomainName()
-    {
-        return $_SERVER['HTTP_HOST'];
     }
 
 
@@ -379,13 +236,42 @@ class Helper
 
 
     /**
+     * Redirect the user's browser to another URL, preserving the current
+     * URL parameters.
+     * -------------------------------------------------------------------------
+     * @param  string   $url             URL to redirect the user to
+     * @param  bool     $preserveParams  Pass existing URL params to the redirect
+     * @param  int      $statusCode      HTTP status code (usually 301 or 303)
+     *
+     * @return  void
+     */
+    public static function redirect(string $url, bool $preserveParams = TRUE,
+        int $statusCode = 301) : void
+    {
+        // Append the exitsing params if needed
+        if ($preserveParams) {
+
+            $url = $url . ((strpos($url, '?')) ? '&' : '?') .
+                $_SERVER['QUERY_STRING'];
+
+        }
+
+        // Redirect the user
+        header('Location: ' . $url, true, $statusCode);
+        exit();
+    }
+
+    /**
      * Disable browser caching of this request
      * -------------------------------------------------------------------------
      * @return  void
      */
     public static function disableCache() : void
     {
-        Utils::disableCache();
+        header("Cache-Control: max-age=0, no-cache, no-store, must-revalidate");
+        header("Cache-Control: post-check=0, pre-check=0", false);
+        header("Pragma: no-cache");
+        header('Expires: Sun, 01 Jan 2014 00:00:00 GMT');
     }
 
 
@@ -406,41 +292,64 @@ class Helper
         $url = "https://abr.business.gov.au/abrxmlsearch/" .
             "AbrXmlSearch.asmx/ABRSearchByABN";
 
-        $data = Utils::sendRequest($url, 'GET', array(
+        $data = self::sendRequest($url, 'GET', array(
             'searchString'             => $abn,
             'includeHistoricalDetails' => 'Y',
-            'authenticationGuid'       => static::$abnLookupGuid
+            'authenticationGuid'       => self::$abnLookupGuid
         ));
+
 
         // Parse the data returned by the API
         $data = new \SimpleXMLElement($data);
         $data = $data->response;
 
-        $result->statement = (string) $data->usageStatement;
-        $result->abn       = (string) $data->businessEntity->ABN->identifierValue;
-        $result->current   = (string) $data->businessEntity->ABN->isCurrentIndicator;
-        $result->asicNo    = (string) $data->businessEntity->ASICNumber;
+        $exception = (string) $data->exception;
+        if (empty($exception)) {
 
-        $entityType               = $data->businessEntity->entityType;
-        $result->entityType       = new \stdClass;
-        $result->entityType->code = (string) $entityType->entityTypeCode;
-        $result->entityType->desc = (string) $entityType->entityDescription;
+            $result->statement               = (string) $data->usageStatement;
+            $result->abn                     = (string) $data->businessEntity->ABN->identifierValue;
+            $result->current                 = (string) $data->businessEntity->ABN->isCurrentIndicator;
+            $result->asicNo                  = (string) $data->businessEntity->ASICNumber;
+            $entityType                      = $data->businessEntity->entityType;
+            $result->entityType              = new \stdClass;
+            $result->entityType->code        = (string) $entityType->entityTypeCode;
+            $result->entityType->desc        = (string) $entityType->entityDescription;
+            $legalName                       = $data->businessEntity->legalName;
+            $result->legalName               = new \stdClass;
+            $result->legalName->firstname    = (string) $legalName->givenName;
+            $result->legalName->othername    = (string) $legalName->otherGivenName;
+            $result->legalName->lastname     = (string) $legalName->familyName;
+            $mainName                        = $data->businessEntity->mainName;
+            $result->mainName                = new \stdClass;
+            $result->mainName->organisation  = (string) $mainName->organisationName;
+            $result->mainName->effective     = (string) $mainName->effectiveFrom;
+            $tradeName                       = $data->businessEntity->mainTradingName;
+            $result->tradeName               = new \stdClass;
+            $result->tradeName->organisation = (string) $tradeName->organisationName;
+            $result->tradeName->effective    = (string) $tradeName->effectiveFrom;
 
-        $legalName                    = $data->businessEntity->legalName;
-        $result->legalName            = new \stdClass;
-        $result->legalName->firstname = (string) $legalName->givenName;
-        $result->legalName->othername = (string) $legalName->otherGivenName;
-        $result->legalName->lastname  = (string) $legalName->familyName;
+        } else {
 
-        $mainName                       = $data->businessEntity->mainName;
-        $result->mainName               = new \stdClass;
-        $result->mainName->organisation = (string) $mainName->organisationName;
-        $result->mainName->effective    = (string) $mainName->effectiveFrom;
+            $result->statement               = '';
+            $result->abn                     = '';
+            $result->current                 = '';
+            $result->asicNo                  = '';
+            $result->entityType              = new \stdClass;
+            $result->entityType->code        = '';
+            $result->entityType->desc        = '';
+            $result->legalName               = new \stdClass;
+            $result->legalName->firstname    = '';
+            $result->legalName->othername    = '';
+            $result->legalName->lastname     = '';
+            $result->mainName                = new \stdClass;
+            $result->mainName->organisation  = '';
+            $result->mainName->effective     = '';
+            $result->tradeName               = new \stdClass;
+            $result->tradeName->organisation = '';
+            $result->tradeName->effective    = '';
 
-        $tradeName                       = $data->businessEntity->mainTradingName;
-        $result->tradeName               = new \stdClass;
-        $result->tradeName->organisation = (string) $tradeName->organisationName;
-        $result->tradeName->effective    = (string) $tradeName->effectiveFrom;
+        }
+
 
         // Return the result
         return $result;
@@ -448,92 +357,8 @@ class Helper
 
 
 
-
-
     /**
-     * Get the HTTP method used to request the page
-     * -------------------------------------------------------------------------
-     * @return string
-     */
-    public static function getRequestMethod()
-    {
-        return $_SERVER['REQUEST_METHOD'];
-    }
-
-
-    /**
-     * Check if the current request is a form submission
-     * -------------------------------------------------------------------------
-     * @return bool
-     */
-    public static function isFormSubmission()
-    {
-        return static::getRequestMethod() == 'POST';
-    }
-
-
-    /**
-     * Convert HTML to PDF document
-     * -------------------------------------------------------------------------
-     * @param  string   $html           The HTML to convert
-     * @param  string   $size           Paper size (eg: A4,A3,A5,etc)
-     * @param  string   $orientation    Page orientation (portrait/landscape)
-     *
-     * @return mixed    A raw PDF file
-     */
-    public static function convertHtmlToPDF(string $html, string $size = 'A4',
-        $orientation = 'portrait')
-    {
-        return Utils::convertHtmlToPDF($html, $size, $orientation);
-    }
-
-
-    /**
-     * Render a template with the given data and return the output as a string
-     * -------------------------------------------------------------------------
-     * @param  string   $filename   Filename of of script to render
-     * @param  mixed    $data       Data passed to the template
-     *
-     * @return string
-     */
-    public static function renderTemplate(string $filename, $data)
-    {
-        ob_start();
-        require($filename);
-        return ob_get_clean();
-    }
-
-
-    /**
-     * Clear all data from the current session
-     * -------------------------------------------------------------------------
-     * @return void
-     */
-    public static function clearAllSessionData()
-    {
-        $_SESSION = [];
-    }
-
-
-    /**
-     * Enable PHP error reporting
-     * -------------------------------------------------------------------------
-     * @param   bool    $enable True for full error reporting, False for none
-     *
-     * @return void
-     */
-    public static function enableErrorReporting(bool $enable = true) : void
-    {
-        if ($enable) {
-            Debug::enableFullErrorReporting();
-        } else {
-            Debug::disableAllErrorReporting();
-        }
-    }
-
-
-    /**
-     *  Block the user if thier IP belongs to a banned country. Security::
+     *  Block the user if thier IP belongs to a banned country. SecurityHelper::
      *  WORST_SPAM_COUNTRIES is a predefined list of the worst spam/bot
      *  countries according to Spamhaus. To avoid blocking Googlebot, the US is
      *  exluded from this predefined list.
@@ -542,66 +367,156 @@ class Helper
      */
     public static function blockBannedCountries() : void
     {
-        // If the user's ip address is a private ip adddress
-        // then do not block
-        if (Utils::isPrivateIPAddress()) {
-            return;
-        }
+        if (SecurityHelper::checkIpLocation(SecurityHelper::
+            WORST_SPAM_COUNTRIES, self::$ipGeolocationApiKey)) {
 
-        if (Security::checkIpLocation(Security::
-            WORST_SPAM_COUNTRIES, static::$ipGeolocationApiKey)) {
-
-            Security::blockAccess();
+            SecurityHelper::blockAccess();
         }
     }
 
 
     /**
-     * Start a new session or resume and existing one
+     * Proxy for the SecurityHelper::getHoneypotHtml() method
      * -------------------------------------------------------------------------
-     * @return mixed
+     * @return  string  HTML for rendering a hidden honeypot text field
+     */
+    public static function getHoneypotHtml()
+    {
+        return SecurityHelper::getHoneypotHtml();
+    }
+
+
+    /**
+     * Check the hidden honeypot form field. If it is missing or invalid then
+     * the user will be blocked
+     * -------------------------------------------------------------------------
+     * @return  void
+     */
+    public static function blockIfInvalidHoneypot() : void
+    {
+        if (!SecurityHelper::checkHoneypot()) {
+            SecurityHelper::blockAccess();
+        }
+    }
+
+
+    /**
+     * Proxy for the SecurityHelper::getCSRFTokenHtml() method
+     * -------------------------------------------------------------------------
+     * @return  string  HTML for rendering a CSRF token inside a web form
+     */
+    public static function getCSRFTokenHtml()
+    {
+        return SecurityHelper::getCSRFTokenHtml();
+    }
+
+
+    /**
+     * Check the CSRF token. If it is missing or doesn't match the one stored
+     * in the user's session then the user will be blocked
+     * -------------------------------------------------------------------------
+     * @return  void
+     */
+    public static function blockIfInvalidCSRFToken() : void
+    {
+        if (!SecurityHelper::checkCSRFToken()) {
+            SecurityHelper::blockAccess();
+        }
+    }
+
+
+    /**
+     * Proxy for the SecurityHelper::getReCaptchaHtml() method
+     * -------------------------------------------------------------------------
+     * @return  string  HTML for rendering a CSRF token inside a web form
+     */
+    public static function getReCaptchaHtml()
+    {
+        return SecurityHelper::getReCaptchaHtml(self::$recaptchaSiteKey);
+    }
+
+
+    /**
+     * Check if the form ReCaptcha was successfully completed. If not, then
+     * the user will be redirected
+     * -------------------------------------------------------------------------
+     * @return void
+     */
+    public static function redirectIfInvalidReCaptcha(string $redirectUrl) : void
+    {
+        if (!SecurityHelper::checkReCaptcha(self::$recaptchaSecret)) {
+            self::redirect($redirectUrl, false, 303);
+        }
+    }
+
+
+    /**
+     * Get the one-time affilate referral id that is set when an affiliate
+     * reffers a cutsomer to this website to make an application. This referral
+     * id should not be confused with an "affiliate id" which identifies the
+     * affilate not the referral.
+     * -------------------------------------------------------------------------
+     * @return  string  The one-time affilate refferal id.
+     */
+    public static function getAffiliateReferralId()
+    {
+        return $_REQUEST['affiliate'] ?? '';
+    }
+
+
+    /**
+     * Start the user's session if not already started
+     * -------------------------------------------------------------------------
+     * @return void
      */
     public static function startSession()
     {
         if (!isset($_SESSION)) {
             session_start();
         }
+    }
 
-        if (!isset($_SESSION['registry'])) {
-            $_SESSION['registry'] = new Registry();
-        }
-
+    /**
+     * Set a value in the user's session
+     * -------------------------------------------------------------------------
+     * @param string    $key    A key name for referancing the stored value
+     * @param mixed     $value  The value to store
+     */
+    public static function setSessionVar(string $key, $value)
+    {
+        // Set a session variable with the given value
+        $_SESSION[$key] = $value;
     }
 
 
     /**
-     * Get a session value
+     * Get a value previously stored in the user's session. If a value with
+     * the given key can not be found then a default can be returned
      * -------------------------------------------------------------------------
-     * @param  string   $key      Key/name of the session value to get
-     * @param  mixed    $default  Value to return if no value is found
+     * @param  string $key      A key name for referancing the stored value
+     * @param  mixed  $default  A default value if the key doesn't exist
      *
-     * @return mixed
+     * @return mixed    A value for the given key, or the default value
      */
-    public static function getSessionValue(string $key, $default = null)
+    public static function getSessionVar(string $key, $default = null)
     {
-        return $_SESSION['registry']->get($key, $default);
+        return $_SESSION[$key] ?? $default;
     }
-
 
 
     /**
-     * Set a session value
+     * Unsets/removes an existing session variable
      * -------------------------------------------------------------------------
-     * @param string    $key       Key/name of the session value to set
-     * @param mixed     $value     Value to set the session value to
+     * @param string    $key    A key name for referancing the stored value
      *
-     * @return void
+     * @return  mixed   The former value of the session var
      */
-    public static function setSessionValue(string $key, $value)
+    public static function unsetSessionVar(string $key)
     {
-        $_SESSION['registry']->set($key, $value);
+        $result = self::getSessionVar($key);
+        unset($_SESSION[$key]);
+        return $result;
     }
-
 
 
     /**
@@ -612,34 +527,85 @@ class Helper
      * -------------------------------------------------------------------------
      * @param string    $key        A key name for referancing the stored value
      * @param string    $var        A GET/POST variable name
-     * @param string    $default    Default value if none can be found
+     * @param string    $default    Default value if both request and session
+     *                              var doesn't exist
+     * @param string    $filter     Filter Type (for sanitisation)
      *
      * @return  mixed   The final value of session var
      */
-    public static function setSessionValueFromRequest(string $key, string $var,
-        $default = '')
+    public static function setSessionVarFromRequest(string $key, string $var,
+        $default = '', string $filter = 'STRING')
     {
         if (isset($_REQUEST[$var])) {
-            $this->set($key, $_REQUEST[$var]);
+            self::setSessionVar($key, $_REQUEST[$var]);
         } else {
             if (!isset($_SESSION[$key])) {
-                $this->set($key, $default);
+                self::setSessionVar($key, $default);
             }
         }
 
         // Return the result
-        return $this->get($key);
+        return self::getSessionVar($key);
     }
 
 
     /**
-     * Get the referrer url if present
+     * Get the user's/remote IP address
      * -------------------------------------------------------------------------
-     * @return string
+     * @return  string  An IP address
      */
-    public static function getReferrerUrl()
+    public static function getRemoteIPAddress()
     {
-        return $_SERVER['HTTP_REFERER'];
+        return $_SERVER['REMOTE_ADDR'];
     }
+
+
+    /**
+     * Get the user's/remote User Agent
+     * -------------------------------------------------------------------------
+     * @return  string  An IP address
+     */
+    public static function getRemoteUserAgent()
+    {
+        return $_SERVER['HTTP_USER_AGENT'];
+    }
+
+
+    /**
+     * Get the current domain name
+     * -------------------------------------------------------------------------
+     * @return  string  A domain name
+     */
+    public static function getCurrentDomainName()
+    {
+        return $_SERVER['HTTP_HOST'];
+    }
+
+
+    /**
+     * Get the sanitised value of the given POST variable
+     * -------------------------------------------------------------------------
+     * @param  string  $name       Name of the post variable
+     * @param  mixed   $default    Default value if no value is found
+     *
+     * @return mixed    Value of the given POST variable, or the default value
+     */
+    public static function getPostValue(string $name, $default = '')
+    {
+        return (isset($_POST[$name])) ?
+            htmlspecialchars($_POST[$name]) : $default;
+    }
+
+
+    /**
+     * Get a new email object for sending an email
+     * -------------------------------------------------------------------------
+     * @return \TCorp\Legacy\Email
+     */
+    public static function getEmail()
+    {
+        return new \TCorp\Legacy\Email();
+    }
+
 
 }
