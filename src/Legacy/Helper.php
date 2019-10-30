@@ -597,15 +597,4 @@ class LegacyHelper
     }
 
 
-    /**
-     * Get a new email object for sending an email
-     * -------------------------------------------------------------------------
-     * @return \TCorp\Legacy\Email
-     */
-    public static function getEmail()
-    {
-        return new \TCorp\Legacy\Email();
-    }
-
-
 }
