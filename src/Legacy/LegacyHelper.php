@@ -73,7 +73,7 @@ class LegacyHelper
     public static function sendRequest(string $url, string $method = 'GET',
         $data =array(), $headers = array())
     {
-        return \KWS\Utils::sendRequest($url, $method, $data, $headers);
+        return Utils::sendRequest($url, $method, $data, $headers);
     }
 
 
@@ -248,17 +248,7 @@ class LegacyHelper
     public static function redirect(string $url, bool $preserveParams = TRUE,
         int $statusCode = 301) : void
     {
-        // Append the exitsing params if needed
-        if ($preserveParams) {
-
-            $url = $url . ((strpos($url, '?')) ? '&' : '?') .
-                $_SERVER['QUERY_STRING'];
-
-        }
-
-        // Redirect the user
-        header('Location: ' . $url, true, $statusCode);
-        exit();
+        Utils::redirect($url, $preserveParams, $statusCode);
     }
 
     /**
@@ -268,10 +258,7 @@ class LegacyHelper
      */
     public static function disableCache() : void
     {
-        header("Cache-Control: max-age=0, no-cache, no-store, must-revalidate");
-        header("Cache-Control: post-check=0, pre-check=0", false);
-        header("Pragma: no-cache");
-        header('Expires: Sun, 01 Jan 2014 00:00:00 GMT');
+        Utils::disableCache();
     }
 
 
