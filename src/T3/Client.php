@@ -71,4 +71,22 @@ class Client
         return $result;
     }
 
+
+    /**
+     * Get all numbers available from the T3 Api
+     * -------------------------------------------------------------------------
+     * @return \stdClass[]
+     */
+    public function getAllNumbers()
+    {
+        // Get the list of numbers
+        $result = $this->getNumbers('1300', 'FLASH', 0, 1000, 1, 1000);
+        $result = array_merge($result, $this->getNumbers('1800', 'FLASH', 0, 1000, 1, 1000));
+        $result = array_merge($result, $this->getNumbers('1300', 'LUCKY_DIP', 0, 1000, 1, 1000));
+        $result = array_merge($result, $this->getNumbers('1800', 'LUCKY_DIP', 0, 1000, 1, 1000));
+
+        // Return the result
+        return $result;
+    }
+
 }
