@@ -12,7 +12,7 @@ namespace TCorp\Joomla\View\Site;
 
 
 use \Joomla\CMS\MVC\View\HtmlView;
-use \KWS\Joomla\Utils;
+use \TCorp\Joomla\Utils;
 
 
 /**

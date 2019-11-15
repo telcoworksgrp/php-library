@@ -27,7 +27,7 @@ class Register
     /**
      * Contains a list of registar entries
      *
-     * @var \KWS\Acma\NumSystem\RegisterEntry[]
+     * @var \TCorp\Acma\NumSystem\RegisterEntry[]
      */
     public $entries = [];
 
