@@ -10,10 +10,12 @@
 
 namespace TCorp\Joomla\Model\Administrator;
 
+use \Joomla\CMS\MVC\Model\BaseDatabaseModel;
+
 
 /**
  * Base class for creating generic back-end models
  */
-class GenericModel extends \KWS\Joomla\Model\Administrator\GenericModel
+class GenericModel extends BaseDatabaseModel
 {
 }

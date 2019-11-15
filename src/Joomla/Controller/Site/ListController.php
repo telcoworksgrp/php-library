@@ -14,6 +14,6 @@ namespace TCorp\Joomla\Controller\Site;
 /**
  * Base class for creating list based front-end controllers
  */
-class ListController extends \KWS\Joomla\Controller\Site\ListController
+class ListController extends GenericController
 {
 }

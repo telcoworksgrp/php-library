@@ -10,11 +10,12 @@
 
 namespace TCorp\Joomla\Model\Site;
 
+use \Joomla\CMS\MVC\Model\BaseDatabaseModel;
 
 
 /**
  * Base class for creating generic front-end models
  */
-class GenericModel extends \KWS\Joomla\Model\Site\GenericModel
+class GenericModel extends BaseDatabaseModel
 {
 }

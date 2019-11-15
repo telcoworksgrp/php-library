@@ -11,9 +11,12 @@
 namespace TCorp\Joomla\Controller\Administrator;
 
 
+use \Joomla\CMS\MVC\Controller\BaseController;
+
+
 /**
  * Base class for creating generic back-end controllers
  */
-class GenericController extends \KWS\Joomla\Controller\Administrator\GenericController
+class GenericController extends BaseController
 {
 }

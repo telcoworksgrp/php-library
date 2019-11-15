@@ -11,9 +11,12 @@
 namespace TCorp\Joomla\Controller\Administrator;
 
 
+use \Joomla\CMS\MVC\Controller\AdminController;
+
+
 /**
  * Base class for creating list based back-end controllers
  */
-class ListController extends \KWS\Joomla\Controller\Administrator\ListController
+class ListController extends AdminController
 {
 }

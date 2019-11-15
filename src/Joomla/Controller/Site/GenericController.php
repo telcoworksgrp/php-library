@@ -10,10 +10,12 @@
 
 namespace TCorp\Joomla\Controller\Site;
 
+use \Joomla\CMS\MVC\Controller\BaseController;
+
 
 /**
  * Base class for creating generic front-end controllers
  */
-class GenericController extends \KWS\Joomla\Controller\Site\GenericController
+class GenericController extends BaseController
 {
 }

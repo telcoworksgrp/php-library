@@ -14,6 +14,6 @@ namespace TCorp\Joomla\Controller\Site;
 /**
  * Base class for creating item based front-end controllers
  */
-class ItemController extends \KWS\Joomla\Controller\Site\ItemController
+class ItemController extends GenericController
 {
 }
