@@ -67,4 +67,20 @@ class Telephony
         return preg_match('|[a-z#*]|i', $value);
     }
 
+
+    /**
+     * Arrange a string's charictars into groups
+     * -------------------------------------------------------------------------
+     * @param  string   $value      The value to group
+     * @param  int      $size       Max size ofo each group
+     * @param  string   $seperator  Charictar to seperate groups
+     *
+     * @return string
+     */
+    public static function group(string $value, int $size = 3,
+        string $seperator = ' ') : string
+    {
+        return implode($seperator, str_split($value, $size));
+    }
+
 }
