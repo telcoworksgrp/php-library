@@ -20,115 +20,11 @@ class RegisterEntry
 {
 
     /**
-     * Lorem ipsum dolor sit amet, consectetur
+     * Raw ACMA data for this entry
      *
      * @var string
      */
-    public $serviceType = '';
-
-
-    /**
-     * Lorem ipsum dolor sit amet, consectetur
-     *
-     * @var int
-     */
-    public $prefix = '';
-
-
-    /**
-     * Lorem ipsum dolor sit amet, consectetur
-     *
-     * @var int
-     */
-    public $numberLength = '';
-
-
-    /**
-     * Lorem ipsum dolor sit amet, consectetur
-     *
-     * @var int
-     */
-    public $from = '';
-
-
-    /**
-     * Lorem ipsum dolor sit amet, consectetur
-     *
-     * @var int
-     */
-    public $to = '';
-
-
-    /**
-     * Lorem ipsum dolor sit amet, consectetur
-     *
-     * @var string
-     */
-    public $status = '';
-
-
-    /**
-     * Lorem ipsum dolor sit amet, consectetur
-     *
-     * @var int
-     */
-    public $quantity = '';
-
-
-    /**
-     * Lorem ipsum dolor sit amet, consectetur
-     *
-     * @var string
-     */
-    public $allocatee = '';
-
-
-    /**
-     * Lorem ipsum dolor sit amet, consectetur
-     *
-     * @var string
-     */
-    public $allocationDate = '';
-
-
-    /**
-     * Lorem ipsum dolor sit amet, consectetur
-     *
-     * @var string
-     */
-    public $latestHolder = '';
-
-
-    /**
-     * Lorem ipsum dolor sit amet, consectetur
-     *
-     * @var string
-     */
-    public $latestTransferDate = '';
-
-
-    /**
-     * Lorem ipsum dolor sit amet, consectetur
-     *
-     * @var string
-     */
-    public $currentErouHolder = '';
-
-
-    /**
-     * Lorem ipsum dolor sit amet, consectetur
-     *
-     * @var string
-     */
-    public $erouAssignmentDate = '';
-
-
-    /**
-     * Lorem ipsum dolor sit amet, consectetur
-     *
-     * @var string
-     */
-    public $numberingArea = '';
+    public $data = [];
 
 
 
@@ -140,35 +36,243 @@ class RegisterEntry
     public function __construct($data = null)
     {
         // Initialise some class properties
-        if (is_array($data)) {
-            $this->loadFromArray($data);
-        }
+        $this->data = (array) $data;
     }
 
 
     /**
-     * Load entry data from an assoc array
+     * Get the value of this entries service type
      * -------------------------------------------------------------------------
-     * @param  array  $data     Data for a single entry
+     * @param   string  $default    Value to return if there is no data
      *
-     * @return void
+     * @return string
      */
-    public function loadFromArray(array $data)
+    public function getServiceType(string $default = '') : string
     {
-        $this->serviceType        = $data['Service Type'] ?? '';
-        $this->prefix             = $data['Prefix'] ?? '';
-        $this->numberLength       = $data['Number Length'] ?? '';
-        $this->from               = $data['From'] ?? '';
-        $this->to                 = $data['To'] ?? '';
-        $this->status             = $data['Status'] ?? '';
-        $this->quantity           = $data['Quantity'] ?? '';
-        $this->allocatee          = $data['Allocatee'] ?? '';
-        $this->allocationDate     = $data['Allocation Date'] ?? '';
-        $this->latestHolder       = $data['Latest Holder'] ?? '';
-        $this->latestTransferDate = $data['Latest Transfer Date'] ?? '';
-        $this->currentErouHolder  = $data['Current EROU holder'] ?? '';
-        $this->erouAssignmentDate = $data['EROU assignment date'] ?? '';
-        $this->numberingArea      = $data['Numbering Area'] ?? '';
+        return $this->data['Service Type'] ?? $default;
     }
+
+
+    /**
+     * Get the value of this entries prefix
+     * -------------------------------------------------------------------------
+     * @param   string  $default    Value to return if there is no data
+     *
+     * @return string
+     */
+    public function getPrefix(string $default = '') : string
+    {
+        return $this->data['Prefix'] ?? $default;
+    }
+
+
+    /**
+     * Get the value of this entries number length
+     * -------------------------------------------------------------------------
+     * @param   string  $default    Value to return if there is no data
+     *
+     * @return string
+     */
+    public function getNumberLength(string $default = '') : int
+    {
+        return $this->data['Number Length'] ?? $default;
+    }
+
+
+    /**
+     * Get the value of this entries starting/"from" number
+     * -------------------------------------------------------------------------
+     * @param   string  $default    Value to return if there is no data
+     *
+     * @return string
+     */
+    public function getRangeStart(string $default = '') : string
+    {
+        return $this->data['From'] ?? $default;
+    }
+
+
+    /**
+     * Get the value of this entries ending/"to" number
+     * -------------------------------------------------------------------------
+     * @param   string  $default    Value to return if there is no data
+     *
+     * @return string
+     */
+    public function getRangeEnd(string $default = '') : string
+    {
+        return $this->data['To'] ?? $default;
+    }
+
+
+    /**
+     * Get the value of this entries status
+     * -------------------------------------------------------------------------
+     * @param   string  $default    Value to return if there is no data
+     *
+     * @return string
+     */
+    public function getStatus(string $default = ''): string
+    {
+        return $this->data['Status'] ?? $default;
+    }
+
+
+    /**
+     * Get the value of this entries quantity
+     * -------------------------------------------------------------------------
+     * @param   string  $default    Value to return if there is no data
+     *
+     * @return string
+     */
+    public function getQuantity(string $default = '') : srting
+    {
+        return $this->data['Quantity'] ?? $default;
+    }
+
+
+    /**
+     * Get the value of this entries allocatee
+     * -------------------------------------------------------------------------
+     * @param   string  $default    Value to return if there is no data
+     *
+     * @return string
+     */
+    public function getAllocatee(string $default = '') : srting
+    {
+        return $this->data['Allocatee'] ?? $default;
+    }
+
+
+    /**
+     * Get the value of this entries allocation date
+     * -------------------------------------------------------------------------
+     * @param   string  $default    Value to return if there is no data
+     *
+     * @return string
+     */
+    public function getAllocationDate(string $default = '') : srting
+    {
+        return $this->data['Allocation Date'] ?? $default;
+    }
+
+
+    /**
+     * Get the value of this lastest holder
+     * -------------------------------------------------------------------------
+     * @param   string  $default    Value to return if there is no data
+     *
+     * @return string
+     */
+    public function getLatestHolder(string $default = '') : srting
+    {
+        return $this->data['Latest Holder'] ?? $default;
+    }
+
+
+    /**
+     * Get the value of this entries latest transfer date
+     * -------------------------------------------------------------------------
+     * @param   string  $default    Value to return if there is no data
+     *
+     * @return string
+     */
+    public function getLatestTransferDate(string $default = '') : srting
+    {
+        return $this->data['Latest Transfer Date'] ?? $default;
+    }
+
+
+    /**
+     * Get the value of this entries EROU holder
+     * -------------------------------------------------------------------------
+     * @param   string  $default    Value to return if there is no data
+     *
+     * @return string
+     */
+    public function getErouHolder(string $default = '') : srting
+    {
+        return $this->data['Current EROU holder'] ?? $default;
+    }
+
+
+    /**
+     * Get the value of this entries EROU assignment date
+     * -------------------------------------------------------------------------
+     * @param   string  $default    Value to return if there is no data
+     *
+     * @return string
+     */
+    public function getErouAssignmentDate(string $default = '') : srting
+    {
+        return $this->data['EROU assignment date'] ?? $default;
+    }
+
+
+    /**
+     * Get the value of this entries numbering area
+     * -------------------------------------------------------------------------
+     * @param   string  $default    Value to return if there is no data
+     *
+     * @return string
+     */
+    public function getNumberingArea(string $default = '') : srting
+    {
+        return $this->data['Numbering Area'] ?? $default;
+    }
+
+
+    /**
+     * Check if the entry has been allocated
+     * -------------------------------------------------------------------------
+     * @return bool
+     */
+    public function isAllocated() : bool
+    {
+        return $this->getStatus() == "Allocated";
+    }
+
+
+    /**
+     * Check if the entry has a current EROU holder
+     * -------------------------------------------------------------------------
+     * @return bool
+     */
+    public function hasErouHolder() : bool
+    {
+        return $his->getErouHolder() != '';
+    }
+
+
+    /**
+     * Check if the entry is a telecom corp flash number
+     * -------------------------------------------------------------------------
+     * @return bool
+     */
+    public function isFlashNumber() : bool
+    {
+        return in_array($this->getErouHolder(), [
+            'FYI TELCO',
+            'FYI TELCO PTY LTD',
+            'TELECOM CORPORATE PTY LTD'
+        ]);
+    }
+
+
+    /**
+     * Check if this entry is available to telecom corp customers
+     * -------------------------------------------------------------------------
+     * @return bool
+     */
+    public function isAvailable(): bool
+    {
+        $hasErouHolder = $this->hasErouHolder();
+        $isAllocated   = $this->isAllocated();
+        $isFlashNumber = $this->isFlashNumber();
+
+        return (!$hasErouHolder && !$isAllocated && !$isFlashNumber) ||
+            ($hasErouHolder && !$isAllocated && $isFlashNumber);
+    }
+
 
 }
