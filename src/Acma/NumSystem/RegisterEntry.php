@@ -125,7 +125,7 @@ class RegisterEntry
      *
      * @return string
      */
-    public function getQuantity(string $default = '') : srting
+    public function getQuantity(string $default = '') : string
     {
         return $this->data['Quantity'] ?? $default;
     }
@@ -138,7 +138,7 @@ class RegisterEntry
      *
      * @return string
      */
-    public function getAllocatee(string $default = '') : srting
+    public function getAllocatee(string $default = '') : string
     {
         return $this->data['Allocatee'] ?? $default;
     }
@@ -151,7 +151,7 @@ class RegisterEntry
      *
      * @return string
      */
-    public function getAllocationDate(string $default = '') : srting
+    public function getAllocationDate(string $default = '') : string
     {
         return $this->data['Allocation Date'] ?? $default;
     }
@@ -164,7 +164,7 @@ class RegisterEntry
      *
      * @return string
      */
-    public function getLatestHolder(string $default = '') : srting
+    public function getLatestHolder(string $default = '') : string
     {
         return $this->data['Latest Holder'] ?? $default;
     }
@@ -177,7 +177,7 @@ class RegisterEntry
      *
      * @return string
      */
-    public function getLatestTransferDate(string $default = '') : srting
+    public function getLatestTransferDate(string $default = '') : string
     {
         return $this->data['Latest Transfer Date'] ?? $default;
     }
@@ -190,7 +190,7 @@ class RegisterEntry
      *
      * @return string
      */
-    public function getErouHolder(string $default = '') : srting
+    public function getErouHolder(string $default = '') : string
     {
         return $this->data['Current EROU holder'] ?? $default;
     }
@@ -203,7 +203,7 @@ class RegisterEntry
      *
      * @return string
      */
-    public function getErouAssignmentDate(string $default = '') : srting
+    public function getErouAssignmentDate(string $default = '') : string
     {
         return $this->data['EROU assignment date'] ?? $default;
     }
@@ -216,7 +216,7 @@ class RegisterEntry
      *
      * @return string
      */
-    public function getNumberingArea(string $default = '') : srting
+    public function getNumberingArea(string $default = '') : string
     {
         return $this->data['Numbering Area'] ?? $default;
     }
