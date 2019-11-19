@@ -10,8 +10,6 @@
 
 namespace TCorp\Acma\NumSystem;
 
-use \League\Flysystem\Filesystem;
-use \League\Flysystem\ZipArchive\ZipArchiveAdapter;
 use \League\Csv\Reader AS CsvReader;
 
 
@@ -40,24 +38,27 @@ class Register
      */
     public function download()
     {
-        // Download the ZIP file and save it to a tempory location
-        $filename = tempnam(sys_get_temp_dir(), '');
-        $url = 'https://www.thenumberingsystem.com.au/download/EnhancedFullDownload.zip';
-        file_put_contents($filename, file_get_contents($url));
+        // Download the data archive to a tempory location
+        $archiveUrl = "https://www.thenumberingsystem.com.au/download/EnhancedFullDownload.zip";
+        $archiveFilename = tempnam(sys_get_temp_dir(), '');
+        file_put_contents($archiveFilename, file_get_contents($archiveUrl));
 
-        // Extract the CSV file which contains the registar of numbers
-        $zipReader = new Filesystem(new ZipArchiveAdapter($filename));
-        $result = $zipReader->read('EnhancedFullDownload.csv');
+        // Extract the csv file from the archive
+        $csvFilename = tempnam(sys_get_temp_dir(), '');
+        $archive = new \ZipArchive();
+        $archive->open($archiveFilename);
+        file_put_contents($csvFilename, $archive->getFromName('EnhancedFullDownload.csv'));
 
-        // Process the CSV data
-        $csvReader = CsvReader::createFromString($result);
+        // Parse the CSV file
+        $csvReader = CsvReader::createFromPath($csvFilename, 'r');
         $csvReader->setHeaderOffset(0);
 
         $this->entries = [];
         foreach ($csvReader as $record) {
-            $this->entries[] = new RegisterEntry($record);
+            if (in_array($record['Prefix'], [1300,1800])) {
+                $this->entries[] = new RegisterEntry($record);
+            }
         }
-
     }
 
 }
