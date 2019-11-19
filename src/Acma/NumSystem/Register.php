@@ -55,7 +55,9 @@ class Register
 
         $this->entries = [];
         foreach ($csvReader as $record) {
-            $this->entries[] = new RegisterEntry($record);
+            if (in_array($record['Prefix'], [1300,1800])) {
+                $this->entries[] = new RegisterEntry($record);
+            }
         }
 
     }
