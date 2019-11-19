@@ -240,7 +240,7 @@ class RegisterEntry
      */
     public function hasErouHolder() : bool
     {
-        return $his->getErouHolder() != '';
+        return $this->getErouHolder() != '';
     }
 
 
