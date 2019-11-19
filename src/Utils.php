@@ -160,4 +160,21 @@ class Utils
         return (bool) preg_match("/Google(bot)?/", $_SERVER['HTTP_USER_AGENT']);
     }
 
+
+    /**
+     * Check if a given EROU holder name is telecom corp
+     * -------------------------------------------------------------------------
+     * @param  string   $holder   An erou holder name
+     *
+     * @return bool
+     */
+    public static function erouHolderIsTelecomCorp(string $holder)
+    {
+        return in_array(strtoupper($holder), [
+            'FYI TELCO',
+            'FYI TELCO PTY LTD',
+            'TELECOM CORPORATE PTY LTD'
+        ]);
+    }
+
 }
