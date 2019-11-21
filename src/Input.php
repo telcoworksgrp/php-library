@@ -168,8 +168,7 @@ class Input
      */
     protected function sanitise($value, $type = 'string')
     {
-        // TODO: Impliment sanitisation here
-        return $value;
+        return Sanitiser::sanitise($value, $type);
     }
 
 }
