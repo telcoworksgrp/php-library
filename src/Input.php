@@ -65,7 +65,7 @@ class Input
             $result = $default;
         }
 
-        return $this->sanitise($result, $filter);
+        return $this->sanitise($result, $type);
     }
 
 
@@ -87,7 +87,7 @@ class Input
             $result = $default;
         }
 
-        return $this->sanitise($result, $filter);
+        return $this->sanitise($result, $type);
     }
 
 
@@ -109,7 +109,7 @@ class Input
             $result = $default;
         }
 
-        return $this->sanitise($result, $filter);
+        return $this->sanitise($result, $type);
     }
 
 
