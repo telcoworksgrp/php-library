@@ -161,15 +161,15 @@ class Input
     /**
      * Sanitise a given value
      * -------------------------------------------------------------------------
-     * @param  string   $name       The value to sanitise
+     * @param  mixed    $value      The value to sanitise
      * @param  string   $type       Expected data type (for sanitisation)
      *
      * @return mixed
      */
-    protected function sanitise(string $value, $type = 'string')
+    protected function sanitise($value, $type = 'string')
     {
         // TODO: Impliment sanitisation here
         return $value;
-    }    
+    }
 
 }
