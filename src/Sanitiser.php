@@ -27,6 +27,14 @@ class Sanitiser
      */
     public static function sanitise($value, $type = 'string')
     {
+        // If the value is an array, sanitise each element
+        if (is_array($value)) {
+            foreach ($value as &$v) {
+                $v = static::sanitise($v, $type);
+            }
+        }
+
+        // Sanitise the value based on the specified type
         switch (strtolower($type)) {
 
             case 'int':
@@ -49,6 +57,10 @@ class Sanitiser
                 $result = preg_replace('|[^0-9A-Z+)( ]|i', '', $value);
                 break;
 
+            case 'array':
+                $result = (array) $value;
+                break;
+
             case 'raw':
                 $result = $value;
                 break;
@@ -58,6 +70,7 @@ class Sanitiser
                 break;
         }
 
+        // Return the result
         return $result;
     }
 
