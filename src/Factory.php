@@ -26,6 +26,15 @@ class Factory
 
 
     /**
+     * Holds the global session object
+     *
+     * @var \TCorp\Session
+     */
+    protected static $session = null;
+
+
+
+    /**
      * Gets a global input object, creating it if necessary
      * -------------------------------------------------------------------------
      * @return \TCorp\Input
@@ -37,6 +46,21 @@ class Factory
         }
 
         return static::$input;
+    }
+
+
+    /**
+     * Gets a global session object, creating it if necessary
+     * -------------------------------------------------------------------------
+     * @return \TCorp\Session
+     */
+    public static function getSession()
+    {
+        if (is_null(static::$session)) {
+            static::$session = new Session();
+        }
+
+        return static::$session;
     }
 
 }
