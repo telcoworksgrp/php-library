@@ -178,9 +178,9 @@ class Email
     /**
      * Send the email
      * -------------------------------------------------------------------------
-     * @return bool
+     * @return void
      */
-    public function send() : bool
+    public function send()
     {
         try {
             $this->email->send();
