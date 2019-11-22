@@ -25,7 +25,7 @@ class Sanitiser
      *
      * @return mixed
      */
-    protected static function sanitise($value, $type = 'string')
+    public static function sanitise($value, $type = 'string')
     {
         switch (strtolower($type)) {
 
