@@ -137,7 +137,7 @@ class Email
      */
     public function setBody(string $body) : Email
     {
-        $his->email->isHTML(Utils::containsHTML($body));
+        $this->email->isHTML(Utils::containsHTML($body));
         $this->email->Body = $body;
         return $this;
     }
