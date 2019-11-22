@@ -62,5 +62,16 @@ class Factory
 
         return static::$session;
     }
+    
+
+    /**
+     * Gets a new email object
+     * -------------------------------------------------------------------------
+     * @return \TCorp\Email
+     */
+    public static function getEmail()
+    {
+        return new Email();
+    }
 
 }
