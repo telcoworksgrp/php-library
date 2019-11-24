@@ -1,5 +1,5 @@
 {
-    "name"       : "telecomcorp/tcorplib",
+    "name"       : "telecomcorp/library-tcorplib",
     "description": "Telecom Corporate PHP Library",
     "type"       : "library",
     "keywords"   : ["telecomcorp", "tcorp"],
