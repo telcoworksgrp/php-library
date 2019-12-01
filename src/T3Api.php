@@ -10,13 +10,13 @@
 
 namespace TCorp\T3;
 
-use \TCorp\Utils;
+use \TCorp;
 
 
 /**
  * A basic client for sending API requests to Telecom Corporates T3 system
  */
-class Client
+class T3Api
 {
 
     /**
