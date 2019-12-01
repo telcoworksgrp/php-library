@@ -33,6 +33,22 @@ class Factory
     protected static $session = null;
 
 
+    /**
+     * Holds the global sanitiser object
+     *
+     * @var \TCorp\Sanitiser
+     */
+    protected static $sanitiser = null;
+
+
+    /**
+     * Holds the global web api object
+     *
+     * @var \TCorp\WebApi
+     */
+    protected static $webapi = null;
+
+
 
     /**
      * Gets a global input object, creating it if necessary
@@ -62,7 +78,7 @@ class Factory
 
         return static::$session;
     }
-    
+
 
     /**
      * Gets a new email object
@@ -72,6 +88,36 @@ class Factory
     public static function getEmail()
     {
         return new Email();
+    }
+
+
+    /**
+     * Gets a global sanitiser object, creating it if necessary
+     * -------------------------------------------------------------------------
+     * @return \TCorp\Sanitiser
+     */
+    public static function getSanitiser()
+    {
+        if (is_null(static::$sanitiser)) {
+            static::$sanitiser = new Sanitiser();
+        }
+
+        return static::$sanitiser;
+    }
+
+
+    /**
+     * Gets a global web api object, creating it if necessary
+     * -------------------------------------------------------------------------
+     * @return \TCorp\WebApi
+     */
+    public static function getWebApiClient()
+    {
+        if (is_null(static::$webapi)) {
+            static::$webapi = new WebApi();
+        }
+
+        return static::$webapi;
     }
 
 }
