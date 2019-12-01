@@ -150,14 +150,4 @@ class Utils
     }
 
 
-    /**
-     * Check if the current user agent is  googlebot
-     *-------------------------------------------------------------------------
-     * @return bool
-     */
-    public static function isGooglebot() : bool
-    {
-        return (bool) preg_match("/Google(bot)?/", $_SERVER['HTTP_USER_AGENT']);
-    }
-
 }
