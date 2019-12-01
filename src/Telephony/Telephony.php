@@ -83,4 +83,17 @@ class Telephony
         return implode($seperator, str_split($value, $size));
     }
 
+
+    /**
+     * Extracts the first phone word found in a given value
+     * -------------------------------------------------------------------------
+     * @param  string   $value  Value from which to extract the phone word from
+     *
+     * @return string
+     */
+    public function extractPhoneWord(string $value) : string
+    {
+        return preg_replace('|^.*?([a-z]+).*$|i', '$1', $value);
+    }
+
 }
