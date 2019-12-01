@@ -8,13 +8,13 @@
  * =============================================================================
  */
 
-namespace TCorp\WebApi;
+namespace TCorp;
 
 
 /**
  * Client for accessing Telecom Corporate's Web API
  */
-class Client
+class WebApi
 {
 
     /**
