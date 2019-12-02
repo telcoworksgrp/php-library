@@ -39,12 +39,12 @@ class Response
      * -------------------------------------------------------------------------
      * @param string  $url              URL to redirect the user to
      * @param bool    $preserveParams   Pass existing URL params to the redirect
-     * @param int     $statusCode        HTTP status code (usually 301 or 303)
+     * @param int     $code             HTTP status code (usually 301 or 303)
      *
      * @return  void
      */
     public static function redirect(string $url = '', bool $preserveParams =
-        false, int $statusCode = 301) : void
+        false, int $code = 301) : void
     {
         // If no url is given, use the cuurent url. This can be useful for
         // returning to form submission page
@@ -56,7 +56,7 @@ class Response
         }
 
         // Redirect the user
-        header('Location: ' . $url, true, $statusCode);
+        header('Location: ' . $url, true, $code);
         exit();
     }
 
