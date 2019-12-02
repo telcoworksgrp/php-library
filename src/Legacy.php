@@ -107,10 +107,50 @@ class Legacy
         $minPrice = 0, $maxPrice = 1000, $pageNo = 1, $pageSize = 500,
         $sortBy = 'PRICE', $direction = 'ASCENDING')
     {
-        return Application::getT3ApiClient()->getNumbers($prefix, $type,
-            $minPrice, $maxPrice, $pageNo, $pageSize, $sortBy, $direction);
+
+        // Query the T3 Api
+        $t3api = Application::getT3ApiClient();
+        $t3api->setEndpoint("Activations");
+        $t3api->setParam("query", $prefix);
+        $t3api->setParam("numberTypes", "SERVICE_NUMBER");
+        $t3api->setParam("serviceNumberTypes", $type);
+        $t3api->setParam("minPriceDollars", $minPrice);
+        $t3api->setParam("maxPriceDollars", $maxPrice);
+        $t3api->setParam("pageNum", $pageNo);
+        $t3api->setParam("pageSize", $pageSize);
+        $t3api->setParam("sortBy", $sortBy);
+        $t3api->setParam("sortDirection", $direction);
+        $result = $t3api->execute();
+
+        // Add additional meta data
+        foreach($result as &$number) {
+            $number->format1 = preg_replace('|^(\d{4})(\d{6})$|i', '$1 $2', $number->number);
+            $number->format2 = preg_replace('|^(\d{4})(\d{3})(\d{3})$|i', '$1 $2 $3', $number->number);
+            $number->format3 = preg_replace('|^(\d{4})(\d{2})(\d{2})(\d{2})$|i', '$1 $2 $3 $4', $number->number);
+            $number->format4 = (!empty($number->word) ? $number->word : $number->format3);
+        }
+
+        // Return the final result
+        return $result;
     }
 
+
+    /**
+     * Get all numbers available from the T3 Api
+     * -------------------------------------------------------------------------
+     * @return \stdClass[]
+     */
+    public static function getAllNumbers()
+    {
+        // Get the list of numbers
+        $result = static::getNumbers('1300', 'FLASH', 0, 1000, 1, 1000);
+        $result = array_merge($result, static::getNumbers('1800', 'FLASH', 0, 1000, 1, 1000));
+        $result = array_merge($result, static::getNumbers('1300', 'LUCKY_DIP', 0, 1000, 1, 1000));
+        $result = array_merge($result, static::getNumbers('1800', 'LUCKY_DIP', 0, 1000, 1, 1000));
+
+        // Return the result
+        return $result;
+    }
 
     /**
      * Send an email
