@@ -91,7 +91,7 @@ class Telephony
      *
      * @return string
      */
-    public function extractPhoneWord(string $value) : string
+    public static function extractPhoneWord(string $value) : string
     {
         return preg_replace('|^.*?([a-z]+).*$|i', '$1', $value);
     }
