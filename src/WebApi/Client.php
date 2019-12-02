@@ -8,7 +8,7 @@
  * =============================================================================
  */
 
-namespace TCorp;
+namespace TCorp\WebApi;
 
 use \TCorp\Rest\Client AS RestClient;
 

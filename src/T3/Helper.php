@@ -8,12 +8,12 @@
  * =============================================================================
  */
 
-namespace TCorp;
+namespace TCorp\T3;
 
 
 /**
  * Helper class for working with Telecom Corporate's T3 system
  */
 class Helper
-{    
+{
 }

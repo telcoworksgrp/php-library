@@ -8,7 +8,7 @@
  * =============================================================================
  */
 
-namespace TCorp;
+namespace TCorp\T3;
 
 use \TCorp\Rest\Client AS RestClient;
 
