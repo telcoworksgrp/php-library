@@ -51,6 +51,14 @@ class Application
 
 
     /**
+     * Holds the global response object
+     *
+     * @var \TCorp\Response
+     */
+    protected static $response = null;
+
+
+    /**
      * Holds the global sanitiser object
      *
      * @var \TCorp\Sanitiser
@@ -150,6 +158,21 @@ class Application
         }
 
         return static::$input;
+    }
+
+
+    /**
+     * Gets a global response object, creating it if necessary
+     * -------------------------------------------------------------------------
+     * @return \TCorp\Response
+     */
+    public static function getResponse()
+    {
+        if (is_null(static::$response)) {
+            static::$response = new Response();
+        }
+
+        return static::$response;
     }
 
 
