@@ -65,6 +65,15 @@ class Factory
     protected static $agent = null;
 
 
+    /**
+     * Holds the global firewall object
+     *
+     * @var \TCorp\Firewall
+     */
+    protected static $firewall = null;
+
+
+
 
     /**
      * Gets a global input object, creating it if necessary
@@ -164,6 +173,21 @@ class Factory
         }
 
         return static::$agent;
+    }
+
+
+    /**
+     * Gets a global firewall object, creating it if necessary
+     * -------------------------------------------------------------------------
+     * @return \TCorp\Firewall
+     */
+    public static function getFirewall()
+    {
+        if (is_null(static::$firewall)) {
+            static::$firewall = new Firewall();
+        }
+
+        return static::$firewall;
     }
 
 }
