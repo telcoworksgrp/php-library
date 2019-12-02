@@ -10,13 +10,13 @@
 
 namespace TCorp;
 
-use \TCorp\Rest\RestClient;
+use \TCorp\Rest\Client AS RestClient;
 
 
 /**
  * A basic client for sending API requests to Telecom Corporates T3 system
  */
-class T3Client extends RestClient
+class Client extends RestClient
 {
 
     /**
