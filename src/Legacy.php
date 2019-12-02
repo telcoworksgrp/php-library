@@ -143,10 +143,8 @@ class Legacy
     public static function getAllNumbers()
     {
         // Get the list of numbers
-        $result = static::getNumbers('1300', 'FLASH', 0, 1000, 1, 1000);
-        $result = array_merge($result, static::getNumbers('1800', 'FLASH', 0, 1000, 1, 1000));
-        $result = array_merge($result, static::getNumbers('1300', 'LUCKY_DIP', 0, 1000, 1, 1000));
-        $result = array_merge($result, static::getNumbers('1800', 'LUCKY_DIP', 0, 1000, 1, 1000));
+        $result = static::getNumbers('', 'FLASH', 0, 1000, 1, 1000);
+        $result = array_merge($result, static::getNumbers('', 'LUCKY_DIP', 0, 1000, 1, 1000));
 
         // Return the result
         return $result;
