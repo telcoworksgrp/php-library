@@ -663,7 +663,7 @@ class Legacy
      */
     public static function getReCaptchaHtml()
     {
-        $sitekey = static::$recaptchaSiteKey
+        $sitekey = static::$recaptchaSiteKey;
         $result  = "<script src=\"https://www.google.com/recaptcha/api.js\" async defer></script>\n";
         $result .= "<div class=\"g-recaptcha\" data-sitekey=\"$siteKey\"></div>";
         return $result;
