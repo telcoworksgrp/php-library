@@ -49,6 +49,14 @@ class Factory
     protected static $webapi = null;
 
 
+    /**
+     * Holds the global t3 api object
+     *
+     * @var \TCorp\T3Api
+     */
+    protected static $t3api = null;
+
+
 
     /**
      * Gets a global input object, creating it if necessary
@@ -118,6 +126,21 @@ class Factory
         }
 
         return static::$webapi;
+    }
+
+
+    /**
+     * Gets a global T3 api object, creating it if necessary
+     * -------------------------------------------------------------------------
+     * @return \TCorp\T3Api
+     */
+    public static function getWebApiClient()
+    {
+        if (is_null(static::$t3api)) {
+            static::t3bapi = new T3Api();
+        }
+
+        return static::$t3api;
     }
 
 }
