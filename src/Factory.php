@@ -57,6 +57,14 @@ class Factory
     protected static $t3api = null;
 
 
+    /**
+     * Holds the global agent object
+     *
+     * @var \TCorp\Agent
+     */
+    protected static $agent = null;
+
+
 
     /**
      * Gets a global input object, creating it if necessary
@@ -141,6 +149,21 @@ class Factory
         }
 
         return static::$t3api;
+    }
+
+
+    /**
+     * Gets a global agent object, creating it if necessary
+     * -------------------------------------------------------------------------
+     * @return \TCorp\Agent
+     */
+    public static function getAgent()
+    {
+        if (is_null(static::$agent)) {
+            static::$agent = new Agent();
+        }
+
+        return static::$agent;
     }
 
 }
