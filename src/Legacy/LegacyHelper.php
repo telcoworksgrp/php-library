@@ -12,7 +12,7 @@
 
 namespace TCorp\Legacy;
 
-use \TCorp\Security\SecurityHelper;
+use \TCorp\Security;
 
 
 /**
@@ -345,7 +345,7 @@ class LegacyHelper
 
 
     /**
-     *  Block the user if thier IP belongs to a banned country. SecurityHelper::
+     *  Block the user if thier IP belongs to a banned country. Security::
      *  WORST_SPAM_COUNTRIES is a predefined list of the worst spam/bot
      *  countries according to Spamhaus. To avoid blocking Googlebot, the US is
      *  exluded from this predefined list.
@@ -354,22 +354,22 @@ class LegacyHelper
      */
     public static function blockBannedCountries() : void
     {
-        if (SecurityHelper::checkIpLocation(SecurityHelper::
-            WORST_SPAM_COUNTRIES, self::$ipGeolocationApiKey)) {
+        if (Security::checkIpLocation(Security::WORST_SPAM_COUNTRIES,
+            self::$ipGeolocationApiKey)) {
 
-            SecurityHelper::blockAccess();
+            Security::blockAccess();
         }
     }
 
 
     /**
-     * Proxy for the SecurityHelper::getHoneypotHtml() method
+     * Proxy for the Security::getHoneypotHtml() method
      * -------------------------------------------------------------------------
      * @return  string  HTML for rendering a hidden honeypot text field
      */
     public static function getHoneypotHtml()
     {
-        return SecurityHelper::getHoneypotHtml();
+        return Security::getHoneypotHtml();
     }
 
 
@@ -381,20 +381,20 @@ class LegacyHelper
      */
     public static function blockIfInvalidHoneypot() : void
     {
-        if (!SecurityHelper::checkHoneypot()) {
-            SecurityHelper::blockAccess();
+        if (!Security::checkHoneypot()) {
+            Security::blockAccess();
         }
     }
 
 
     /**
-     * Proxy for the SecurityHelper::getCSRFTokenHtml() method
+     * Proxy for the Security::getCSRFTokenHtml() method
      * -------------------------------------------------------------------------
      * @return  string  HTML for rendering a CSRF token inside a web form
      */
     public static function getCSRFTokenHtml()
     {
-        return SecurityHelper::getCSRFTokenHtml();
+        return Security::getCSRFTokenHtml();
     }
 
 
@@ -406,20 +406,20 @@ class LegacyHelper
      */
     public static function blockIfInvalidCSRFToken() : void
     {
-        if (!SecurityHelper::checkCSRFToken()) {
-            SecurityHelper::blockAccess();
+        if (!Security::checkCSRFToken()) {
+            Security::blockAccess();
         }
     }
 
 
     /**
-     * Proxy for the SecurityHelper::getReCaptchaHtml() method
+     * Proxy for the Security::getReCaptchaHtml() method
      * -------------------------------------------------------------------------
      * @return  string  HTML for rendering a CSRF token inside a web form
      */
     public static function getReCaptchaHtml()
     {
-        return SecurityHelper::getReCaptchaHtml(self::$recaptchaSiteKey);
+        return Security::getReCaptchaHtml(self::$recaptchaSiteKey);
     }
 
 
@@ -431,7 +431,7 @@ class LegacyHelper
      */
     public static function redirectIfInvalidReCaptcha(string $redirectUrl) : void
     {
-        if (!SecurityHelper::checkReCaptcha(self::$recaptchaSecret)) {
+        if (!Security::checkReCaptcha(self::$recaptchaSecret)) {
             self::redirect($redirectUrl, false, 303);
         }
     }
