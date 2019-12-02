@@ -106,4 +106,59 @@ class Utils
         return $result;
     }
 
+
+    /**
+     * Send an email
+     * -------------------------------------------------------------------------
+     * @param  string   $to           Receiver, or receivers of the mail.
+     * @param  string   $from         A From address
+     * @param  string   $subject      Subject of the email to be sent.
+     * @param  string   $message      Message to be sent.
+     * @param  string   $cc           A CC address
+     * @param  string   $bcc          A BCC address
+     * @param  mixed    $headers      String/array of additional headers to add
+     *
+     * @return bool                 TRUE if successfully sent, FALSE otherwise
+     */
+    public static function sendEmail(string $to, string $from, string $subject,
+        string $message, string $cc = '', string $bcc = '', $headers = array())
+    {
+        // Add some mime headers if the message contains HTML
+        if ($message != strip_tags($message)) {
+            $headers['MIME-Version']      = "1.0";
+            $headers['Content-type']      = "text/html; charset=iso-8859-1";
+        }
+
+        // Add a From header
+        if (!empty($from)) {
+            $headers['From'] = $from;
+        }
+
+        // Add a CC header
+        if (!empty($from)) {
+            $headers['Cc'] = $from;
+        }
+
+        // Add a BCC header
+        if (!empty($bcc)) {
+            $headers['Bcc'] = $bcc;
+        }
+
+        // Add some additional metadata to headers
+        $headers['X-WebForm-ServerIP']   = $_SERVER['SERVER_ADDR'];
+        $headers['X-WebForm-ServerName'] = $_SERVER['SERVER_NAME'];
+        $headers['X-WebForm-Host']       = static::getCurrentDomainName();
+        $headers['X-WebForm-Referrer']   = $_SERVER['HTTP_REFERER'];
+        $headers['X-WebForm-UserAgent']  = static::getRemoteUserAgent();
+        $headers['X-WebForm-RemoteIP']   = static::getRemoteIPAddress();
+        $headers['X-WebForm-URI']        = $_SERVER['REQUEST_URI'];
+        $headers['X-WebForm-Script']     = $_SERVER['SCRIPT_NAME'];
+
+        // Send the email
+        $result = mail($to, $subject, $message, $headers);
+
+        // Return the result
+        return $result;
+    }    
+
 }
