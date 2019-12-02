@@ -12,9 +12,10 @@ namespace TCorp;
 
 
 /**
- * Factory class for creating and/or getting global class instances
+ * Class for ecapsulating a website application. This includes various
+ * factory methods for getting global objects
  */
-class Factory
+class Application
 {
 
     /**
