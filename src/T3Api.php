@@ -24,7 +24,7 @@ class T3Api
      *
      * @var string;
      */
-    protected $baseUri = "https://portal.tbill.live/numbers-service-impl/api";
+    protected $baseUri = "https://portal.tbill.live/numbers-service-impl/api/";
 
 
     /**
