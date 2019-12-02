@@ -151,7 +151,7 @@ class Factory
      * -------------------------------------------------------------------------
      * @return \TCorp\T3Api
      */
-    public static function getWebApiClient()
+    public static function getT3ApiClient()
     {
         if (is_null(static::$t3api)) {
             static::t3bapi = new T3Api();
