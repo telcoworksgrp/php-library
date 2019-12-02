@@ -15,7 +15,7 @@ namespace TCorp;
 /**
  * A basic client for sending API requests to Telecom Corporates T3 system
  */
-class T3Api
+class Client
 {
 
 
@@ -153,7 +153,7 @@ class T3Api
      * -------------------------------------------------------------------------
      * @param  string   $value  A new asbolute base uri
      *
-     * @return T3Api
+     * @return Client
      */
     public function setBaseUri(string $value) : T3Api
     {
@@ -167,7 +167,7 @@ class T3Api
      * -------------------------------------------------------------------------
      * @param  string   $value  A new relative enpoint uri
      *
-     * @return T3Api
+     * @return Client
      */
     public function setEndpoint(string $value) : T3Api
     {
@@ -182,7 +182,7 @@ class T3Api
      * -------------------------------------------------------------------------
      * @param  string   $value  A HTTP method (eg: GET,POST,PUT,PATCH,DELETE)
      *
-     * @return T3Api
+     * @return Client
      */
     public function setMethod(string $value) : T3Api
     {
@@ -196,7 +196,7 @@ class T3Api
      * -------------------------------------------------------------------------
      * @param  string[]     $value  Assoc array of parameters
      *
-     * @return T3Api
+     * @return Client
      */
     public function setParams($value) : T3Api
     {
@@ -212,7 +212,7 @@ class T3Api
      * @param  mixed    $value      A value for the parameter
      * @param  bool     $array      Treat parameter as an array of values
      *
-     * @return T3Api
+     * @return Client
      */
     public function setParam(string $name, $value, bool $array = false) : T3Api
     {
@@ -232,7 +232,7 @@ class T3Api
      * -------------------------------------------------------------------------
      * @param  string   $value  A new username
      *
-     * @return T3Api
+     * @return Client
      */
     public function setUsername(string $value) : T3Api
     {
@@ -246,7 +246,7 @@ class T3Api
      * -------------------------------------------------------------------------
      * @param  string   $value  A new password
      *
-     * @return T3Api
+     * @return Client
      */
     public function setPassword(string $value) : T3Api
     {
