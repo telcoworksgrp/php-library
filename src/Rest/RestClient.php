@@ -15,7 +15,7 @@ namespace TCorp\Rest;
 /**
  * Basic client for sending API requests to Rest APIs
  */
-class Client
+class RestClient
 {
 
     /**
@@ -113,9 +113,9 @@ class Client
      * -------------------------------------------------------------------------
      * @param  string   $value  An absolute base URL
      *
-     * @return \TCorp\Rest\Client
+     * @return \TCorp\Rest\RestClient
      */
-    public function setBaseUrl(string $value) : Client
+    public function setBaseUrl(string $value) : RestClient
     {
         $this->baseUrl = $value;
     }
@@ -137,9 +137,9 @@ class Client
      * -------------------------------------------------------------------------
      * @param  string   $value  A relative URL
      *
-     * @return \TCorp\Rest\Client
+     * @return \TCorp\Rest\RestClient
      */
-    public function setResource(string $value) : Client
+    public function setResource(string $value) : RestClient
     {
         $this->resource = $value;
     }
@@ -161,9 +161,9 @@ class Client
      * -------------------------------------------------------------------------
      * @param  string   $value  A HTTP method/verb (eg: GET,POST,PUT,DELETE)
      *
-     * @return \TCorp\Rest\Client
+     * @return \TCorp\Rest\RestClient
      */
-    public function setMethod(string $value) : Client
+    public function setMethod(string $value) : RestClient
     {
         $this->method = strtoupper($value);
     }
@@ -185,9 +185,9 @@ class Client
      * -------------------------------------------------------------------------
      * @param  mixed    $value  Assoc array or object containing HTTP params
      *
-     * @return \TCorp\Rest\Client
+     * @return \TCorp\Rest\RestClient
      */
-    public function setParams($value) : Client
+    public function setParams($value) : RestClient
     {
         $this->params = (array) $value;
     }
@@ -209,7 +209,7 @@ class Client
      * -------------------------------------------------------------------------
      * @return Client
      */
-    public function clearParams() : Client
+    public function clearParams() : RestClient
     {
         $this->params = [];
     }
@@ -221,9 +221,9 @@ class Client
      * @param  string   $name   The name of the HTTP parameter
      * @param  mixed    $value  A new value for the parameter
      *
-     * @return \TCorp\Rest\Client
+     * @return \TCorp\Rest\RestClient
      */
-    public function setParam(string $name, $value) : Client
+    public function setParam(string $name, $value) : RestClient
     {
         $this->params[$name] = $value;
     }
@@ -248,9 +248,9 @@ class Client
      * -------------------------------------------------------------------------
      * @param  array   $value   Assoc array of HTTP headers
      *
-     * @return \TCorp\Rest\Client
+     * @return \TCorp\Rest\RestClient
      */
-    public function setHeaders(array $value) : Client
+    public function setHeaders(array $value) : RestClient
     {
         $this->headers = $value;
     }
@@ -273,9 +273,9 @@ class Client
      * @param  string   $name   The name of the HTTP header
      * @param  mixed    $value  A new value for the header
      *
-     * @return \TCorp\Rest\Client
+     * @return \TCorp\Rest\RestClient
      */
-    public function setHeader(string $name, $value) : Client
+    public function setHeader(string $name, $value) : RestClient
     {
         $this->headers[$name] = $value;
     }
@@ -300,9 +300,9 @@ class Client
      * -------------------------------------------------------------------------
      * @param  string   $value  An API client id/username
      *
-     * @return \TCorp\Rest\Client
+     * @return \TCorp\Rest\RestClient
      */
-    public function setClientId(string $value) : Client
+    public function setClientId(string $value) : RestClient
     {
         $this->clientId = $value;
     }
@@ -324,9 +324,9 @@ class Client
      * -------------------------------------------------------------------------
      * @param  string   $value  An API client secret/key/password
      *
-     * @return \TCorp\Rest\Client
+     * @return \TCorp\Rest\RestClient
      */
-    public function setSecret(string $value) : Client
+    public function setSecret(string $value) : RestClient
     {
         $this->secret = $value;
     }
@@ -347,9 +347,9 @@ class Client
      * -------------------------------------------------------------------------
      * @param  float  $value    Timeout in seconds
      *
-     * @return \TCorp\Rest\Client
+     * @return \TCorp\Rest\RestClient
      */
-    public function setTimeout(float $value) : Client
+    public function setTimeout(float $value) : RestClient
     {
         $this->timeout = $value;
     }
