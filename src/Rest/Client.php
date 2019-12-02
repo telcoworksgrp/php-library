@@ -90,7 +90,7 @@ class Client
     public function execute()
     {
         // Initialise a HTTP client
-        $client = new \GuzzleHttp\Client('base_uri' => $this->getBaseUrl());
+        $client = new \GuzzleHttp\Client(['base_uri' => $this->getBaseUrl()]);
 
         // Send the HTTP request and get the result
         $result = $client->request($this->getMethod(), $this->getResource(), [
