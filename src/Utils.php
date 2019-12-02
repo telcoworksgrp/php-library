@@ -93,16 +93,17 @@ class Utils
     public static function sendRequest(string $url, string $method = 'GET',
         $data =array(), $headers = array())
     {
-        // Compose a HTTP request using Guzzle HTTP
-        $request = new \GuzzleHttp\Psr7\Request($method, $url, $headers);
-
-        // Execute the http request with Guzzle HTTP
+        // Send the HTTP request
         $client  = new \GuzzleHttp\Client();
-        $result = $client->send($request, array('query' => $data));
 
-        // Return the result body
-        return $result->getBody();
+        $result = $client->request($method, $url,
+            ['query'=> $data, 'headers' => $headers]);
+
+        // Get the response
+        $result = $result->getBody();
+
+        // Return the final result
+        return $result;
     }
-
 
 }
