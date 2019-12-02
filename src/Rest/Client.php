@@ -118,6 +118,7 @@ class Client
     public function setBaseUrl(string $value) : Client
     {
         $this->baseUrl = $value;
+        return $this;
     }
 
 
@@ -142,6 +143,7 @@ class Client
     public function setResource(string $value) : Client
     {
         $this->resource = $value;
+        return $this;
     }
 
 
@@ -166,6 +168,7 @@ class Client
     public function setMethod(string $value) : Client
     {
         $this->method = strtoupper($value);
+        return $this;
     }
 
 
@@ -190,6 +193,7 @@ class Client
     public function setParams($value) : Client
     {
         $this->params = (array) $value;
+        return $this;
     }
 
 
@@ -212,6 +216,7 @@ class Client
     public function clearParams() : Client
     {
         $this->params = [];
+        return $this;
     }
 
 
@@ -226,6 +231,7 @@ class Client
     public function setParam(string $name, $value) : Client
     {
         $this->params[$name] = $value;
+        return $this;
     }
 
 
@@ -253,6 +259,7 @@ class Client
     public function setHeaders(array $value) : Client
     {
         $this->headers = $value;
+        return $this;
     }
 
 
@@ -278,6 +285,7 @@ class Client
     public function setHeader(string $name, $value) : Client
     {
         $this->headers[$name] = $value;
+        return $this;
     }
 
 
@@ -305,6 +313,7 @@ class Client
     public function setClientId(string $value) : Client
     {
         $this->clientId = $value;
+        return $this;
     }
 
 
@@ -329,6 +338,7 @@ class Client
     public function setSecret(string $value) : Client
     {
         $this->secret = $value;
+        return $this;
     }
 
     /**
@@ -352,6 +362,7 @@ class Client
     public function setTimeout(float $value) : Client
     {
         $this->timeout = $value;
+        return $this;
     }
 
 
