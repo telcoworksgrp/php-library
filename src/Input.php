@@ -28,7 +28,8 @@ class Input
      */
     public function get(string $name, $default = null, $type = 'string')
     {
-        return $this->sanitise($_GET[$name] ?? $default, $type);
+        return Application::getSanitiser()->sanitise(
+            $_GET[$name] ?? $default, $type);
     }
 
 
@@ -43,7 +44,8 @@ class Input
      */
     public function post(string $name, $default = null, $type = 'string')
     {
-        return $this->sanitise($_POST[$name] ?? $default, $type);
+        return Application::getSanitiser()->sanitise(
+            $_POST[$name] ?? $default, $type);
     }
 
 
@@ -65,7 +67,7 @@ class Input
             $result = $default;
         }
 
-        return $this->sanitise($result, $type);
+        return Application::getSanitiser()->sanitise($result, $type);
     }
 
 
@@ -87,7 +89,7 @@ class Input
             $result = $default;
         }
 
-        return $this->sanitise($result, $type);
+        return Application::getSanitiser()->sanitise($result, $type);
     }
 
 
@@ -109,7 +111,7 @@ class Input
             $result = $default;
         }
 
-        return $this->sanitise($result, $type);
+        return Application::getSanitiser()->sanitise($result, $type);
     }
 
 
@@ -124,7 +126,8 @@ class Input
      */
     public function request(string $name, $default = null, $type = 'string')
     {
-        return $this->sanitise($_REQUEST[$name] ?? $default, $type);
+        return Application::getSanitiser()->sanitise(
+            $_REQUEST[$name] ?? $default, $type);
     }
 
 
@@ -139,7 +142,8 @@ class Input
      */
     public function file(string $name, $default = null, $type = 'string')
     {
-        return $this->sanitise($_FILES[$name] ?? $default, $type);
+        return Application::getSanitiser()->sanitise(
+            $_FILES[$name] ?? $default, $type);
     }
 
 
@@ -154,21 +158,8 @@ class Input
      */
     public function cookie(string $name, $default = null, $type = 'string')
     {
-        return $this->sanitise($_COOKIE[$name] ?? $default, $type);
-    }
-
-
-    /**
-     * Sanitise a given value
-     * -------------------------------------------------------------------------
-     * @param  mixed    $value      The value to sanitise
-     * @param  string   $type       Expected data type (for sanitisation)
-     *
-     * @return mixed
-     */
-    protected function sanitise($value, $type = 'string')
-    {
-        return Sanitiser::sanitise($value, $type);
+        return Application::getSanitiser()->sanitise(
+            $_COOKIE[$name] ?? $default, $type);
     }
 
 }
