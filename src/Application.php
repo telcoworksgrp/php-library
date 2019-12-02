@@ -27,6 +27,14 @@ class Application
 
 
     /**
+     * Holds the global configuration object
+     *
+     * @var \TCorp\Config
+     */
+    protected static $config = null;
+
+
+    /**
      * Holds the global firewall object
      *
      * @var \TCorp\Firewall
@@ -86,6 +94,21 @@ class Application
         }
 
         return static::$agent;
+    }
+
+
+    /**
+     * Gets a global configuration object, creating it if necessary
+     * -------------------------------------------------------------------------
+     * @return \TCorp\Config
+     */
+    public static function getConfig()
+    {
+        if (is_null(static::$config)) {
+            static::$config = new Config();
+        }
+
+        return static::$config;
     }
 
 
