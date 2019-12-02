@@ -10,6 +10,10 @@
 
 namespace TCorp;
 
+use \TCorp\WebApi\Client AS WebApiClient;
+use \TCorp\T3\Client AS T3Client;
+
+
 
 /**
  * Class for ecapsulating a website application. This includes various
@@ -209,12 +213,12 @@ class Application
     /**
      * Gets a global T3 api object, creating it if necessary
      * -------------------------------------------------------------------------
-     * @return \TCorp\T3Api
+     * @return \TCorp\T3\Client
      */
     public static function getT3ApiClient()
     {
         if (is_null(static::$t3api)) {
-            static::t3bapi = new T3Api();
+            static::t3bapi = new T3Client();
         }
 
         return static::$t3api;
@@ -224,12 +228,12 @@ class Application
     /**
      * Gets a global web api object, creating it if necessary
      * -------------------------------------------------------------------------
-     * @return \TCorp\WebApi
+     * @return \TCorp\WebApi\Client
      */
     public static function getWebApiClient()
     {
         if (is_null(static::$webapi)) {
-            static::$webapi = new WebApi();
+            static::$webapi = new WebApiClient();
         }
 
         return static::$webapi;
