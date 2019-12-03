@@ -8,10 +8,12 @@
  * =============================================================================
  */
 
-namespace TCorp\WebApi\Server\Orm;
+namespace TCorp\WebApi\Server;
 
 
-
+/**
+ * Base class for creating FuelPHP models
+ */
 class Model extends \Orm\Model
 {
 

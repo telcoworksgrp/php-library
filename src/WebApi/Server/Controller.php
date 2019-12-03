@@ -8,13 +8,13 @@
  * =============================================================================
  */
 
-namespace TCorp\WebApi\Server\Controller;
+namespace TCorp\WebApi\Server;
 
 
 /**
- * Base class for creating REST controllers in FuelPHP
+ * Base class for creating FuelPHP controllers
  */
-class RestController extends \Controller_Rest
+class Controller extends \Controller_Rest
 {
 
     /**
