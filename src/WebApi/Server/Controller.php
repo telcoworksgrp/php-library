@@ -12,7 +12,7 @@ namespace TCorp\WebApi\Server;
 
 
 /**
- * Base class for creating FuelPHP controllers
+ * Base class for creating REST controllers
  */
 class Controller extends \Controller_Rest
 {
@@ -32,6 +32,7 @@ class Controller extends \Controller_Rest
      */
     public function get_list()
     {
+        throw new \HttpNotFoundException;
     }
 
 
@@ -42,6 +43,7 @@ class Controller extends \Controller_Rest
      */
     public function post_create()
     {
+        throw new \HttpNotFoundException;
     }
 
 
@@ -54,6 +56,7 @@ class Controller extends \Controller_Rest
      */
     public function get_read($id)
     {
+        throw new \HttpNotFoundException;
     }
 
 
@@ -66,6 +69,7 @@ class Controller extends \Controller_Rest
      */
     public function put_update($id)
     {
+        throw new \HttpNotFoundException;
     }
 
 
@@ -78,6 +82,7 @@ class Controller extends \Controller_Rest
      */
     public function delete_delete($id)
     {
+        throw new \HttpNotFoundException;
     }
 
 }

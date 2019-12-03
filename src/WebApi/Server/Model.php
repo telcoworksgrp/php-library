@@ -12,12 +12,16 @@ namespace TCorp\WebApi\Server;
 
 
 /**
- * Base class for creating FuelPHP models
+ * Base class for creating ORM models
  */
 class Model extends \Orm\Model
 {
 
-
+    /**
+     * Hydrate the ORM model with values from the script's input
+     * -------------------------------------------------------------------------
+     * @return void
+     */
     public function hydrateFromInput()
     {
         $properties = array_keys($this->properties());
@@ -30,7 +34,6 @@ class Model extends \Orm\Model
                 $this->set($name, $value);
             }
         }
-
     }
 
 }
