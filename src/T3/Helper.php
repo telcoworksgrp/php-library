@@ -44,9 +44,16 @@ class Helper
         // Query the T3 API and get the results
         $client = new T3Client();
         $client->setResource("Activations");
-        $client->setParam("query", $prefix);
+
+        if (!empty($prefix)) {
+            $client->setParam("query", $prefix);
+        }
+
+        if (!empty($type)) {
+            $client->setParam("serviceNumberTypes", $type);
+        }
+
         $client->setParam("numberTypes", "SERVICE_NUMBER");
-        $client->setParam("serviceNumberTypes", $type);
         $client->setParam("minPriceDollars", $minPrice);
         $client->setParam("maxPriceDollars", $maxPrice);
         $client->setParam("pageNum", $pageNo);
