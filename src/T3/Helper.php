@@ -34,10 +34,13 @@ class Helper
       *
       * @return stdClass[]
       */
-    public static function getNumberList($prefix = '1300', $type = 'FLASH',
-        $minPrice = 0, $maxPrice = 1000, $pageNo = 1, $pageSize = 500,
+    public static function getNumberList($prefix = '', $type = '',
+        $minPrice = 0, $maxPrice = 1000, $pageNo = 1, $pageSize = 1000,
         $sortBy = 'PRICE', $direction = 'ASCENDING')
     {
+        // Initiliase some local variables
+        $result = [];
+
         // Query the T3 API and get the results
         $client = new T3Client();
         $client->setResource("Activations");
@@ -50,7 +53,13 @@ class Helper
         $client->setParam("pageSize", $pageSize);
         $client->setParam("sortBy", $sortBy);
         $client->setParam("sortDirection", $direction);
-        $result = $client->execute();
+        $items = $client->execute();
+
+        // Set the key for each item to the item's number
+        foreach ($items AS $k => $item) {
+            $item->order = $k;
+            $result[$item->number] = $item;
+        }
 
         // Return the final result
         return $result;
