@@ -55,9 +55,13 @@ class Helper
         $client->setParam("sortDirection", $direction);
         $items = $client->execute();
 
-        // Set the key for each item to the item's number
+        // Process the results
         foreach ($items AS $k => $item) {
-            $item->order = $k;
+            $item->order   = $k;
+            $item->format1 = preg_replace('|^(\d{4})(\d{6})$|i', '$1 $2', $item->number);
+            $item->format2 = preg_replace('|^(\d{4})(\d{3})(\d{3})$|i', '$1 $2 $3', $item->number);
+            $item->format3 = preg_replace('|^(\d{4})(\d{2})(\d{2})(\d{2})$|i', '$1 $2 $3 $4', $item->number);
+            $item->format4 = (!empty($item->word) ? $item->word : $item->format3);
             $result[$item->number] = $item;
         }
 
