@@ -76,4 +76,18 @@ class Helper
         return $result;
     }
 
+
+
+    /**
+     * Get all available numbers from the T3 API
+     * -------------------------------------------------------------------------
+     * @return stdClass[]
+     */
+    public static function getAllNumbers()
+    {
+        $result = $this->getNumberList('1300');
+        $result = array_merge($result, $this->getNumberList('1800'));
+        return $result;
+    }
+
 }
