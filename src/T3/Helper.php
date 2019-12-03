@@ -115,11 +115,11 @@ class Helper
                 $result[$number] = $items[$number];
             } else {
                 $result[$number] = new Number([
-                    'number'    => $number
+                    'number'    => $number,
                     'available' => false
                 ]);
             }
-        }        
+        }
 
         // Return the result
         return $result;
