@@ -8,7 +8,7 @@
  * =============================================================================
  */
 
-namespace TCorp\WebApi\Server;
+namespace TCorp\WebApi\Server\Response;
 
 use \TCorp\WebApi\Server\Response;
 
@@ -17,5 +17,5 @@ use \TCorp\WebApi\Server\Response;
  * Base class for creating single item based response objects
  */
 class ItemResponse extends Response
-{    
+{
 }

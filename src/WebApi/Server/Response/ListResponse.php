@@ -8,7 +8,7 @@
  * =============================================================================
  */
 
-namespace TCorp\WebApi\Server;
+namespace TCorp\WebApi\Server\Response;
 
 use \TCorp\WebApi\Server\Response;
 
