@@ -38,7 +38,7 @@ class Number
      *
      * @var string
      */
-    public $numtype = '';
+    public $numtype = 'ServiceNumber';
 
 
     /**
