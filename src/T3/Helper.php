@@ -36,7 +36,7 @@ class Helper
         $minPrice = 0, $maxPrice = 1000, $pageNo = 1, $pageSize = 1000,
         $sortBy = 'NUMBER', $direction = 'ASCENDING')
     {
-        // Initiliase some local variables
+        // Initialise some local variables
         $result = [];
 
         // Query the T3 API and get the results
@@ -70,7 +70,6 @@ class Helper
     }
 
 
-
     /**
      * Get all available numbers from the T3 API
      * -------------------------------------------------------------------------
@@ -80,6 +79,36 @@ class Helper
     {
         $result = $this->getNumberList('1300');
         $result = array_merge($result, $this->getNumberList('1800'));
+        return $result;
+    }
+
+
+    /**
+     * Get information on a specific list of numbers
+     * -------------------------------------------------------------------------
+     * @param  string   $numbers    An array of numbers
+     *
+     * @return \TCorp\T3\Number[]
+     */
+    public function getNumbers($numbers)
+    {
+
+        // Initialise some local variables
+        $result = [];
+
+        // Query the T3 API and get the results
+        $client = new Client();
+        $client->setResource("Activations");
+        $client->setParam("query", implode(',', $numbers));
+        $client->setParam("numberTypes", "SERVICE_NUMBER");
+        $items = $client->execute();
+
+        // Process the result
+        foreach ($items AS $k => $item) {
+            $result[$item->number] = new Number($item);
+        }
+
+        // Return the result
         return $result;
     }
 
