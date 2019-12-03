@@ -77,8 +77,8 @@ class Helper
      */
     public static function getAllNumbers()
     {
-        $result = $this->getNumberList('1300');
-        $result = array_merge($result, $this->getNumberList('1800'));
+        $result = static::getNumberList('1300');
+        $result = array_merge($result, static::getNumberList('1800'));
         return $result;
     }
 
@@ -90,7 +90,7 @@ class Helper
      *
      * @return \TCorp\T3\Number[]
      */
-    public function getNumbers($numbers)
+    public static function getNumbers($numbers)
     {
 
         // Initialise some local variables
