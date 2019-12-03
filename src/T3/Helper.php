@@ -10,8 +10,6 @@
 
 namespace TCorp\T3;
 
-use \TCorp\T3\Client AS T3Client;
-
 
 /**
  * Helper class for working with Telecom Corporate's T3 system
@@ -32,7 +30,7 @@ class Helper
       * @param  string  $sortBy     Column to sort the results by
       * @param  string  $direction  Direction to sort the results by
       *
-      * @return stdClass[]
+      * @return \TCorp\T3\Number[]
       */
     public static function getNumberList($prefix = '', $type = '',
         $minPrice = 0, $maxPrice = 1000, $pageNo = 1, $pageSize = 1000,
@@ -42,7 +40,7 @@ class Helper
         $result = [];
 
         // Query the T3 API and get the results
-        $client = new T3Client();
+        $client = new Client();
         $client->setResource("Activations");
 
         if (!empty($prefix)) {
@@ -64,12 +62,7 @@ class Helper
 
         // Process the results
         foreach ($items AS $k => $item) {
-            $item->order   = $k;
-            $item->format1 = preg_replace('|^(\d{4})(\d{6})$|i', '$1 $2', $item->number);
-            $item->format2 = preg_replace('|^(\d{4})(\d{3})(\d{3})$|i', '$1 $2 $3', $item->number);
-            $item->format3 = preg_replace('|^(\d{4})(\d{2})(\d{2})(\d{2})$|i', '$1 $2 $3 $4', $item->number);
-            $item->format4 = (!empty($item->word) ? $item->word : $item->format3);
-            $result[$item->number] = $item;
+            $result[$item->number] = new Number($item);
         }
 
         // Return the final result
@@ -81,7 +74,7 @@ class Helper
     /**
      * Get all available numbers from the T3 API
      * -------------------------------------------------------------------------
-     * @return stdClass[]
+     * @return \TCorp\T3\Number[]
      */
     public static function getAllNumbers()
     {
