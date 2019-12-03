@@ -36,7 +36,7 @@ class Helper
       */
     public static function getNumberList($prefix = '', $type = '',
         $minPrice = 0, $maxPrice = 1000, $pageNo = 1, $pageSize = 1000,
-        $sortBy = 'PRICE', $direction = 'ASCENDING')
+        $sortBy = 'NUMBER', $direction = 'ASCENDING')
     {
         // Initiliase some local variables
         $result = [];
