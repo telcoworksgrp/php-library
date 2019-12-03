@@ -105,8 +105,21 @@ class Helper
 
         // Process the result
         foreach ($items AS $k => $item) {
-            $result[$item->number] = new Number($item);
+            $items[$item->number] = new Number($item);
+            unset($items[$k]);
         }
+
+        // Make sure there is a result for each number
+        foreach ($numbers as $number) {
+            if (array_key_exists($number, $items)) {
+                $result[$number] = $items[$number];
+            } else {
+                $result[$number] = new Number([
+                    'number'    => $number
+                    'available' => false
+                ]);
+            }
+        }        
 
         // Return the result
         return $result;
