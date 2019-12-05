@@ -12,6 +12,9 @@ namespace TCorp;
 
 use \TCorp\WebApi\Client AS WebApiClient;
 use \TCorp\T3\Client AS T3Client;
+use \TCorp\Agent\Agent;
+use \TCorp\Input\Input;
+use \TCorp\Config\Config;
 
 
 
@@ -33,7 +36,7 @@ class Application
     /**
      * Holds the global configuration object
      *
-     * @var \TCorp\Config
+     * @var \TCorp\Config\Config
      */
     protected static $config = null;
 
@@ -49,7 +52,7 @@ class Application
     /**
      * Holds the global input object
      *
-     * @var \TCorp\Input
+     * @var \TCorp\Input\Input
      */
     protected static $input = null;
 
@@ -97,7 +100,7 @@ class Application
     /**
      * Gets a global agent object, creating it if necessary
      * -------------------------------------------------------------------------
-     * @return \TCorp\Agent
+     * @return \TCorp\Agent\Agent
      */
     public static function getAgent()
     {
@@ -112,7 +115,7 @@ class Application
     /**
      * Gets a global configuration object, creating it if necessary
      * -------------------------------------------------------------------------
-     * @return \TCorp\Config
+     * @return \TCorp\Config\Config
      */
     public static function getConfig()
     {
@@ -153,7 +156,7 @@ class Application
     /**
      * Gets a global input object, creating it if necessary
      * -------------------------------------------------------------------------
-     * @return \TCorp\Input
+     * @return \TCorp\Input\Input
      */
     public static function getInput()
     {
