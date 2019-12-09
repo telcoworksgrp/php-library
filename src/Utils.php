@@ -159,6 +159,66 @@ class Utils
 
         // Return the result
         return $result;
-    }    
+    }
+
+
+    /**
+     * Convert an array to a string.
+     * -------------------------------------------------------------------------
+     * @param   array  $array          The array to convert.
+     * @param   string $innerGlue      The glue between the key and the value.
+     * @param   string $outerGlue      The glue between array elements.
+     * @param   bool   $quoteChar      Charictar to surround the value with.
+     * @param   bool   $finalGlue      Add the outerGlue to the last item
+     *
+     * @return  string
+     */
+     public static function arrayToString(array $array, string $innerGlue = '=',
+         string $outerGlue = ' ', string $quoteChar = '"', bool $finalGlue = true)
+    {
+        $output = array();
+
+        foreach ($array as $key => $item) {
+
+            if (\is_array($item)) {
+
+                $output[] = static::toString($item, $innerGlue,
+                    $outerGlue, $quoteChar, $finalGlue);
+
+            } else {
+
+                $output[] = $key . $innerGlue . $quoteChar . $item . $quoteChar;
+
+            }
+        }
+
+        $result  = implode($outerGlue, $output);
+        $result .= ($finalGlue) ? $outerGlue  : '';
+
+        return $result;
+    }
+
+
+    /**
+     * Convert an associtive array into a CSS rule. Keys are treated as CSS
+     * property names and values are treated as values for the corrasponding
+     * property.
+     * ------------------------------------------------------------------------
+     * @param  string  $selector       A CSS selector for the CSS rule
+     * @param  array   $properties     A list of CSS property => value pairs
+     *
+     * @return string  A CSS rule
+     */
+     public static function arrayToCSSRule(string $selector, array $properties) : string
+     {
+        $result = $selector . ' { ';
+        $result .= static::arrayToString($properties, ': ', '; ', '');
+        $result .= '}';
+
+        // Return the result
+        return $result;
+    }
+
+
 
 }
