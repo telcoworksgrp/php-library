@@ -17,6 +17,7 @@ use \TCorp\Input\Input;
 use \TCorp\Config\Config;
 use \TCorp\Firewall\Firewall;
 use \TCorp\Email\Email;
+use \TCorp\Session\Session;
 
 
 
