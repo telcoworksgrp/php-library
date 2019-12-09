@@ -10,7 +10,7 @@
 
 namespace TCorp\Joomla;
 
-
+use \TCorp\Utils AS MiscUtils;
 use \Joomla\CMS\Component\ComponentHelper;
 use \Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use \Joomla\CMS\Factory;
@@ -19,6 +19,7 @@ use \Joomla\CMS\Table\Table;
 use \Joomla\CMS\Language\Text;
 use \Joomla\CMS\Toolbar\ToolbarHelper;
 use \Joomla\CMS\HTML\HTMLHelper;
+
 
 
 /**
@@ -469,5 +470,19 @@ class Utils
         return $result;
     }
 
+
+    /**
+     * Add a single CSS rule to the document
+     * -------------------------------------------------------------------------
+     * @param string    $selector       A CSS selector for the CSS rule
+     * @param array     $properties     A list of CSS property => value pairs
+     *
+     * @return void
+     */
+    public static function addStyleRule(string $selector, array $properties = [])
+    {
+        Factory::getDocument()->addStyleDeclaration(
+            MiscUtils::arrayToCSSRule($selector, $properties));
+    }
 
 }
