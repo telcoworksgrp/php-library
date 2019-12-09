@@ -15,6 +15,7 @@ use \TCorp\T3\Client AS T3Client;
 use \TCorp\Agent\Agent;
 use \TCorp\Input\Input;
 use \TCorp\Config\Config;
+use \TCorp\Firewall\Firewall;
 
 
 
@@ -44,7 +45,7 @@ class Application
     /**
      * Holds the global firewall object
      *
-     * @var \TCorp\Firewall
+     * @var \TCorp\Firewall\Firewall
      */
     protected static $firewall = null;
 
