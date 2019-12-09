@@ -16,6 +16,7 @@ use \TCorp\Agent\Agent;
 use \TCorp\Input\Input;
 use \TCorp\Config\Config;
 use \TCorp\Firewall\Firewall;
+use \TCorp\Email\Email;
 
 
 

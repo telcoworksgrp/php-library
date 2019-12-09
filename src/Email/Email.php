@@ -8,7 +8,7 @@
  * =============================================================================
  */
 
-namespace TCorp;
+namespace TCorp\Email;
 
 use \PHPMailer\PHPMailer\PHPMailer;
 
