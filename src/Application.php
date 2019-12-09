@@ -18,6 +18,7 @@ use \TCorp\Config\Config;
 use \TCorp\Firewall\Firewall;
 use \TCorp\Email\Email;
 use \TCorp\Session\Session;
+use \TCorp\Response\Response;
 
 
 
