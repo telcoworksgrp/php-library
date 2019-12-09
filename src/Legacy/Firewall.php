@@ -8,7 +8,7 @@
  * =============================================================================
  */
 
-namespace TCorp\Firewall;
+namespace TCorp\Legacy\Firewall;
 
 
 /**

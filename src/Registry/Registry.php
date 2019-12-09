@@ -8,7 +8,7 @@
  * =============================================================================
  */
 
-namespace TCorp;
+namespace TCorp\Registry;
 
 use \Windwalker\Structure\Structure;
 

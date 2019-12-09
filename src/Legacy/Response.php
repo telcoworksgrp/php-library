@@ -8,7 +8,7 @@
  * =============================================================================
  */
 
-namespace TCorp\Response;
+namespace TCorp\Legacy\Response;
 
 
 /**

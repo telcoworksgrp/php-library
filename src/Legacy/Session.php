@@ -8,38 +8,47 @@
  * =============================================================================
  */
 
-namespace TCorp\Config;
+namespace TCorp\Legacy\Session;
 
 
 /**
- * Class for managing configuration values
+ * Class for managing the current session
  */
-class Config
+class Session
 {
 
 
     /**
-     * Holds all configuration values
-     *
-     * @var \TCorp\Registry;
-     */
-    protected $data = null;
-
-
-
-    /**
-     * Constructor for initialising new instances of this class
+     * Start a new session and initialise session data
      * -------------------------------------------------------------------------
+     * @return void
      */
-    public function __construct()
+    public function start()
     {
-        // Initialise some class properties
-        $this->data = new Registry();
+        // Start the PHP session if it hasn't already.
+        if (!$this->active()) {
+            session_start();
+        }
+
+        // Initialise a container for all the session data
+        if (!isset($_SESSION['data'])) {
+            $_SESSION['data'] = new Registry();
+        }
     }
 
 
     /**
-     * Set a value of given configuration item
+     * Check if a session is currently active
+     * -------------------------------------------------------------------------
+     * @return bool
+     */
+    public function active() : bool
+    {
+        return session_status() == PHP_SESSION_ACTIVE;
+    }
+
+    /**
+     * Set a value for given key in the current session
      * -------------------------------------------------------------------------
      * @param string    $key    Dot seperated key name
      * @param mixed     value   Value to set
@@ -48,12 +57,12 @@ class Config
      */
     public function set(string $key, $value)
     {
-        $this->data->set($key, $value);
+        $_SESSION['data']->set($key, $value);
     }
 
 
     /**
-     * Get the value for given configuration item
+     * Get the value for given key in the current session
      * -------------------------------------------------------------------------
      * @param string    $key        Dot seperated key name
      * @param mixed     $default    Value to return if the key is not found
@@ -62,12 +71,12 @@ class Config
      */
     public function get(string $key, $default = null)
     {
-        return $this->data->get($key, $default);
+        return $_SESSION['data']->get($key, $default);
     }
 
 
     /**
-     * Delete an item from the configuration
+     * Delete a key and value from the current session
      * -------------------------------------------------------------------------
      * @param  string   $key  Dot seperated key name
      *
@@ -75,23 +84,23 @@ class Config
      */
     public function delete(string $key)
     {
-        $this->data->remove($key);
+        $_SESSION['data']->remove($key);
     }
 
 
     /**
-     * Clear/remove all configuration values
+     * Clear all data managed my this class
      * -------------------------------------------------------------------------
      * @return void
      */
     public function clear()
     {
-        $this->data->reset();
+        $_SESSION['data']->reset();
     }
 
 
     /**
-     * Check if a value for the given item exists
+     * Check if a value for the given key exists
      * -------------------------------------------------------------------------
      * @param  string   $key    Dot seperated key name
      *
@@ -99,7 +108,7 @@ class Config
      */
     public function exists(string $key) : bool
     {
-        return $this->data->exists($key);
+        return $_SESSION['data']->exists($key);
     }
 
 }

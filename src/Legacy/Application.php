@@ -8,17 +8,10 @@
  * =============================================================================
  */
 
-namespace TCorp\Application;
+namespace TCorp\Legacy\Application;
 
 use \TCorp\WebApi\Client AS WebApiClient;
 use \TCorp\T3\Client AS T3Client;
-use \TCorp\Agent\Agent;
-use \TCorp\Input\Input;
-use \TCorp\Config\Config;
-use \TCorp\Firewall\Firewall;
-use \TCorp\Email\Email;
-use \TCorp\Session\Session;
-use \TCorp\Response\Response;
 
 
 
