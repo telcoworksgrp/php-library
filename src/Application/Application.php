@@ -8,7 +8,7 @@
  * =============================================================================
  */
 
-namespace TCorp;
+namespace TCorp\Application;
 
 use \TCorp\WebApi\Client AS WebApiClient;
 use \TCorp\T3\Client AS T3Client;
