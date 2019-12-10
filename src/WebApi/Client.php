@@ -24,6 +24,6 @@ class Client extends RestClient
      *
      * @var string
      */
-    protected $baseUrl = 'https://tcorpapi.krealmwebservices.com.au/';
+    protected $baseUrl = 'https://api.telcoworksgroup.com.au/';
 
 }
