@@ -166,8 +166,8 @@ class LegacyHelper
         }
 
         // Add a CC header
-        if (!empty($from)) {
-            $headers['Cc'] = $from;
+        if (!empty($cc)) {
+            $headers['Cc'] = $cc;
         }
 
         // Add a BCC header
