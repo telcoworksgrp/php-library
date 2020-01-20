@@ -71,15 +71,17 @@ class LegacyHelper
     public static function sendRequest(string $url, string $method = 'GET',
         $data =array(), $headers = array())
     {
-        // Compose a HTTP request using Guzzle HTTP
-        $request = new \GuzzleHttp\Psr7\Request($method, $url, $headers);
 
-        // Execute the http request with Guzzle HTTP
-        $client  = new \GuzzleHttp\Client();
-        $result = $client->send($request, array('query' => $data));
+        // Initialise a HTTP client and send the request
+        $client                 = new \GuzzleHttp\Client();
+        $options                = [];
+        $options['query']       = $data;
+        $options['headers']     = $headers;
+        $options['http_errors'] = true;
+        $response               = $client->request($method, $url, $options);
 
         // Return the result body
-        return $result->getBody();
+        return $response->getBody();
     }
 
 
