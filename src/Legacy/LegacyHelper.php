@@ -26,20 +26,6 @@ class LegacyHelper
         'July','August','September','October','November','December');
 
 
-
-    /**
-     * Country codes for some of the worst spam and bot countries according
-     * to Spamhaus.
-     *
-     * @var string[]
-     *
-     * @link https://www.spamhaus.org/statistics/countries/
-     * @link  https://www.spamhaus.org/statistics/botnet-cc/
-     */
-    const WORST_SPAM_COUNTRIES = array('CN','RU','UA','IN','FR','JP','GB',
-    'HK','DE','EG','VN','IR','BR','TH','ID','PA','GG');
-
-
     /**
      * An API key issued by IP Geolocation
      *
@@ -85,7 +71,15 @@ class LegacyHelper
     public static function sendRequest(string $url, string $method = 'GET',
         $data =array(), $headers = array())
     {
-        return Utils::sendRequest($url, $method, $data, $headers);
+        // Compose a HTTP request using Guzzle HTTP
+        $request = new \GuzzleHttp\Psr7\Request($method, $url, $headers);
+
+        // Execute the http request with Guzzle HTTP
+        $client  = new \GuzzleHttp\Client();
+        $result = $client->send($request, array('query' => $data));
+
+        // Return the result body
+        return $result->getBody();
     }
 
 
@@ -108,47 +102,39 @@ class LegacyHelper
         $sortBy = 'PRICE', $direction = 'ASCENDING')
     {
 
-        // Query the T3 Api
-        $t3api = Application::getT3ApiClient();
-        $t3api->setEndpoint("Activations");
-        $t3api->setParam("query", $prefix);
-        $t3api->setParam("numberTypes", "SERVICE_NUMBER");
-        $t3api->setParam("serviceNumberTypes", $type);
-        $t3api->setParam("minPriceDollars", $minPrice);
-        $t3api->setParam("maxPriceDollars", $maxPrice);
-        $t3api->setParam("pageNum", $pageNo);
-        $t3api->setParam("pageSize", $pageSize);
-        $t3api->setParam("sortBy", $sortBy);
-        $t3api->setParam("sortDirection", $direction);
-        $result = $t3api->execute();
+        // Compose an enpoint URL
+        $params                       = array();
+        $params['query']              = $prefix;
+        $params['numberTypes']        = 'SERVICE_NUMBER';
+        $params['serviceNumberTypes'] = $type;
+        $params['minPriceDollars']    = $minPrice;
+        $params['maxPriceDollars']    = $maxPrice;
+        $params['pageNum']            = $pageNo;
+        $params['pageSize']           = $pageSize;
+        $params['sortBy']             = $sortBy;
+        $params['sortDirection']      = $direction;
+
+
+        // Get the data from the API
+        $result = self::sendRequest(
+            'https://portal.tbill.live/numbers-service-impl/api/Activations',
+            'GET', $params, array('Content-type: application/json'));
+
+        // Decode JSON response
+        $result = json_decode($result);
 
         // Add additional meta data
-        foreach($result as &$number) {
+        foreach($result as $number) {
             $number->format1 = preg_replace('|^(\d{4})(\d{6})$|i', '$1 $2', $number->number);
-            $number->format2 = preg_replace('|^(\d{4})(\d{3})(\d{3})$|i', '$1 $2 $3', $number->number);
+	        $number->format2 = preg_replace('|^(\d{4})(\d{3})(\d{3})$|i', '$1 $2 $3', $number->number);
             $number->format3 = preg_replace('|^(\d{4})(\d{2})(\d{2})(\d{2})$|i', '$1 $2 $3 $4', $number->number);
             $number->format4 = (!empty($number->word) ? $number->word : $number->format3);
         }
 
-        // Return the final result
-        return $result;
-    }
-
-
-    /**
-     * Get all numbers available from the T3 Api
-     * -------------------------------------------------------------------------
-     * @return \stdClass[]
-     */
-    public static function getAllNumbers()
-    {
-        // Get the list of numbers
-        $result = static::getNumbers('', 'FLASH', 0, 1000, 1, 1000);
-        $result = array_merge($result, static::getNumbers('', 'LUCKY_DIP', 0, 1000, 1, 1000));
-
         // Return the result
         return $result;
     }
+
 
     /**
      * Send an email
@@ -166,8 +152,42 @@ class LegacyHelper
     public static function sendEmail(string $to, string $from, string $subject,
         string $message, string $cc = '', string $bcc = '', $headers = array())
     {
-        return Utils::sendEmail($to, $from, $subject, $message,
-            $cc, $bcc, $headers);
+        // Add some mime headers if the message contains HTML
+        if ($message != strip_tags($message)) {
+            $headers['MIME-Version']      = "1.0";
+            $headers['Content-type']      = "text/html; charset=iso-8859-1";
+        }
+
+        // Add a From header
+        if (!empty($from)) {
+            $headers['From'] = $from;
+        }
+
+        // Add a CC header
+        if (!empty($from)) {
+            $headers['Cc'] = $from;
+        }
+
+        // Add a BCC header
+        if (!empty($bcc)) {
+            $headers['Bcc'] = $bcc;
+        }
+
+        // Add some additional metadata to headers
+        $headers['X-WebForm-ServerIP']   = $_SERVER['SERVER_ADDR'];
+        $headers['X-WebForm-ServerName'] = $_SERVER['SERVER_NAME'];
+        $headers['X-WebForm-Host']       = static::getCurrentDomainName();
+        $headers['X-WebForm-Referrer']   = $_SERVER['HTTP_REFERER'];
+        $headers['X-WebForm-UserAgent']  = static::getRemoteUserAgent();
+        $headers['X-WebForm-RemoteIP']   = static::getRemoteIPAddress();
+        $headers['X-WebForm-URI']        = $_SERVER['REQUEST_URI'];
+        $headers['X-WebForm-Script']     = $_SERVER['SCRIPT_NAME'];
+
+        // Send the email
+        $result = mail($to, $subject, $message, $headers);
+
+        // Return the result
+        return $result;
     }
 
 
@@ -227,15 +247,24 @@ class LegacyHelper
      * -------------------------------------------------------------------------
      * @param  string   $url             URL to redirect the user to
      * @param  bool     $preserveParams  Pass existing URL params to the redirect
-     * @param  int      $code            HTTP status code (usually 301 or 303)
+     * @param  int      $statusCode      HTTP status code (usually 301 or 303)
      *
      * @return  void
      */
     public static function redirect(string $url, bool $preserveParams = TRUE,
-        int $code = 301) : void
+        int $statusCode = 301) : void
     {
-        $response = Application::getResponse();
-        $response->redirect($url, $preserveParams, $code);
+        // Append the exitsing params if needed
+        if ($preserveParams) {
+
+            $url = $url . ((strpos($url, '?')) ? '&' : '?') .
+                $_SERVER['QUERY_STRING'];
+
+        }
+
+        // Redirect the user
+        header('Location: ' . $url, true, $statusCode);
+        exit();
     }
 
     /**
@@ -245,8 +274,10 @@ class LegacyHelper
      */
     public static function disableCache() : void
     {
-        $response = Application::getResponse();
-        $response->disableCache();
+        header("Cache-Control: max-age=0, no-cache, no-store, must-revalidate");
+        header("Cache-Control: post-check=0, pre-check=0", false);
+        header("Pragma: no-cache");
+        header('Expires: Sun, 01 Jan 2014 00:00:00 GMT');
     }
 
 
@@ -333,7 +364,7 @@ class LegacyHelper
 
 
     /**
-     *  Block the user if thier IP belongs to a banned country. static::
+     *  Block the user if thier IP belongs to a banned country. SecurityHelper::
      *  WORST_SPAM_COUNTRIES is a predefined list of the worst spam/bot
      *  countries according to Spamhaus. To avoid blocking Googlebot, the US is
      *  exluded from this predefined list.
@@ -342,10 +373,22 @@ class LegacyHelper
      */
     public static function blockBannedCountries() : void
     {
-        if (static::checkIpLocation(static::WORST_SPAM_COUNTRIES)) {
+        if (SecurityHelper::checkIpLocation(SecurityHelper::
+            WORST_SPAM_COUNTRIES, self::$ipGeolocationApiKey)) {
 
-            Application::getFirewall()->block('Your Country Has been Banned from thi Site');
+            SecurityHelper::blockAccess();
         }
+    }
+
+
+    /**
+     * Proxy for the SecurityHelper::getHoneypotHtml() method
+     * -------------------------------------------------------------------------
+     * @return  string  HTML for rendering a hidden honeypot text field
+     */
+    public static function getHoneypotHtml()
+    {
+        return SecurityHelper::getHoneypotHtml();
     }
 
 
@@ -357,9 +400,20 @@ class LegacyHelper
      */
     public static function blockIfInvalidHoneypot() : void
     {
-        if (!static::checkHoneypot()) {
-            Application::getFirewall()->block('Invalid Honeypot');
+        if (!SecurityHelper::checkHoneypot()) {
+            SecurityHelper::blockAccess();
         }
+    }
+
+
+    /**
+     * Proxy for the SecurityHelper::getCSRFTokenHtml() method
+     * -------------------------------------------------------------------------
+     * @return  string  HTML for rendering a CSRF token inside a web form
+     */
+    public static function getCSRFTokenHtml()
+    {
+        return SecurityHelper::getCSRFTokenHtml();
     }
 
 
@@ -371,11 +425,21 @@ class LegacyHelper
      */
     public static function blockIfInvalidCSRFToken() : void
     {
-        if (!static::checkCSRFToken()) {
-            Application::getFirewall()->block('Invalid CSRF');
+        if (!SecurityHelper::checkCSRFToken()) {
+            SecurityHelper::blockAccess();
         }
     }
 
+
+    /**
+     * Proxy for the SecurityHelper::getReCaptchaHtml() method
+     * -------------------------------------------------------------------------
+     * @return  string  HTML for rendering a CSRF token inside a web form
+     */
+    public static function getReCaptchaHtml()
+    {
+        return SecurityHelper::getReCaptchaHtml(self::$recaptchaSiteKey);
+    }
 
 
     /**
@@ -386,8 +450,33 @@ class LegacyHelper
      */
     public static function redirectIfInvalidReCaptcha(string $redirectUrl) : void
     {
-        if (!static::checkReCaptcha(self::$recaptchaSecret)) {
+        if (!SecurityHelper::checkReCaptcha(self::$recaptchaSecret)) {
             self::redirect($redirectUrl, false, 303);
+        }
+    }
+
+
+    /**
+     * Try to detect any affilate id's passed via the https request. If one
+     * is found,then store the id in the user's session.
+     * -------------------------------------------------------------------------
+     * @return  bool    TRUE = An id was found, FALSE = no id was found
+     *
+     * @deprecated  Use \TCorp\Legacy\LegacyHelper::getAffiliateReferralId() instead
+     */
+    public static function detectAffilateId()
+    {
+
+        trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
+
+        if (isset($_REQUEST['affilate']) && !empty($_REQUEST['affilate'])) {
+
+            $affilateId = trim($_REQUEST['affilate']);
+            static::startSession();
+            $_SESSION['affilate'] = $affilateId;
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -402,7 +491,7 @@ class LegacyHelper
      */
     public static function getAffiliateReferralId()
     {
-        return Application::getInput()->request('affiliate', '');
+        return $_REQUEST['affiliate'] ?? '';
     }
 
 
@@ -413,7 +502,9 @@ class LegacyHelper
      */
     public static function startSession()
     {
-        Application::getSession()->start();
+        if (!isset($_SESSION)) {
+            session_start();
+        }
     }
 
     /**
@@ -425,7 +516,7 @@ class LegacyHelper
     public static function setSessionVar(string $key, $value)
     {
         // Set a session variable with the given value
-        Application::getSession()->set($key, $value);
+        $_SESSION[$key] = $value;
     }
 
 
@@ -440,7 +531,7 @@ class LegacyHelper
      */
     public static function getSessionVar(string $key, $default = null)
     {
-        return Application::getSession()->get($key, $default);
+        return $_SESSION[$key] ?? $default;
     }
 
 
@@ -449,11 +540,13 @@ class LegacyHelper
      * -------------------------------------------------------------------------
      * @param string    $key    A key name for referancing the stored value
      *
-     * @return  void
+     * @return  mixed   The former value of the session var
      */
     public static function unsetSessionVar(string $key)
     {
-        Application::getSession()->delete($key);
+        $result = self::getSessionVar($key);
+        unset($_SESSION[$key]);
+        return $result;
     }
 
 
@@ -474,22 +567,16 @@ class LegacyHelper
     public static function setSessionVarFromRequest(string $key, string $var,
         $default = '', string $filter = 'STRING')
     {
-        // Initialise some local variables
-        $session = Application::getSession();
-        $input   = Application::getInput();
-
-        // If a value can be found in the request then set/update
-        // the session to that value
-        if ($input->request($var, false)) {
-            $session->set($key, $input->request($var));
+        if (isset($_REQUEST[$var])) {
+            self::setSessionVar($key, $_REQUEST[$var]);
+        } else {
+            if (!isset($_SESSION[$key])) {
+                self::setSessionVar($key, $default);
+            }
         }
 
-        // Get the value from the current session. If none exists
-        // then use the default given
-        $result = $session->get($key, $default);
-
-        // Return the final result
-        return $result;
+        // Return the result
+        return self::getSessionVar($key);
     }
 
 
@@ -538,162 +625,6 @@ class LegacyHelper
     {
         return (isset($_POST[$name])) ?
             htmlspecialchars($_POST[$name]) : $default;
-    }
-
-
-
-    /**
-     * Get a CSRF token that can used to protect the site from XSS attacks
-     * -------------------------------------------------------------------------
-     * @return string   A CSRF token
-     */
-    public static function getCSRFToken()
-    {
-        // Start the session if not already started
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-
-        // Generate and set the token if none exist in the session
-        if (empty($_SESSION['CSRF'])) {
-            $_SESSION['CSRF'] = bin2hex(random_bytes(32));
-        }
-
-        // Return the result
-        return $_SESSION['CSRF'];
-    }
-
-    /**
-     * Gets HTML for rendering a CSRF token inside a web form
-     * -------------------------------------------------------------------------
-     * @return string   HTML for rendering a CSRF token inside a web form
-     */
-    public static function getCSRFTokenHTML() : string
-    {
-        // Get a CSRF token
-        $token = self::getCSRFToken();
-
-        // Compose a HTML input form field
-        $result = "<input type=\"hidden\" name=\"CSRF\" value=\"$token\">";
-
-        // Return the result
-        return $result;
-    }
-
-
-
-    /**
-     * Check if the CSRF token in the POST params is valid (the same as the
-     * one previously set in the session)
-     * -------------------------------------------------------------------------
-     * @return  bool    TRUE = Token is valid; FALSE = Toekn is NOT valid.
-     */
-    public static function checkCSRFToken() : bool
-    {
-        // Start the session if not already started
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-
-        // Get the token submited in the post request
-        $token = $_POST['CSRF'] ?? '';
-
-        // Rteurn the result
-        return hash_equals($_SESSION['CSRF'], $token);
-    }
-
-
-
-    /**
-     * Gets HTML for rendering a hidden honeypot text field inside a web form
-     * -------------------------------------------------------------------------
-     * @return  string  HTML for rendering a hidden honeypot text field
-     */
-    public static function getHoneypotHtml() : string
-    {
-        return "<input type=\"text\" name=\"c67538\" value=\"\" " .
-            "style=\"display: none !important;\">";
-    }
-
-
-
-    /**
-     * Check if a honeypot is empty. If the honeypot has not been submitted or
-     * contains a value then it is most likely a bot.
-     * -------------------------------------------------------------------------
-     * @return  bool    TRUE = honeypot is valid, FALSE = honeypot is NOT valid
-     */
-    public static function checkHoneypot() : bool
-    {
-        return ($_POST['c67538'] ?? '-') === '';
-    }
-
-
-    /**
-     * Check if the remote user's IP is from certain countries. This method
-     * uses the IP Geolocation Service for up-to-date IP to location data.
-     * API keys for this service can be obtained at https://ipgeolocation.io/
-     * -------------------------------------------------------------------------
-     * @param   array   $countryCodes     List of 2 or 3 char country codes
-     * @param   string  $apiKey           API key issued by
-     *
-     * @return  bool    TRUE = IP belongs to one of the countries, FALSE is not
-     */
-    public static function checkIpLocation(array $countryCodes) : bool
-    {
-        // Get location information from the API
-        $endpoint  = "https://api.ipgeolocation.io/ipgeo?apiKey=$apiKey";
-        $endpoint .=  "&ip=" . $_SERVER['REMOTE_ADDR'];
-        $location = file_get_contents($endpoint);
-        $location = json_decode($location);
-
-        // Check if the IP belongs to one of the given countries
-        $result = in_array($location->country_code2, $countryCodes) ||
-            in_array($location->country_code3, $countryCodes);
-
-        // Return the result
-        return $result;
-    }
-
-
-    /**
-     * Get the HTML/Javascript for displaying a reCAPTCHA 3
-     * -------------------------------------------------------------------------
-     * @return string   HTML/Javascript needed to render reCAPTCHA 3
-     */
-    public static function getReCaptchaHtml()
-    {
-        $sitekey = static::$recaptchaSiteKey;
-        $result  = "<script src=\"https://www.google.com/recaptcha/api.js\" async defer></script>\n";
-        $result .= "<div class=\"g-recaptcha\" data-sitekey=\"$siteKey\"></div>";
-        return $result;
-    }
-
-
-    /**
-     * Check if the user was successfully completed a reCAPTCHA 3
-     * -------------------------------------------------------------------------
-     * @param  string   $key    reCAPTCHA Secret Key (issued by Google)
-     *
-     * @return  bool
-     */
-    public static function checkReCaptcha(string $secretKey)
-    {
-        // Initialise some local variables
-        $response  = $_POST['g-recaptcha-response'] ?? '';
-
-        // Send POST http request to verify the response with Google
-        $client = new \GuzzleHttp\Client();
-        $url    = 'https://www.google.com/recaptcha/api/siteverify';
-        $params = ['secret' => $secretKey, 'response' => $response];
-        $result = $client->post($url, ['form_params' => $params]);
-        $result = json_decode($result->getBody());
-
-        // Check google's response
-        $result = $result->success == true;
-
-        // Return the result
-        return $result;
     }
 
 
