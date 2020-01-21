@@ -14,7 +14,7 @@ namespace TCorp\Legacy;
 
 
 /**
- * Helper class for working with Telecom Corp's Legacy sites/projects
+ * Legacy helper class for working with Telecom Corp's Legacy sites/projects
  */
 class LegacyHelper
 {
@@ -24,6 +24,20 @@ class LegacyHelper
      */
     const MONTHS = array('January','February','March','April','May','June',
         'July','August','September','October','November','December');
+
+
+    /**
+     * Country codes for some of the worst spam and bot countries according
+     * to Spamhaus.
+     *
+     * @var string[]
+     *
+     * @link https://www.spamhaus.org/statistics/countries/
+     * @link  https://www.spamhaus.org/statistics/botnet-cc/
+     */
+    const WORST_SPAM_COUNTRIES = array('CN','RU','UA','IN','FR','JP','GB',
+    'HK','DE','EG','VN','IR','BR','TH','ID','PA','GG');
+
 
 
     /**
@@ -59,7 +73,7 @@ class LegacyHelper
 
 
     /**
-     * Send a very basic HTTP request and return the response body
+     * Proxy for the Utils::sendRequest() method
      * -------------------------------------------------------------------------
      * @param  string   $url        The URL to send the quest to
      * @param  string   $method     The HTTP verb/type of request to use
@@ -69,24 +83,14 @@ class LegacyHelper
      * @return string               The reponse body
      */
     public static function sendRequest(string $url, string $method = 'GET',
-        $data =array(), $headers = array())
+        $data = [], $headers = [])
     {
-
-        // Initialise a HTTP client and send the request
-        $client                 = new \GuzzleHttp\Client();
-        $options                = [];
-        $options['query']       = $data;
-        $options['headers']     = $headers;
-        $options['http_errors'] = true;
-        $response               = $client->request($method, $url, $options);
-
-        // Return the result body
-        return $response->getBody();
+        return Utils::sendRequest($url, $method, $data, $headers);
     }
 
 
     /**
-     * Get a list of numbers from the T3 API
+     * Proxy for the T3Api::getNumbers() method.
      * -------------------------------------------------------------------------
      * @param  string   $prefix     Numbe prefix ('1300' or '1800')
      * @param  string   $type       Type of numbers to get ('FLASH' or 'LUCKYDIP')
@@ -103,38 +107,8 @@ class LegacyHelper
         $minPrice = 0, $maxPrice = 1000, $pageNo = 1, $pageSize = 500,
         $sortBy = 'PRICE', $direction = 'ASCENDING')
     {
-
-        // Compose an enpoint URL
-        $params                       = array();
-        $params['query']              = $prefix;
-        $params['numberTypes']        = 'SERVICE_NUMBER';
-        $params['serviceNumberTypes'] = $type;
-        $params['minPriceDollars']    = $minPrice;
-        $params['maxPriceDollars']    = $maxPrice;
-        $params['pageNum']            = $pageNo;
-        $params['pageSize']           = $pageSize;
-        $params['sortBy']             = $sortBy;
-        $params['sortDirection']      = $direction;
-
-
-        // Get the data from the API
-        $result = self::sendRequest(
-            'https://portal.tbill.live/numbers-service-impl/api/Activations',
-            'GET', $params, array('Content-type: application/json'));
-
-        // Decode JSON response
-        $result = json_decode($result);
-
-        // Add additional meta data
-        foreach($result as $number) {
-            $number->format1 = preg_replace('|^(\d{4})(\d{6})$|i', '$1 $2', $number->number);
-	        $number->format2 = preg_replace('|^(\d{4})(\d{3})(\d{3})$|i', '$1 $2 $3', $number->number);
-            $number->format3 = preg_replace('|^(\d{4})(\d{2})(\d{2})(\d{2})$|i', '$1 $2 $3 $4', $number->number);
-            $number->format4 = (!empty($number->word) ? $number->word : $number->format3);
-        }
-
-        // Return the result
-        return $result;
+        return T3Api::getNumbers($prefix, $type, $minPrice, $maxPrice,
+            $pageNo, $pageSize, $sortBy, $direction);
     }
 
 
@@ -152,7 +126,7 @@ class LegacyHelper
      * @return bool                 TRUE if successfully sent, FALSE otherwise
      */
     public static function sendEmail(string $to, string $from, string $subject,
-        string $message, string $cc = '', string $bcc = '', $headers = array())
+        string $message, string $cc = '', string $bcc = '', $headers = [])
     {
         // Add some mime headers if the message contains HTML
         if ($message != strip_tags($message)) {
@@ -166,8 +140,8 @@ class LegacyHelper
         }
 
         // Add a CC header
-        if (!empty($cc)) {
-            $headers['Cc'] = $cc;
+        if (!empty($from)) {
+            $headers['Cc'] = $from;
         }
 
         // Add a BCC header
@@ -220,26 +194,13 @@ class LegacyHelper
 
 
     /**
-     * Render a hidden input field for each POST variable. Not a good
-     * practice but needed to avoid breaking some of Telecom Corp's
-     * legacy websites
+     * Proxy method for Form::renderPostParamsAsHiddenFields();
      * -------------------------------------------------------------------------
      * @return string   Rendered HTML
      */
     public static function renderPostParamsAsHiddenFields()
     {
-        // Initialise some local variables
-        $result = '';
-
-        // Render a hidden input field for each POST variable
-        foreach ($_POST as $key => $value) {
-            $key     = htmlentities($key);
-            $value   = htmlentities($value);
-            $result .= "<input type=hidden name=$key value=\"$value\">\n";
-        }
-
-        // Return the result
-        return $result;
+        return Form::renderPostParamsAsHiddenFields();
     }
 
 
@@ -283,9 +244,8 @@ class LegacyHelper
     }
 
 
-
     /**
-     * Look up the details for a given ABN using an API
+     * Proxy for the AbnApi::getABNDetails() method;
      * -------------------------------------------------------------------------
      * @param  string   $abn    The ABN to lookup
      *
@@ -293,104 +253,48 @@ class LegacyHelper
      */
     public static function getABNDetails(string $abn)
     {
-        // Initialise some local variables
-        $result = new \stdClass();
-
-        // Look up the ABN details using ABR's API
-        $url = "https://abr.business.gov.au/abrxmlsearch/" .
-            "AbrXmlSearch.asmx/ABRSearchByABN";
-
-        $data = self::sendRequest($url, 'GET', array(
-            'searchString'             => $abn,
-            'includeHistoricalDetails' => 'Y',
-            'authenticationGuid'       => self::$abnLookupGuid
-        ));
-
-
-        // Parse the data returned by the API
-        $data = new \SimpleXMLElement($data);
-        $data = $data->response;
-
-        $exception = (string) $data->exception;
-        if (empty($exception)) {
-
-            $result->statement               = (string) $data->usageStatement;
-            $result->abn                     = (string) $data->businessEntity->ABN->identifierValue;
-            $result->current                 = (string) $data->businessEntity->ABN->isCurrentIndicator;
-            $result->asicNo                  = (string) $data->businessEntity->ASICNumber;
-            $entityType                      = $data->businessEntity->entityType;
-            $result->entityType              = new \stdClass;
-            $result->entityType->code        = (string) $entityType->entityTypeCode;
-            $result->entityType->desc        = (string) $entityType->entityDescription;
-            $legalName                       = $data->businessEntity->legalName;
-            $result->legalName               = new \stdClass;
-            $result->legalName->firstname    = (string) $legalName->givenName;
-            $result->legalName->othername    = (string) $legalName->otherGivenName;
-            $result->legalName->lastname     = (string) $legalName->familyName;
-            $mainName                        = $data->businessEntity->mainName;
-            $result->mainName                = new \stdClass;
-            $result->mainName->organisation  = (string) $mainName->organisationName;
-            $result->mainName->effective     = (string) $mainName->effectiveFrom;
-            $tradeName                       = $data->businessEntity->mainTradingName;
-            $result->tradeName               = new \stdClass;
-            $result->tradeName->organisation = (string) $tradeName->organisationName;
-            $result->tradeName->effective    = (string) $tradeName->effectiveFrom;
-
-        } else {
-
-            $result->statement               = '';
-            $result->abn                     = '';
-            $result->current                 = '';
-            $result->asicNo                  = '';
-            $result->entityType              = new \stdClass;
-            $result->entityType->code        = '';
-            $result->entityType->desc        = '';
-            $result->legalName               = new \stdClass;
-            $result->legalName->firstname    = '';
-            $result->legalName->othername    = '';
-            $result->legalName->lastname     = '';
-            $result->mainName                = new \stdClass;
-            $result->mainName->organisation  = '';
-            $result->mainName->effective     = '';
-            $result->tradeName               = new \stdClass;
-            $result->tradeName->organisation = '';
-            $result->tradeName->effective    = '';
-
-        }
-
-
-        // Return the result
-        return $result;
+        return AbnApi::getABNDetails($abn, static::$abnLookupGuid);
     }
 
 
 
     /**
-     *  Block the user if thier IP belongs to a banned country. SecurityHelper::
+     *  Block the user if thier IP belongs to a banned country. sttaic::
      *  WORST_SPAM_COUNTRIES is a predefined list of the worst spam/bot
-     *  countries according to Spamhaus. To avoid blocking Googlebot, the US is
-     *  exluded from this predefined list.
+     *  countries according to Spamhaus. To avoid blocking Googlebot, the
+     *  US is exluded from this predefined list.
      *  ------------------------------------------------------------------------
      *  @return void
      */
     public static function blockBannedCountries() : void
     {
-        if (SecurityHelper::checkIpLocation(SecurityHelper::
-            WORST_SPAM_COUNTRIES, self::$ipGeolocationApiKey)) {
+        if (static::checkIpLocation(static::WORST_SPAM_COUNTRIES,
+            static::$ipGeolocationApiKey)) {
 
-            SecurityHelper::blockAccess();
+            Firewall::block();
         }
     }
 
 
     /**
-     * Proxy for the SecurityHelper::getHoneypotHtml() method
+     * Proxy for the Form::getHoneypotHtml() method
      * -------------------------------------------------------------------------
      * @return  string  HTML for rendering a hidden honeypot text field
      */
-    public static function getHoneypotHtml()
+    public static function getHoneypotHtml() : string
     {
-        return SecurityHelper::getHoneypotHtml();
+        return Form::getHoneypotHtml();
+    }
+
+
+    /**
+     * Proxy for the Form::checkHoneypot() method
+     * -------------------------------------------------------------------------
+     * @return  bool    TRUE = honeypot is valid, FALSE = honeypot is NOT valid
+     */
+    public static function checkHoneypot() : bool
+    {
+        return Form::checkHoneypot();
     }
 
 
@@ -402,20 +306,43 @@ class LegacyHelper
      */
     public static function blockIfInvalidHoneypot() : void
     {
-        if (!SecurityHelper::checkHoneypot()) {
-            SecurityHelper::blockAccess();
+        if (!Form::checkHoneypot()) {
+            Firewall::block();
         }
     }
 
 
     /**
-     * Proxy for the SecurityHelper::getCSRFTokenHtml() method
+     * Proxy for the Form::getCSRFToken() method
      * -------------------------------------------------------------------------
-     * @return  string  HTML for rendering a CSRF token inside a web form
+     * @return string   A CSRF token
      */
-    public static function getCSRFTokenHtml()
+    public static function getCSRFToken()
     {
-        return SecurityHelper::getCSRFTokenHtml();
+        return Form::getCSRFToken();
+    }
+
+
+
+    /**
+     * Proxy for the Form::getCSRFTokenHTML() method
+     * -------------------------------------------------------------------------
+     * @return string   HTML for rendering a CSRF token inside a web form
+     */
+    public static function getCSRFTokenHTML() : string
+    {
+        return Form::getCSRFTokenHTML();
+    }
+
+
+    /**
+     * Proxy for the Form::checkCSRFToken() method
+     * -------------------------------------------------------------------------
+     * @return  bool    TRUE = Token is valid; FALSE = Toekn is NOT valid.
+     */
+    public static function checkCSRFToken() : bool
+    {
+        return Form::checkCSRFToken();
     }
 
 
@@ -427,20 +354,35 @@ class LegacyHelper
      */
     public static function blockIfInvalidCSRFToken() : void
     {
-        if (!SecurityHelper::checkCSRFToken()) {
-            SecurityHelper::blockAccess();
+        if (!Form::checkCSRFToken()) {
+            Firewall::block();
         }
     }
 
 
     /**
-     * Proxy for the SecurityHelper::getReCaptchaHtml() method
+     * Proxy for the Form::getReCaptchaHtml() method
      * -------------------------------------------------------------------------
-     * @return  string  HTML for rendering a CSRF token inside a web form
+     * @param  string   $key        reCAPTCHA Site Key (issued by Google)
+     *
+     * @return string   HTML/Javascript needed to render reCAPTCHA 3
      */
-    public static function getReCaptchaHtml()
+    public static function getReCaptchaHtml(string $siteKey)
     {
-        return SecurityHelper::getReCaptchaHtml(self::$recaptchaSiteKey);
+        return Form::getReCaptchaHtml($siteKey);
+    }
+
+
+    /**
+     * Proxy for the Form::checkReCaptcha() method
+     * -------------------------------------------------------------------------
+     * @param  string   $secretKey    reCAPTCHA Secret Key (issued by Google)
+     *
+     * @return  bool
+     */
+    public static function checkReCaptcha(string $secretKey)
+    {
+        return Form::checkReCaptcha($secretKey);
     }
 
 
@@ -452,33 +394,8 @@ class LegacyHelper
      */
     public static function redirectIfInvalidReCaptcha(string $redirectUrl) : void
     {
-        if (!SecurityHelper::checkReCaptcha(self::$recaptchaSecret)) {
-            self::redirect($redirectUrl, false, 303);
-        }
-    }
-
-
-    /**
-     * Try to detect any affilate id's passed via the https request. If one
-     * is found,then store the id in the user's session.
-     * -------------------------------------------------------------------------
-     * @return  bool    TRUE = An id was found, FALSE = no id was found
-     *
-     * @deprecated  Use \TCorp\Legacy\LegacyHelper::getAffiliateReferralId() instead
-     */
-    public static function detectAffilateId()
-    {
-
-        trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
-
-        if (isset($_REQUEST['affilate']) && !empty($_REQUEST['affilate'])) {
-
-            $affilateId = trim($_REQUEST['affilate']);
-            static::startSession();
-            $_SESSION['affilate'] = $affilateId;
-            return true;
-        } else {
-            return false;
+        if (!Form::checkReCaptcha(static::$recaptchaSecret)) {
+            static::redirect($redirectUrl, false, 303);
         }
     }
 
@@ -498,33 +415,30 @@ class LegacyHelper
 
 
     /**
-     * Start the user's session if not already started
+     * Proxy for the Session::start() method
      * -------------------------------------------------------------------------
      * @return void
      */
     public static function startSession()
     {
-        if (!isset($_SESSION)) {
-            session_start();
-        }
+        Session::start();
     }
 
+
     /**
-     * Set a value in the user's session
+     * Proxu for the Session::set(); method
      * -------------------------------------------------------------------------
      * @param string    $key    A key name for referancing the stored value
      * @param mixed     $value  The value to store
      */
     public static function setSessionVar(string $key, $value)
     {
-        // Set a session variable with the given value
-        $_SESSION[$key] = $value;
+        Session::set($key, $value);
     }
 
 
     /**
-     * Get a value previously stored in the user's session. If a value with
-     * the given key can not be found then a default can be returned
+     * Proxy for the Session::get(); method
      * -------------------------------------------------------------------------
      * @param  string $key      A key name for referancing the stored value
      * @param  mixed  $default  A default value if the key doesn't exist
@@ -533,12 +447,12 @@ class LegacyHelper
      */
     public static function getSessionVar(string $key, $default = null)
     {
-        return $_SESSION[$key] ?? $default;
+        return Session::get($key, $default);
     }
 
 
     /**
-     * Unsets/removes an existing session variable
+     * Proxy for the Session::unset() method
      * -------------------------------------------------------------------------
      * @param string    $key    A key name for referancing the stored value
      *
@@ -546,17 +460,12 @@ class LegacyHelper
      */
     public static function unsetSessionVar(string $key)
     {
-        $result = self::getSessionVar($key);
-        unset($_SESSION[$key]);
-        return $result;
+        return Session::unset($key);
     }
 
 
     /**
-     * Store the value of a request variable in a session var. If the request
-     * var doesn't exist then preserve the existing session var. If a session
-     * var with the given key doesn't exist then set a session var with the
-     * given key to a given default value.
+     * Proxy for the Session::setFromRequest() method
      * -------------------------------------------------------------------------
      * @param string    $key        A key name for referancing the stored value
      * @param string    $var        A GET/POST variable name
@@ -569,16 +478,7 @@ class LegacyHelper
     public static function setSessionVarFromRequest(string $key, string $var,
         $default = '', string $filter = 'STRING')
     {
-        if (isset($_REQUEST[$var])) {
-            self::setSessionVar($key, $_REQUEST[$var]);
-        } else {
-            if (!isset($_SESSION[$key])) {
-                self::setSessionVar($key, $default);
-            }
-        }
-
-        // Return the result
-        return self::getSessionVar($key);
+        return Session::setFromRequest($key, $var, $default, $filter);
     }
 
 
@@ -629,5 +529,32 @@ class LegacyHelper
             htmlspecialchars($_POST[$name]) : $default;
     }
 
+
+    /**
+     * Check if the remote user's IP is from certain countries. This method
+     * uses the IP Geolocation Service for up-to-date IP to location data.
+     * API keys for this service can be obtained at https://ipgeolocation.io/
+     * -------------------------------------------------------------------------
+     * @param   array   $countryCodes     List of 2 or 3 char country codes
+     * @param   string  $apiKey           API key issued by
+     *
+     * @return  bool    TRUE = IP belongs to one of the countries, FALSE is not
+     */
+    public static function checkIpLocation(array $countryCodes,
+        string $apiKey) : bool
+    {
+        // Get location information from the API
+        $endpoint  = "https://api.ipgeolocation.io/ipgeo?apiKey=$apiKey";
+        $endpoint .=  "&ip=" . $_SERVER['REMOTE_ADDR'];
+        $location = file_get_contents($endpoint);
+        $location = json_decode($location);
+
+        // Check if the IP belongs to one of the given countries
+        $result = in_array($location->country_code2, $countryCodes) ||
+            in_array($location->country_code3, $countryCodes);
+
+        // Return the result
+        return $result;
+    }
 
 }
