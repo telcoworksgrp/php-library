@@ -73,7 +73,7 @@ class LegacyHelper
 
 
     /**
-     * Proxy for the Utils::sendRequest() method
+     * Send a very basic HTTP request and return the response body
      * -------------------------------------------------------------------------
      * @param  string   $url        The URL to send the quest to
      * @param  string   $method     The HTTP verb/type of request to use
@@ -85,12 +85,22 @@ class LegacyHelper
     public static function sendRequest(string $url, string $method = 'GET',
         $data = [], $headers = [])
     {
-        return Utils::sendRequest($url, $method, $data, $headers);
+
+        // Initialise a HTTP client and send the request
+        $client                 = new \GuzzleHttp\Client();
+        $options                = [];
+        $options['query']       = $data;
+        $options['headers']     = $headers;
+        $options['http_errors'] = true;
+        $response               = $client->request($method, $url, $options);
+
+        // Return the result body
+        return $response->getBody();
     }
 
 
     /**
-     * Proxy for the T3Api::getNumbers() method.
+     * Get a list of numbers from the T3 API
      * -------------------------------------------------------------------------
      * @param  string   $prefix     Numbe prefix ('1300' or '1800')
      * @param  string   $type       Type of numbers to get ('FLASH' or 'LUCKYDIP')
@@ -107,8 +117,38 @@ class LegacyHelper
         $minPrice = 0, $maxPrice = 1000, $pageNo = 1, $pageSize = 500,
         $sortBy = 'PRICE', $direction = 'ASCENDING')
     {
-        return T3Api::getNumbers($prefix, $type, $minPrice, $maxPrice,
-            $pageNo, $pageSize, $sortBy, $direction);
+
+        // Compose an enpoint URL
+        $params                       = [];
+        $params['query']              = $prefix;
+        $params['numberTypes']        = 'SERVICE_NUMBER';
+        $params['serviceNumberTypes'] = $type;
+        $params['minPriceDollars']    = $minPrice;
+        $params['maxPriceDollars']    = $maxPrice;
+        $params['pageNum']            = $pageNo;
+        $params['pageSize']           = $pageSize;
+        $params['sortBy']             = $sortBy;
+        $params['sortDirection']      = $direction;
+
+
+        // Get the data from the API
+        $result = static::sendRequest(
+            'https://portal.tbill.live/numbers-service-impl/api/Activations',
+            'GET', $params, ['Content-type: application/json']);
+
+        // Decode JSON response
+        $result = json_decode($result);
+
+        // Add additional meta data
+        foreach($result as $number) {
+            $number->format1 = preg_replace('|^(\d{4})(\d{6})$|i', '$1 $2', $number->number);
+	        $number->format2 = preg_replace('|^(\d{4})(\d{3})(\d{3})$|i', '$1 $2 $3', $number->number);
+            $number->format3 = preg_replace('|^(\d{4})(\d{2})(\d{2})(\d{2})$|i', '$1 $2 $3 $4', $number->number);
+            $number->format4 = (!empty($number->word) ? $number->word : $number->format3);
+        }
+
+        // Return the result
+        return $result;
     }
 
 
@@ -140,8 +180,8 @@ class LegacyHelper
         }
 
         // Add a CC header
-        if (!empty($from)) {
-            $headers['Cc'] = $from;
+        if (!empty($cc)) {
+            $headers['Cc'] = $cc;
         }
 
         // Add a BCC header
@@ -194,13 +234,26 @@ class LegacyHelper
 
 
     /**
-     * Proxy method for Form::renderPostParamsAsHiddenFields();
+     * Render a hidden input field for each POST variable. Not a good
+     * practice but needed to avoid breaking some of Telecom Corp's
+     * legacy websites
      * -------------------------------------------------------------------------
      * @return string   Rendered HTML
      */
     public static function renderPostParamsAsHiddenFields()
     {
-        return Form::renderPostParamsAsHiddenFields();
+        // Initialise some local variables
+        $result = '';
+
+        // Render a hidden input field for each POST variable
+        foreach ($_POST as $key => $value) {
+            $key     = htmlentities($key);
+            $value   = htmlentities($value);
+            $result .= "<input type=hidden name=$key value=\"$value\">\n";
+        }
+
+        // Return the result
+        return $result;
     }
 
 
@@ -245,21 +298,88 @@ class LegacyHelper
 
 
     /**
-     * Proxy for the AbnApi::getABNDetails() method;
+     * Look up the details for a given ABN using an API
      * -------------------------------------------------------------------------
-     * @param  string   $abn    The ABN to lookup
+     * @param  string   $abn        The ABN to lookup
+     * @param string    $apikey     ApiKey/GUID for authentication
      *
      * @return object   ABN details, or False if ABN not found
      */
-    public static function getABNDetails(string $abn)
+    public static function getABNDetails(string $abn, string $apikey)
     {
-        return AbnApi::getABNDetails($abn, static::$abnLookupGuid);
+        // Initialise some local variables
+        $result = new \stdClass();
+
+        // Look up the ABN details using ABR's API
+        $url = "https://abr.business.gov.au/abrxmlsearch/" .
+            "AbrXmlSearch.asmx/ABRSearchByABN";
+
+        $data = static::sendRequest($url, 'GET', array(
+            'searchString'             => $abn,
+            'includeHistoricalDetails' => 'Y',
+            'authenticationGuid'       => $apikey
+        ));
+
+
+        // Parse the data returned by the API
+        $data = new \SimpleXMLElement($data);
+        $data = $data->response;
+
+        $exception = (string) $data->exception;
+        if (empty($exception)) {
+
+            $result->statement               = (string) $data->usageStatement;
+            $result->abn                     = (string) $data->businessEntity->ABN->identifierValue;
+            $result->current                 = (string) $data->businessEntity->ABN->isCurrentIndicator;
+            $result->asicNo                  = (string) $data->businessEntity->ASICNumber;
+            $entityType                      = $data->businessEntity->entityType;
+            $result->entityType              = new \stdClass;
+            $result->entityType->code        = (string) $entityType->entityTypeCode;
+            $result->entityType->desc        = (string) $entityType->entityDescription;
+            $legalName                       = $data->businessEntity->legalName;
+            $result->legalName               = new \stdClass;
+            $result->legalName->firstname    = (string) $legalName->givenName;
+            $result->legalName->othername    = (string) $legalName->otherGivenName;
+            $result->legalName->lastname     = (string) $legalName->familyName;
+            $mainName                        = $data->businessEntity->mainName;
+            $result->mainName                = new \stdClass;
+            $result->mainName->organisation  = (string) $mainName->organisationName;
+            $result->mainName->effective     = (string) $mainName->effectiveFrom;
+            $tradeName                       = $data->businessEntity->mainTradingName;
+            $result->tradeName               = new \stdClass;
+            $result->tradeName->organisation = (string) $tradeName->organisationName;
+            $result->tradeName->effective    = (string) $tradeName->effectiveFrom;
+
+        } else {
+
+            $result->statement               = '';
+            $result->abn                     = '';
+            $result->current                 = '';
+            $result->asicNo                  = '';
+            $result->entityType              = new \stdClass;
+            $result->entityType->code        = '';
+            $result->entityType->desc        = '';
+            $result->legalName               = new \stdClass;
+            $result->legalName->firstname    = '';
+            $result->legalName->othername    = '';
+            $result->legalName->lastname     = '';
+            $result->mainName                = new \stdClass;
+            $result->mainName->organisation  = '';
+            $result->mainName->effective     = '';
+            $result->tradeName               = new \stdClass;
+            $result->tradeName->organisation = '';
+            $result->tradeName->effective    = '';
+
+        }
+
+        // Return the result
+        return $result;
     }
 
 
 
     /**
-     *  Block the user if thier IP belongs to a banned country. sttaic::
+     *  Block the user if thier IP belongs to a banned country. static::
      *  WORST_SPAM_COUNTRIES is a predefined list of the worst spam/bot
      *  countries according to Spamhaus. To avoid blocking Googlebot, the
      *  US is exluded from this predefined list.
@@ -271,30 +391,32 @@ class LegacyHelper
         if (static::checkIpLocation(static::WORST_SPAM_COUNTRIES,
             static::$ipGeolocationApiKey)) {
 
-            Firewall::block();
+            static::block();
         }
     }
 
 
     /**
-     * Proxy for the Form::getHoneypotHtml() method
+     * Gets HTML for rendering a hidden honeypot text field inside a web form
      * -------------------------------------------------------------------------
      * @return  string  HTML for rendering a hidden honeypot text field
      */
     public static function getHoneypotHtml() : string
     {
-        return Form::getHoneypotHtml();
+        return "<input type=\"text\" name=\"c67538\" value=\"\" " .
+            "style=\"display: none !important;\">";
     }
 
 
     /**
-     * Proxy for the Form::checkHoneypot() method
+     * Check if a honeypot is empty. If the honeypot has not been submitted or
+     * contains a value then it is most likely a bot.
      * -------------------------------------------------------------------------
      * @return  bool    TRUE = honeypot is valid, FALSE = honeypot is NOT valid
      */
     public static function checkHoneypot() : bool
     {
-        return Form::checkHoneypot();
+        return ($_POST['c67538'] ?? '-') === '';
     }
 
 
@@ -306,43 +428,71 @@ class LegacyHelper
      */
     public static function blockIfInvalidHoneypot() : void
     {
-        if (!Form::checkHoneypot()) {
-            Firewall::block();
+        if (!static::checkHoneypot()) {
+            static::block();
         }
     }
 
 
     /**
-     * Proxy for the Form::getCSRFToken() method
+     * Get a CSRF token that can used to protect the site from XSS attacks
      * -------------------------------------------------------------------------
      * @return string   A CSRF token
      */
     public static function getCSRFToken()
     {
-        return Form::getCSRFToken();
+        // Start the session if not already started
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+
+        // Generate and set the token if none exist in the session
+        if (empty($_SESSION['CSRF'])) {
+            $_SESSION['CSRF'] = bin2hex(random_bytes(32));
+        }
+
+        // Return the result
+        return $_SESSION['CSRF'];
     }
 
 
 
     /**
-     * Proxy for the Form::getCSRFTokenHTML() method
+     * Gets HTML for rendering a CSRF token inside a web form
      * -------------------------------------------------------------------------
      * @return string   HTML for rendering a CSRF token inside a web form
      */
     public static function getCSRFTokenHTML() : string
     {
-        return Form::getCSRFTokenHTML();
+        // Get a CSRF token
+        $token = static::getCSRFToken();
+
+        // Compose a HTML input form field
+        $result = "<input type=\"hidden\" name=\"CSRF\" value=\"$token\">";
+
+        // Return the result
+        return $result;
     }
 
 
     /**
-     * Proxy for the Form::checkCSRFToken() method
+     * Check if the CSRF token in the POST params is valid (the same as the
+     * one previously set in the session)
      * -------------------------------------------------------------------------
      * @return  bool    TRUE = Token is valid; FALSE = Toekn is NOT valid.
      */
     public static function checkCSRFToken() : bool
     {
-        return Form::checkCSRFToken();
+        // Start the session if not already started
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+
+        // Get the token submited in the post request
+        $token = $_POST['CSRF'] ?? '';
+
+        // Rteurn the result
+        return hash_equals($_SESSION['CSRF'], $token);
     }
 
 
@@ -354,14 +504,14 @@ class LegacyHelper
      */
     public static function blockIfInvalidCSRFToken() : void
     {
-        if (!Form::checkCSRFToken()) {
-            Firewall::block();
+        if (!static::checkCSRFToken()) {
+            static::block();
         }
     }
 
 
     /**
-     * Proxy for the Form::getReCaptchaHtml() method
+     * Get the HTML/Javascript for displaying a reCAPTCHA 3
      * -------------------------------------------------------------------------
      * @param  string   $key        reCAPTCHA Site Key (issued by Google)
      *
@@ -369,12 +519,14 @@ class LegacyHelper
      */
     public static function getReCaptchaHtml(string $siteKey)
     {
-        return Form::getReCaptchaHtml($siteKey);
+        $result  = "<script src=\"https://www.google.com/recaptcha/api.js\" async defer></script>\n";
+        $result .= "<div class=\"g-recaptcha\" data-sitekey=\"$siteKey\"></div>";
+        return $result;
     }
 
 
     /**
-     * Proxy for the Form::checkReCaptcha() method
+     * Check if the user was successfully completed a reCAPTCHA 3
      * -------------------------------------------------------------------------
      * @param  string   $secretKey    reCAPTCHA Secret Key (issued by Google)
      *
@@ -382,7 +534,21 @@ class LegacyHelper
      */
     public static function checkReCaptcha(string $secretKey)
     {
-        return Form::checkReCaptcha($secretKey);
+        // Initialise some local variables
+        $response  = $_POST['g-recaptcha-response'] ?? '';
+
+        // Send POST http request to verify the response with Google
+        $client = new \GuzzleHttp\Client();
+        $url    = 'https://www.google.com/recaptcha/api/siteverify';
+        $params = ['secret' => $secretKey, 'response' => $response];
+        $result = $client->post($url, ['form_params' => $params]);
+        $result = json_decode($result->getBody());
+
+        // Check google's response
+        $result = $result->success == true;
+
+        // Return the result
+        return $result;
     }
 
 
@@ -394,7 +560,7 @@ class LegacyHelper
      */
     public static function redirectIfInvalidReCaptcha(string $redirectUrl) : void
     {
-        if (!Form::checkReCaptcha(static::$recaptchaSecret)) {
+        if (!static::checkReCaptcha(static::$recaptchaSecret)) {
             static::redirect($redirectUrl, false, 303);
         }
     }
@@ -415,30 +581,34 @@ class LegacyHelper
 
 
     /**
-     * Proxy for the Session::start() method
+     * Start the user's session if not already started
      * -------------------------------------------------------------------------
      * @return void
      */
     public static function startSession()
     {
-        Session::start();
+        if (!isset($_SESSION)) {
+            session_start();
+        }
     }
 
 
     /**
-     * Proxu for the Session::set(); method
+     * Set a value in the user's session
      * -------------------------------------------------------------------------
      * @param string    $key    A key name for referancing the stored value
      * @param mixed     $value  The value to store
      */
     public static function setSessionVar(string $key, $value)
     {
-        Session::set($key, $value);
+        // Set a session variable with the given value
+        $_SESSION[$key] = $value;
     }
 
 
     /**
-     * Proxy for the Session::get(); method
+     * Get a value previously stored in the user's session. If a value with
+     * the given key can not be found then a default can be returned
      * -------------------------------------------------------------------------
      * @param  string $key      A key name for referancing the stored value
      * @param  mixed  $default  A default value if the key doesn't exist
@@ -447,12 +617,12 @@ class LegacyHelper
      */
     public static function getSessionVar(string $key, $default = null)
     {
-        return Session::get($key, $default);
+        return $_SESSION[$key] ?? $default;
     }
 
 
     /**
-     * Proxy for the Session::unset() method
+     * Unsets/removes an existing session variable
      * -------------------------------------------------------------------------
      * @param string    $key    A key name for referancing the stored value
      *
@@ -460,12 +630,17 @@ class LegacyHelper
      */
     public static function unsetSessionVar(string $key)
     {
-        return Session::unset($key);
+        $result = static::get($key);
+        unset($_SESSION[$key]);
+        return $result;
     }
 
 
     /**
-     * Proxy for the Session::setFromRequest() method
+     * Store the value of a request variable in a session var. If the request
+     * var doesn't exist then preserve the existing session var. If a session
+     * var with the given key doesn't exist then set a session var with the
+     * given key to a given default value.
      * -------------------------------------------------------------------------
      * @param string    $key        A key name for referancing the stored value
      * @param string    $var        A GET/POST variable name
@@ -478,7 +653,16 @@ class LegacyHelper
     public static function setSessionVarFromRequest(string $key, string $var,
         $default = '', string $filter = 'STRING')
     {
-        return Session::setFromRequest($key, $var, $default, $filter);
+        if (isset($_REQUEST[$var])) {
+            static::setSessionVar($key, $_REQUEST[$var]);
+        } else {
+            if (!isset($_SESSION[$key])) {
+                static::setSessionVar($key, $default);
+            }
+        }
+
+        // Return the result
+        return static::getSessionVar($key);
     }
 
 
@@ -555,6 +739,20 @@ class LegacyHelper
 
         // Return the result
         return $result;
+    }
+
+
+    /**
+      * Block access to the site with a given HTTP response code and message
+      * ------------------------------------------------------------------------
+      * @param integer $httpCode        HTTP response code to send
+      * @param string  $httpMessage     Message to send with the response code
+      */
+    public static function block(int $httpCode = 403, string
+        $httpMessage = 'Forbidden') : void
+    {
+        header("HTTP/1.0 $httpCode $httpMessage");
+        die();
     }
 
 }
