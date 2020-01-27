@@ -393,21 +393,18 @@ class LegacyHelper
 
 
     /**
-     * Check the hidden honeypot form field. If it is missing or invalid then
-     * the user will be blocked
+     * Proxy method for blocking access to the site if the form's
+     * honeypot is invalid
      * -------------------------------------------------------------------------
+     * @param   int     $status      HTTP response code to send
+     * @param   string  $message     Message to send with the response code
+     *
      * @return  void
      */
-    public static function blockIfInvalidHoneypot() : void
+    public function blockIfInvalidHoneypot(int $status = 403, string
+        $message = 'Forbidden') : void
     {
-        // Initialise some local variables
-        $form     = Factory::getForm();
-        $firewall = Factory::getFirewall();
-
-        // Block user if honeypot is not valid
-        if (!$form->honeypot->check()) {
-            $firewall->block();
-        }
+        Factory::getFirewall()->blockIfInvalidHoneypot($status, $message);
     }
 
 
