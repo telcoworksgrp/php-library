@@ -27,7 +27,7 @@ class Firewall
       */
     public function block(int $status = 403, string $message = 'Forbidden') : void
     {
-        header("HTTP/1.0 $code $message");
+        header("HTTP/1.0 $status $message");
         die();
     }
 
