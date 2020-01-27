@@ -23,7 +23,7 @@ class Factory
     /**
      * Holds the global form object
      *
-     * @var \Legacy\Form
+     * @var \TCorp\Legacy\Form
      */
     protected static $form =  null;
 
@@ -31,7 +31,7 @@ class Factory
     /**
      * Holds the global T3 client object
      *
-     * @var \Legacy\T3
+     * @var \TCorp\Legacy\T3
      */
     protected static $t3 =  null;
 
@@ -39,7 +39,7 @@ class Factory
     /**
      * Holds the global firewall object
      *
-     * @var \Legacy\Firewall
+     * @var \TCorp\Legacy\Firewall
      */
     protected static $firewall =  null;
 
@@ -48,7 +48,7 @@ class Factory
     /**
      * Get the global form object, creating it if nessary
      * -------------------------------------------------------------------------
-     * @return \Legacy\Form
+     * @return \TCorp\Legacy\Form
      */
     public static function getForm()
     {
@@ -63,7 +63,7 @@ class Factory
     /**
      * Get the global T3 client, creating it if nessary
      * -------------------------------------------------------------------------
-     * @return \Legacy\T3
+     * @return \TCorp\Legacy\T3
      */
     public static function getT3Client()
     {
@@ -78,7 +78,7 @@ class Factory
     /**
      * Get the global firewall object, creating it if nessary
      * -------------------------------------------------------------------------
-     * @return \Legacy\Firewall
+     * @return \TCorp\Legacy\Firewall
      */
     public static function getFirewall()
     {

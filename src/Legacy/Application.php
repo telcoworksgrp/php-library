@@ -22,7 +22,7 @@ class Application
     /**
      * Holds the global form object
      *
-     * @var \Legacy\Form
+     * @var \TCorp\Legacy\Form
      */
     public $form = null;
 
@@ -30,7 +30,7 @@ class Application
     /**
      * Holds the global T3 client object
      *
-     * @var \Legacy\T3
+     * @var \TCorp\Legacy\T3
      */
     public $t3 = null;
 
@@ -38,7 +38,7 @@ class Application
     /**
      * Holds the global firewall object
      *
-     * @var \Legacy\Firewall
+     * @var \TCorp\Legacy\Firewall
      */
     public $firewall = null;
 
