@@ -21,12 +21,35 @@ class Factory
 
 
     /**
+     * Holds the global form object
+     *
+     * @var \Legacy\Form
+     */
+    protected static $form =  null;
+
+
+    /**
      * Holds the global T3 client object
      *
      * @var \Legacy\T3
      */
     protected static $t3 =  null;
 
+
+
+    /**
+     * Get the global form object, creating it if nessary
+     * -------------------------------------------------------------------------
+     * @return \Legacy\Form
+     */
+    public static function getForm()
+    {
+        if (is_null(static::$form)) {
+            static::$form = new Form();
+        }
+
+        return static::$form;
+    }
 
 
     /**

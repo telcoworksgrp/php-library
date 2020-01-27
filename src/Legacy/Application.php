@@ -19,6 +19,13 @@ namespace TCorp\Legacy;
 class Application
 {
 
+    /**
+     * Holds the global form object
+     *
+     * @var \Legacy\Form
+     */
+    public $form = null;
+
 
     /**
      * Holds the global T3 client object
@@ -37,7 +44,8 @@ class Application
     public function __construct()
     {
         // Initialise some class properties
-        $this->t3 = Factory::getT3Client();
+        $this->form = Factory::getForm();
+        $this->t3   = Factory::getT3Client();
     }
 
 
