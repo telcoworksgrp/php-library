@@ -25,7 +25,7 @@ class Factory
      *
      * @var \Legacy\T3
      */
-    protected $t3 =  null;
+    protected static $t3 =  null;
 
 
 
