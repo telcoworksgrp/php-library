@@ -34,7 +34,7 @@ class Application
      * -------------------------------------------------------------------------
      * @return void
      */
-    public function __constructor()
+    public function __construct()
     {
         // Initialise some class properties
         $this->t3 = Factory::getT3Client();
