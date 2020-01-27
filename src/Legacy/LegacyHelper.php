@@ -401,7 +401,7 @@ class LegacyHelper
      *
      * @return  void
      */
-    public function blockIfInvalidHoneypot(int $status = 403, string
+    public static function blockIfInvalidHoneypot(int $status = 403, string
         $message = 'Forbidden') : void
     {
         Factory::getFirewall()->blockIfInvalidHoneypot($status, $message);
