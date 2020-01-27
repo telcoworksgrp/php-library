@@ -36,6 +36,14 @@ class Factory
     protected static $t3 =  null;
 
 
+    /**
+     * Holds the global firewall object
+     *
+     * @var \Legacy\Firewall
+     */
+    protected static $firewall =  null;
+
+
 
     /**
      * Get the global form object, creating it if nessary
@@ -64,6 +72,21 @@ class Factory
         }
 
         return static::$t3;
+    }
+
+
+    /**
+     * Get the global firewall object, creating it if nessary
+     * -------------------------------------------------------------------------
+     * @return \Legacy\Firewall
+     */
+    public static function getFirewall()
+    {
+        if (is_null(static::$firewall)) {
+            static::$firewall = new Firewall();
+        }
+
+        return static::$firewall;
     }
 
 }

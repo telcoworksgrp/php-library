@@ -35,6 +35,14 @@ class Application
     public $t3 = null;
 
 
+    /**
+     * Holds the global firewall object
+     *
+     * @var \Legacy\Firewall
+     */
+    public $firewall = null;
+
+
 
     /**
      * Construtor method for initiailing new instances of this class
@@ -44,8 +52,9 @@ class Application
     public function __construct()
     {
         // Initialise some class properties
-        $this->form = Factory::getForm();
-        $this->t3   = Factory::getT3Client();
+        $this->form     = Factory::getForm();
+        $this->t3       = Factory::getT3Client();
+        $this->firewall = Factory::getFirewall();
     }
 
 
