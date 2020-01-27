@@ -367,14 +367,13 @@ class LegacyHelper
 
 
     /**
-     * Gets HTML for rendering a hidden honeypot text field inside a web form
+     * Proxy for getting some honeypot HTML
      * -------------------------------------------------------------------------
      * @return  string  HTML for rendering a hidden honeypot text field
      */
     public static function getHoneypotHtml() : string
     {
-        return "<input type=\"text\" name=\"c67538\" value=\"\" " .
-            "style=\"display: none !important;\">";
+        return Factory::getForm()->honeypot->render();
     }
 
 
@@ -386,7 +385,7 @@ class LegacyHelper
      */
     public static function checkHoneypot() : bool
     {
-        return ($_POST['c67538'] ?? '-') === '';
+        return Factory::getForm()->honeypot->check();
     }
 
 

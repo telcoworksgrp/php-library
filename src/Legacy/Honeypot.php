@@ -14,29 +14,31 @@ namespace TCorp\Legacy;
 
 
 /**
- * Class for working with HTML forms
+ * Class for working with HTML form honeypots
  */
-class Form
+class Honeypot
 {
 
-
     /**
-     * Holds the form's honeypot
-     *
-     * @var \TCorp\Legacy\Honeypot
-     */
-    public $honeypot = null;
-
-
-    /**
-     * Construtor method for initiailing new instances of this class
+     * Renders the honeypot's HTML
      * -------------------------------------------------------------------------
-     * @return void
+     * @return string
      */
-    public function __construct()
+    public function render() : string
     {
-        // Initialise some class properties
-        $this->honeypot = new Honeypot();
+        return "<input type=\"text\" name=\"c67538\" value=\"\" " .
+            "style=\"display: none !important;\">";
+    }
+
+
+    /**
+     * Checks if the honeypot exists and is valid
+     * -------------------------------------------------------------------------
+     * @return bool
+     */
+    public function check() : bool
+    {
+        return ($_REQUEST['c67538'] ?? '-') === '';
     }
 
 }
