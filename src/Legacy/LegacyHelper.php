@@ -358,10 +358,13 @@ class LegacyHelper
      */
     public static function blockBannedCountries() : void
     {
+        //  Initialise some local variables
+        $firewall = Factory::getFirewall();
+
         if (static::checkIpLocation(static::WORST_SPAM_COUNTRIES,
             static::$ipGeolocationApiKey)) {
 
-            static::block();
+            $firewall->block();
         }
     }
 
@@ -397,8 +400,13 @@ class LegacyHelper
      */
     public static function blockIfInvalidHoneypot() : void
     {
-        if (!static::checkHoneypot()) {
-            static::block();
+        // Initialise some local variables
+        $form     = Factory::getForm();
+        $firewall = Factory::getFirewall();
+
+        // Block user if honeypot is not valid
+        if (!$form->honeypot->check()) {
+            $firewall->block();
         }
     }
 
@@ -473,8 +481,11 @@ class LegacyHelper
      */
     public static function blockIfInvalidCSRFToken() : void
     {
+        //  Initialise some local variables
+        $firewall = Fatcory::getFirewall();
+
         if (!static::checkCSRFToken()) {
-            static::block();
+            $firewall->block();
         }
     }
 
@@ -708,20 +719,6 @@ class LegacyHelper
 
         // Return the result
         return $result;
-    }
-
-
-    /**
-      * Block access to the site with a given HTTP response code and message
-      * ------------------------------------------------------------------------
-      * @param integer $httpCode        HTTP response code to send
-      * @param string  $httpMessage     Message to send with the response code
-      */
-    public static function block(int $httpCode = 403, string
-        $httpMessage = 'Forbidden') : void
-    {
-        header("HTTP/1.0 $httpCode $httpMessage");
-        die();
     }
 
 }
