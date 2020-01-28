@@ -12,8 +12,6 @@
 
 namespace TCorp\Legacy;
 
-use TCorp\Legacy\Form\Honeypot;
-use TCorp\Legacy\Form\CsrfToken;
 
 
 /**
@@ -34,7 +32,7 @@ class Form
     /**
      * Holds the form's CSRF token
      *
-     * @var \TCorp\Legacy\CsrfToken
+     * @var \TCorp\Legacy\Token
      */
     public $token = null;
 
@@ -49,7 +47,7 @@ class Form
     {
         // Initialise some class properties
         $this->honeypot = new Honeypot();
-        $this->token    = new CsrfToken();
+        $this->token    = new Token();
     }
 
 }

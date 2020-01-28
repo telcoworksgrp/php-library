@@ -10,13 +10,13 @@
  * =============================================================================
  */
 
-namespace TCorp\Legacy\Form;
+namespace TCorp\Legacy;
 
 
 /**
  * Class for working with CSRF tokens to stop XSS attacks
  */
-class CsrfToken
+class Token
 {
 
 
