@@ -51,9 +51,36 @@ class Input
      *
      * @return mixed
      */
-    public function get(string $key, $default = null)
+    public function get(string $key, $default = null, string $filter = 'string')
     {
-        return $this->data->get($key, $default);
+        // Get the value
+        $result = $this->data->get($key, $default);
+
+        // Sanitise the value
+        switch (strtolower($filter)) {
+            case 'int':
+                $result = filter_var($result, FILTER_SANITIZE_NUMBER_INT);
+                break;
+
+            case 'float':
+                $result = filter_var($result, FILTER_SANITIZE_NUMBER_FLOAT);
+                break;
+
+            case 'email':
+                $result = filter_var($result, FILTER_SANITIZE_NUMBER_EMAIL);
+                break;
+
+            case 'url':
+                $result = filter_var($result, FILTER_SANITIZE_URL);
+                break;
+
+            case 'string':
+                $result = filter_var($result, FILTER_SANITIZE_STRING);
+                break;
+        }
+
+        // Return the result
+        return $result;
     }
 
 
