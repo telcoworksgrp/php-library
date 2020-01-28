@@ -56,7 +56,7 @@ class Session
      */
     public function get(string $key, $default = null)
     {
-        return $_SESSION['session']->get($key, $value);
+        return $_SESSION['session']->get($key, $default);
     }
 
 
