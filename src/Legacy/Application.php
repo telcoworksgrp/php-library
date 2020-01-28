@@ -20,6 +20,14 @@ class Application
 {
 
     /**
+     * Holds the global session object
+     *
+     * @var \TCorp\Legacy\Session
+     */
+    public $session = null;
+
+
+    /**
      * Holds the global form object
      *
      * @var \TCorp\Legacy\Form
@@ -52,6 +60,7 @@ class Application
     public function __construct()
     {
         // Initialise some class properties
+        $this->session  = Factory::getSession();
         $this->form     = Factory::getForm();
         $this->t3       = Factory::getT3Client();
         $this->firewall = Factory::getFirewall();

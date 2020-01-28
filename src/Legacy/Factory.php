@@ -19,6 +19,13 @@ namespace TCorp\Legacy;
 class Factory
 {
 
+    /**
+     * Holds the global session object
+     *
+     * @var \TCorp\Legacy\Session
+     */
+    protected static $session =  null;
+
 
     /**
      * Holds the global form object
@@ -43,6 +50,21 @@ class Factory
      */
     protected static $firewall =  null;
 
+
+
+    /**
+     * Get the global session object, creating it if nessary
+     * -------------------------------------------------------------------------
+     * @return \TCorp\Legacy\Session
+     */
+    public static function getForm()
+    {
+        if (is_null(static::$session)) {
+            static::$session = new Session();
+        }
+
+        return static::$session;
+    }
 
 
     /**
