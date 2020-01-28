@@ -29,6 +29,15 @@ class Form
 
 
     /**
+     * Holds the form's CSRF token
+     *
+     * @var \TCorp\Legacy\CsrfToken
+     */
+    public $token = null;
+
+
+
+    /**
      * Construtor method for initiailing new instances of this class
      * -------------------------------------------------------------------------
      * @return void
@@ -37,6 +46,7 @@ class Form
     {
         // Initialise some class properties
         $this->honeypot = new Honeypot();
+        $this->token    = new CsrfToken();
     }
 
 }

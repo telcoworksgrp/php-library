@@ -409,82 +409,53 @@ class LegacyHelper
 
 
     /**
-     * Get a CSRF token that can used to protect the site from XSS attacks
+     * Proxy method to get a CSRF token that can used to protect the
+     * site from XSS attacks
      * -------------------------------------------------------------------------
-     * @return string   A CSRF token
+     * @return string
      */
     public static function getCSRFToken()
     {
-        // Start the session if not already started
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-
-        // Generate and set the token if none exist in the session
-        if (empty($_SESSION['CSRF'])) {
-            $_SESSION['CSRF'] = bin2hex(random_bytes(32));
-        }
-
-        // Return the result
-        return $_SESSION['CSRF'];
+        return Factory::getForm()->token->get();
     }
 
 
-
     /**
-     * Gets HTML for rendering a CSRF token inside a web form
+     * Proxy method to get HTML for rendering a CSRF token inside a web form
      * -------------------------------------------------------------------------
-     * @return string   HTML for rendering a CSRF token inside a web form
+     * @return string
      */
     public static function getCSRFTokenHTML() : string
     {
-        // Get a CSRF token
-        $token = static::getCSRFToken();
-
-        // Compose a HTML input form field
-        $result = "<input type=\"hidden\" name=\"CSRF\" value=\"$token\">";
-
-        // Return the result
-        return $result;
+        return Factory::getForm()->token->render();
     }
 
 
     /**
-     * Check if the CSRF token in the POST params is valid (the same as the
-     * one previously set in the session)
+     * Proxy method for checking if the csrf token exists and is valid
      * -------------------------------------------------------------------------
      * @return  bool    TRUE = Token is valid; FALSE = Toekn is NOT valid.
      */
     public static function checkCSRFToken() : bool
     {
-        // Start the session if not already started
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-
-        // Get the token submited in the post request
-        $token = $_POST['CSRF'] ?? '';
-
-        // Rteurn the result
-        return hash_equals($_SESSION['CSRF'], $token);
+        return Factory::getForm()->token->check();
     }
 
 
     /**
-     * Check the CSRF token. If it is missing or doesn't match the one stored
-     * in the user's session then the user will be blocked
+     * Proxy method for blocking access to the site if the form's
+     * CSRF token is invalid
      * -------------------------------------------------------------------------
+     * @param   int     $status      HTTP response code to send
+     * @param   string  $message     Message to send with the response code
+     *
      * @return  void
      */
-    public static function blockIfInvalidCSRFToken() : void
-    {
-        //  Initialise some local variables
-        $firewall = Fatcory::getFirewall();
-
-        if (!static::checkCSRFToken()) {
-            $firewall->block();
-        }
-    }
+    public static function blockIfInvalidCSRFToken(int $status = 403, string
+         $message = 'Forbidden') : void
+     {
+         Factory::getFirewall()->blockIfInvalidCSRFToken($status, $message);
+     }
 
 
     /**
