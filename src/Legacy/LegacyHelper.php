@@ -358,13 +358,10 @@ class LegacyHelper
      */
     public static function blockBannedCountries() : void
     {
-        //  Initialise some local variables
-        $firewall = Factory::getFirewall();
-
         if (static::checkIpLocation(static::WORST_SPAM_COUNTRIES,
             static::$ipGeolocationApiKey)) {
 
-            $firewall->block();
+            Factory::getFirewall()->block();
         }
     }
 
@@ -524,7 +521,7 @@ class LegacyHelper
      */
     public static function getAffiliateReferralId()
     {
-        return $_REQUEST['affiliate'] ?? '';
+        return Factory::getInput()->get('affiliate', '');
     }
 
 
@@ -535,9 +532,7 @@ class LegacyHelper
      */
     public static function startSession()
     {
-        if (!isset($_SESSION)) {
-            session_start();
-        }
+        Factory::getSession()->start();
     }
 
 
@@ -550,7 +545,7 @@ class LegacyHelper
     public static function setSessionVar(string $key, $value)
     {
         // Set a session variable with the given value
-        $_SESSION[$key] = $value;
+        Factory::getSession()->set($key, $value);
     }
 
 
@@ -565,7 +560,7 @@ class LegacyHelper
      */
     public static function getSessionVar(string $key, $default = null)
     {
-        return $_SESSION[$key] ?? $default;
+        return Factory::getSession()->get($key, $value);
     }
 
 
@@ -574,13 +569,11 @@ class LegacyHelper
      * -------------------------------------------------------------------------
      * @param string    $key    A key name for referancing the stored value
      *
-     * @return  mixed   The former value of the session var
+     * @return  void
      */
     public static function unsetSessionVar(string $key)
     {
-        $result = static::get($key);
-        unset($_SESSION[$key]);
-        return $result;
+        Factory::getSession()->unset($key);
     }
 
 
@@ -601,16 +594,15 @@ class LegacyHelper
     public static function setSessionVarFromRequest(string $key, string $var,
         $default = '', string $filter = 'STRING')
     {
-        if (isset($_REQUEST[$var])) {
-            static::setSessionVar($key, $_REQUEST[$var]);
-        } else {
-            if (!isset($_SESSION[$key])) {
-                static::setSessionVar($key, $default);
-            }
-        }
+        // Initialise some local variables
+        $input   = Factory::getInput();
+        $session = Factory::getSession();
+
+        $result = $input->get($key, $session->get($key, $default), $filter);
+        $session->set($key, $result);
 
         // Return the result
-        return static::getSessionVar($key);
+        return $result;
     }
 
 
@@ -657,8 +649,7 @@ class LegacyHelper
      */
     public static function getPostValue(string $name, $default = '')
     {
-        return (isset($_POST[$name])) ?
-            htmlspecialchars($_POST[$name]) : $default;
+        return Factory::getInput()->get($name, $default);
     }
 
 
