@@ -12,6 +12,9 @@
 
 namespace TCorp\Legacy;
 
+use TCorp\Legacy\Form\Honeypot;
+use TCorp\Legacy\Form\CsrfToken;
+
 
 /**
  * Class for working with HTML forms
