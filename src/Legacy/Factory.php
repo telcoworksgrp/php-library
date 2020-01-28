@@ -57,7 +57,7 @@ class Factory
      * -------------------------------------------------------------------------
      * @return \TCorp\Legacy\Session
      */
-    public static function getForm()
+    public static function getSession()
     {
         if (is_null(static::$session)) {
             static::$session = new Session();
