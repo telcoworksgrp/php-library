@@ -19,6 +19,15 @@ namespace TCorp\Legacy;
 class Factory
 {
 
+
+    /**
+     * Holds the global config object
+     *
+     * @var \TCorp\Legacy\Config
+     */
+    protected static $config =  null;
+
+
     /**
      * Holds the global input object
      *
@@ -58,6 +67,20 @@ class Factory
      */
     protected static $firewall =  null;
 
+
+    /**
+     * Get the global config object, creating it if nessary
+     * -------------------------------------------------------------------------
+     * @return \TCorp\Legacy\Config
+     */
+    public static function getConfig()
+    {
+        if (is_null(static::$config)) {
+            static::$config = new Config();
+        }
+
+        return static::$config;
+    }
 
 
     /**

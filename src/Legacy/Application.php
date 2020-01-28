@@ -19,6 +19,15 @@ namespace TCorp\Legacy;
 class Application
 {
 
+
+    /**
+     * Holds the global config object
+     *
+     * @var \TCorp\Legacy\Config
+     */
+    public $config = null;
+
+
     /**
      * Holds the global session object
      *
@@ -68,6 +77,7 @@ class Application
     public function __construct()
     {
         // Initialise some class properties
+        $this->config   = Factory::getConfig();
         $this->input    = Factory::getInput();
         $this->session  = Factory::getSession();
         $this->form     = Factory::getForm();
