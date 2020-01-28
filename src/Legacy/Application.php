@@ -24,6 +24,14 @@ class Application
      *
      * @var \TCorp\Legacy\Session
      */
+    public $input = null;
+
+
+    /**
+     * Holds the global session object
+     *
+     * @var \TCorp\Legacy\Session
+     */
     public $session = null;
 
 
@@ -60,6 +68,7 @@ class Application
     public function __construct()
     {
         // Initialise some class properties
+        $this->input    = Factory::getInput();
         $this->session  = Factory::getSession();
         $this->form     = Factory::getForm();
         $this->t3       = Factory::getT3Client();

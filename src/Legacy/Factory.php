@@ -20,6 +20,14 @@ class Factory
 {
 
     /**
+     * Holds the global input object
+     *
+     * @var \TCorp\Legacy\Input
+     */
+    protected static $input =  null;
+
+
+    /**
      * Holds the global session object
      *
      * @var \TCorp\Legacy\Session
@@ -50,6 +58,21 @@ class Factory
      */
     protected static $firewall =  null;
 
+
+
+    /**
+     * Get the global input object, creating it if nessary
+     * -------------------------------------------------------------------------
+     * @return \TCorp\Legacy\Input
+     */
+    public static function getInput()
+    {
+        if (is_null(static::$input)) {
+            static::$input = new Input();
+        }
+
+        return static::$input;
+    }
 
 
     /**
