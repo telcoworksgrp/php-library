@@ -53,7 +53,7 @@ class Input
      */
     public function get(string $key, $default = null)
     {
-        return $data->get($key, $default);
+        return $this->data->get($key, $default);
     }
 
 
@@ -66,7 +66,7 @@ class Input
      */
     public function exists(string $key) : bool
     {
-        return $data->exists($key);
+        return $this->data->exists($key);
     }
 
 }
