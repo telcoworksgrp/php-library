@@ -13,6 +13,7 @@
 namespace TCorp\Legacy;
 
 use TCorp\Registry\Registry;
+use TCorp\Registry\Format;
 
 
 /**
@@ -104,6 +105,19 @@ class Config
     public function clear()
     {
         $this->data->reset();
+    }
+
+
+    /**
+     * Load configuration data from file
+     * -------------------------------------------------------------------------
+     * @param  string   $filename   Absolute path to the config file
+     *
+     * @return void
+     */
+    public function load(string $filename)
+    {
+        $this->data->loadFile($filename, Format::PHP);
     }
 
 }
