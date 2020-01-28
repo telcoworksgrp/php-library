@@ -75,7 +75,7 @@ class Input
                 break;
 
             case 'string':
-                $result = filter_var($result, FILTER_SANITIZE_STRING);
+                $result = htmlspecialchars(filter_var($result, FILTER_SANITIZE_STRING));
                 break;
         }
 
