@@ -38,7 +38,14 @@ class Honeypot
      */
     public function check() : bool
     {
-        return ($_REQUEST['c67538'] ?? '-') === '';
+        // Initialise some local variables
+        $input = Factory::getInput();
+
+        // Check if the honeypot is valid
+        $result = $input->get('c67538', '-') === '';
+
+        // Return the result
+        return $result
     }
 
 }
