@@ -19,26 +19,23 @@ namespace TCorp\Legacy;
 class Token
 {
 
-
     /**
      * Get the CSRF token value
      * -------------------------------------------------------------------------
      * @return string
      */
-    public function get()
+    public function getId()
     {
-        // Start the session if not already started
-        if (!isset($_SESSION)) {
-            session_start();
-        }
+        // Initialise some local variables
+        $session = Factory::getSession();
 
         // Generate and set the token if none exist in the session
-        if (empty($_SESSION['CSRF'])) {
-            $_SESSION['CSRF'] = bin2hex(random_bytes(32));
+        if (!$session->exists('csrf')) {
+            $session->set('csrf', bin2hex(random_bytes(32)));
         }
 
         // Return the result
-        return $_SESSION['CSRF'];
+        return $session->get('csrf', '');
     }
 
 
@@ -50,8 +47,8 @@ class Token
      */
     public function render() : string
     {
-        $token = $this->get();
-        return "<input type=\"hidden\" name=\"CSRF\" value=\"$token\">";
+        $tokenId = $this->getId();
+        return "<input type=\"hidden\" name=\"CSRF\" value=\"$tokenId\">";
     }
 
 
@@ -62,8 +59,14 @@ class Token
      */
     public function check() : bool
     {
-        $token = $_REQUEST['CSRF'] ?? '';
-        return hash_equals($this->get(), $token);
+        // Initialise some local variables
+        $input = Factory::getInput();
+
+        // Check if the CSRF tokeb is valid
+        $result = hash_equals($this->getId(), $input->get('csrf'))
+
+        // Return the result
+        return $result;
     }
 
 }
