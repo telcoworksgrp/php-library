@@ -1,14 +1,14 @@
 {
-    "name"       : "telecomcorp/library-tcorplib",
-    "description": "Telecom Corporate PHP Library",
+    "name"       : "telecomcorp/tworksgrp-php-library",
+    "description": "Teloworks Group PHP Library",
     "type"       : "library",
-    "keywords"   : ["telecomcorp", "tcorp"],
+    "keywords"   : ["telcoworks","php","library"],
     "license"    : "GPL-3.0-or-later",
 
     "authors": [
         {
-            "name": "Telecom Corporate",
-            "email": "webmaster@telecomcorp.com.au"
+            "name": "Telcoworks Group",
+            "email": "webmaster@telcoworksgroup.com.au"
         }
     ],
 
