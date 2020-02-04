@@ -75,11 +75,11 @@ class TemplateHelper
      * -------------------------------------------------------------------------
      * @param Registry  $params   Parameters belonging to the template
      */
-    public function __construct(string $name, Registry $params)
+    public function __construct(Registry $params)
     {
         // Initialise some class properties
         $this->params        = $params;
-        $this->baseUrl       = Uri::base() . "/templates/{$this->name}/";
+        $this->baseUrl       = Uri::base() . "templates/{$this->name}/";
         $this->document      = Factory::getDocument();
         $this->showComponent = !empty($this->document->getBuffer('component'));
     }
