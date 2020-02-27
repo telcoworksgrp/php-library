@@ -1,14 +1,14 @@
 <?php
 /**
  * =============================================================================
- * @package     Telecom Corporation PHP Library
- * @author      David Plath <webmaster@telecomcorp.com.au>
- * @copyright   Copyright (C) 2019 Telecom Corporation. All rights reserved.
+ * @package     Telcoworks Group PHP Library
+ * @author      David Plath <webmaster@telcoworksgrp.com.au>
+ * @copyright   Copyright (c) 2020 Telcoworks Group. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  * =============================================================================
  */
 
-namespace TCorp\Rest;
+namespace TelcoworksGrp\Rest;
 
 
 
@@ -113,7 +113,7 @@ class Client
      * -------------------------------------------------------------------------
      * @param  string   $value  An absolute base URL
      *
-     * @return \TCorp\Rest\Client
+     * @return \TelcoworksGrp\Rest\Client
      */
     public function setBaseUrl(string $value) : Client
     {
@@ -138,7 +138,7 @@ class Client
      * -------------------------------------------------------------------------
      * @param  string   $value  A relative URL
      *
-     * @return \TCorp\Rest\Client
+     * @return \TelcoworksGrp\Rest\Client
      */
     public function setResource(string $value) : Client
     {
@@ -163,7 +163,7 @@ class Client
      * -------------------------------------------------------------------------
      * @param  string   $value  A HTTP method/verb (eg: GET,POST,PUT,DELETE)
      *
-     * @return \TCorp\Rest\Client
+     * @return \TelcoworksGrp\Rest\Client
      */
     public function setMethod(string $value) : Client
     {
@@ -188,7 +188,7 @@ class Client
      * -------------------------------------------------------------------------
      * @param  mixed    $value  Assoc array or object containing HTTP params
      *
-     * @return \TCorp\Rest\Client
+     * @return \TelcoworksGrp\Rest\Client
      */
     public function setParams($value) : Client
     {
@@ -226,7 +226,7 @@ class Client
      * @param  string   $name   The name of the HTTP parameter
      * @param  mixed    $value  A new value for the parameter
      *
-     * @return \TCorp\Rest\Client
+     * @return \TelcoworksGrp\Rest\Client
      */
     public function setParam(string $name, $value) : Client
     {
@@ -254,7 +254,7 @@ class Client
      * -------------------------------------------------------------------------
      * @param  array   $value   Assoc array of HTTP headers
      *
-     * @return \TCorp\Rest\Client
+     * @return \TelcoworksGrp\Rest\Client
      */
     public function setHeaders(array $value) : Client
     {
@@ -280,7 +280,7 @@ class Client
      * @param  string   $name   The name of the HTTP header
      * @param  mixed    $value  A new value for the header
      *
-     * @return \TCorp\Rest\Client
+     * @return \TelcoworksGrp\Rest\Client
      */
     public function setHeader(string $name, $value) : Client
     {
@@ -308,7 +308,7 @@ class Client
      * -------------------------------------------------------------------------
      * @param  string   $value  An API client id/username
      *
-     * @return \TCorp\Rest\Client
+     * @return \TelcoworksGrp\Rest\Client
      */
     public function setClientId(string $value) : Client
     {
@@ -333,7 +333,7 @@ class Client
      * -------------------------------------------------------------------------
      * @param  string   $value  An API client secret/key/password
      *
-     * @return \TCorp\Rest\Client
+     * @return \TelcoworksGrp\Rest\Client
      */
     public function setSecret(string $value) : Client
     {
@@ -357,7 +357,7 @@ class Client
      * -------------------------------------------------------------------------
      * @param  float  $value    Timeout in seconds
      *
-     * @return \TCorp\Rest\Client
+     * @return \TelcoworksGrp\Rest\Client
      */
     public function setTimeout(float $value) : Client
     {

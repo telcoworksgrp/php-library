@@ -1,20 +1,20 @@
 <?php
 /**
  * =============================================================================
- * @package     Telecom Corporation PHP Library
- * @author      David Plath <webmaster@telecomcorp.com.au>
- * @copyright   Copyright (C) 2019 Telecom Corporation. All rights reserved.
+ * @package     Telcoworks Group PHP Library
+ * @author      David Plath <webmaster@telcoworksgrp.com.au>
+ * @copyright   Copyright (c) 2020 Telcoworks Group. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  * =============================================================================
  */
 
-namespace TCorp\WebApi;
+namespace TelcoworksGrp\WebApi;
 
-use \TCorp\Rest\Client AS RestClient;
+use \TelcoworksGrp\Rest\Client AS RestClient;
 
 
 /**
- * Client for accessing Telecom Corporate's Web API
+ * Client for accessing Telcoworks Group's Web API
  */
 class Client extends RestClient
 {

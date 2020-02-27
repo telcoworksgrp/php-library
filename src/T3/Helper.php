@@ -1,18 +1,18 @@
 <?php
 /**
  * =============================================================================
- * @package     Telecom Corporation PHP Library
- * @author      David Plath <webmaster@telecomcorp.com.au>
- * @copyright   Copyright (C) 2019 Telecom Corporation. All rights reserved.
+ * @package     Telcoworks Group PHP Library
+ * @author      David Plath <webmaster@telcoworksgrp.com.au>
+ * @copyright   Copyright (c) 2020 Telcoworks Group. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  * =============================================================================
  */
 
-namespace TCorp\T3;
+namespace TelcoworksGrp\T3;
 
 
 /**
- * Helper class for working with Telecom Corporate's T3 system
+ * Helper class for working with Telcoworks Group's T3 system
  */
 class Helper
 {
@@ -30,7 +30,7 @@ class Helper
       * @param  string  $sortBy     Column to sort the results by
       * @param  string  $direction  Direction to sort the results by
       *
-      * @return \TCorp\T3\Number[]
+      * @return \TelcoworksGrp\T3\Number[]
       */
     public static function getNumberList($prefix = '', $type = '',
         $minPrice = 0, $maxPrice = 1000, $pageNo = 1, $pageSize = 1000,
@@ -73,7 +73,7 @@ class Helper
     /**
      * Get all available numbers from the T3 API
      * -------------------------------------------------------------------------
-     * @return \TCorp\T3\Number[]
+     * @return \TelcoworksGrp\T3\Number[]
      */
     public static function getAllNumbers()
     {
@@ -88,7 +88,7 @@ class Helper
      * -------------------------------------------------------------------------
      * @param  string   $numbers    An array of numbers
      *
-     * @return \TCorp\T3\Number[]
+     * @return \TelcoworksGrp\T3\Number[]
      */
     public static function getNumbers($numbers)
     {

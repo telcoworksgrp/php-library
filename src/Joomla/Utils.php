@@ -1,16 +1,16 @@
 <?php
 /**
  * =============================================================================
- * @package     Telecom Corporation PHP Library
- * @author      David Plath <webmaster@telecomcorp.com.au>
- * @copyright   Copyright (C) 2019 Telecom Corporation. All rights reserved.
+ * @package     Telcoworks Group PHP Library
+ * @author      David Plath <webmaster@telcoworksgrp.com.au>
+ * @copyright   Copyright (c) 2020 Telcoworks Group. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  * =============================================================================
  */
 
-namespace TCorp\Joomla;
+namespace TelcoworksGrp\Joomla;
 
-use \TCorp\Utils AS MiscUtils;
+use \TelcoworksGrp\Utils AS MiscUtils;
 use \Joomla\CMS\Component\ComponentHelper;
 use \Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use \Joomla\CMS\Factory;

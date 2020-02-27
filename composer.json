@@ -1,13 +1,13 @@
 {
-    "name"       : "telecomcorp/tworksgrp-php-library",
+    "name"       : "telcoworksgrp/php-library",
     "description": "Teloworks Group PHP Library",
     "type"       : "library",
-    "keywords"   : ["telcoworks","php","library"],
+    "keywords"   : ["telcoworks group","php","library"],
     "license"    : "GPL-3.0-or-later",
 
     "authors": [
         {
-            "name": "Telcoworks Group",
+            "name": "David Plath",
             "email": "webmaster@telcoworksgroup.com.au"
         }
     ],
@@ -15,17 +15,20 @@
 
     "require":
     {
-        "composer/installers": "^1.6",
-        "guzzlehttp/guzzle"  : "^6.3.3",
-        "phpmailer/phpmailer": "~6.0",
-        "league/csv"        : "^9.1",
-        "scssphp/scssphp"   : "^1.0",
-        "windwalker/structure": "^3.5.12",
-        "dompdf/dompdf": "^0.8.3"
+        "composer/installers"  : "^1.6",
+        "guzzlehttp/guzzle"    : "^6.3.3",
+        "phpmailer/phpmailer"  : "~6.0",
+        "league/csv"           : "^9.1",
+        "scssphp/scssphp"      : "^1.0",
+        "windwalker/structure" : "^3.5.12",
+        "dompdf/dompdf"        : "^0.8.3"
     },
 
     "autoload": {
-        "psr-4": {"TCorp\\": "src/"}
+        "psr-4": {
+            "TelcoworksGrp\\" : "src/",
+            "TCorp\\"         : "src2/"
+        }
     },
 
     "minimum-stability ": "stable"

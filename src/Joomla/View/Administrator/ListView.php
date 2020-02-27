@@ -1,14 +1,14 @@
 <?php
 /**
  * =============================================================================
- * @package     Telecom Corporation PHP Library
- * @author      David Plath <webmaster@telecomcorp.com.au>
- * @copyright   Copyright (C) 2019 Telecom Corporation. All rights reserved.
+ * @package     Telcoworks Group PHP Library
+ * @author      David Plath <webmaster@telcoworksgrp.com.au>
+ * @copyright   Copyright (c) 2020 Telcoworks Group. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  * =============================================================================
  */
 
-namespace TCorp\Joomla\View\Administrator;
+namespace TelcoworksGrp\Joomla\View\Administrator;
 
 
 /**

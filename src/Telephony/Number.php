@@ -1,14 +1,14 @@
 <?php
 /**
  * =============================================================================
- * @package     Telecom Corporation PHP Library
- * @author      David Plath <webmaster@telecomcorp.com.au>
- * @copyright   Copyright (C) 2019 Telecom Corporation. All rights reserved.
+ * @package     Telcoworks Group PHP Library
+ * @author      David Plath <webmaster@telcoworksgrp.com.au>
+ * @copyright   Copyright (c) 2020 Telcoworks Group. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  * =============================================================================
  */
 
-namespace TCorp\Telephony;
+namespace TelcoworksGrp\Telephony;
 
 
 /**
@@ -39,7 +39,7 @@ class Number
      * -------------------------------------------------------------------------
      * @param  string   $value  A new value for the prefix
      *
-     * @return \TCorp\Telephony\Number
+     * @return \TelcoworksGrp\Telephony\Number
      */
     public function setPrefix(string $value): Number
     {
@@ -53,7 +53,7 @@ class Number
      * -------------------------------------------------------------------------
      * @param  string   $value  A new value for the suffix
      *
-     * @return \TCorp\Telephony\Number
+     * @return \TelcoworksGrp\Telephony\Number
      */
     public function setSuffix(string $value): Number
     {

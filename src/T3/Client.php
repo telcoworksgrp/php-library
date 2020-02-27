@@ -1,20 +1,20 @@
 <?php
 /**
  * =============================================================================
- * @package     Telecom Corporation PHP Library
- * @author      David Plath <webmaster@telecomcorp.com.au>
- * @copyright   Copyright (C) 2019 Telecom Corporation. All rights reserved.
+ * @package     Telcoworks Group PHP Library
+ * @author      David Plath <webmaster@telcoworksgrp.com.au>
+ * @copyright   Copyright (c) 2020 Telcoworks Group. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  * =============================================================================
  */
 
-namespace TCorp\T3;
+namespace TelcoworksGrp\T3;
 
-use \TCorp\Rest\Client AS RestClient;
+use \TelcoworksGrp\Rest\Client AS RestClient;
 
 
 /**
- * A basic client for sending API requests to Telecom Corporates T3 system
+ * A basic client for sending API requests to Telcoworks Group's T3 system
  */
 class Client extends RestClient
 {
