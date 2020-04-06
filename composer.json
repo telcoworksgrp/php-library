@@ -26,8 +26,7 @@
 
     "autoload": {
         "psr-4": {
-            "TelcoworksGrp\\" : "src/",
-            "TCorp\\"         : "src2/"
+            "TelcoworksGrp\\" : "src/"
         }
     },
 
